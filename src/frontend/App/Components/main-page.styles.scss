@@ -1,0 +1,34 @@
+$dashboard-head-height: 34px;
+$dashboard-padding: 12px;
+
+.item-selected {
+    background-color:cyan;
+}
+
+html, body {
+    height: 100%;
+}
+
+.dashboard {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    &__head {
+        height: $dashboard-head-height;
+        padding: $dashboard-padding/2 $dashboard-padding $dashboard-padding/2 $dashboard-padding;
+        background-color: black;
+    }
+    &__content {
+        flex:1;
+        display: flex;
+        .left-panel {
+            width: 25%;
+            background-color: lightgray;
+            overflow: auto;
+        }
+        .right-panel {
+            flex: 1;
+            overflow: auto;
+        }
+    }
+}

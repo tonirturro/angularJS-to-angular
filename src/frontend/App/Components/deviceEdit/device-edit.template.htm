@@ -1,0 +1,9 @@
+<div class="device-edit-centered_content">
+    <div ng-if="deviceEditController.selectedDeviceId > -1">
+        <div>Device Name</div>
+        <div>
+            <input type="text" ng-model="deviceEditController.deviceName">
+            <button class="btn btn-primary btn-sm" ng-click="deviceEditController.apply()">Apply</button>
+        </div>
+    </div>
+</div>

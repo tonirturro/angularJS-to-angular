@@ -1,0 +1,23 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>
+                <strong>DEVICES</strong>
+            </td>  
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="device in devicePanelController.devices">
+            <td 
+                ng-class="{'item-selected' : device.id === devicePanelController.selectedDeviceId}" 
+                ng-click="devicePanelController.selectDevice(device.id)">
+                <span>
+                    <button type="button" class="btn btn-danger" ng-click="devicePanelController.deleteDevice($event, device.id)">
+                        <span  class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    {{device.name}}
+                </span>              
+            </td>
+        </tr>
+    </tbody>
+</table>
