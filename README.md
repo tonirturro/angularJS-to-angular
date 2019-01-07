@@ -7,4 +7,12 @@ Based on a electron app project we will migrate the front end displayed at the r
 
 We will follow the steps documented at https://angular.io/guide/upgrade
 
+## Steps
 
+* step0  : Starting point.
+
+To go to a particular step:
+
+```sh
+git checkout [step]
+```
