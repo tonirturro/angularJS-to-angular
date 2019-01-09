@@ -1,15 +1,31 @@
-import "@uirouter/angularjs";
+// polyfills
+import "core-js/es7/reflect";
+
+import "zone.js/dist/zone";
+
+// vendor
+import "@angular/platform-browser";
+
+import "@angular/platform-browser-dynamic";
+
+import "@angular/core";
+
+import "@angular/common";
+
+import "@angular/http";
+
+import "@angular/router";
+
+import "@angular/forms";
+
+import "@angular/upgrade/static";
+
+// Dual boot
+import { setAngularLib } from "@angular/upgrade/static";
 import * as angular from "angular";
-import "angular-animate";
 
-import { COMPONENTS_MODULE_NAME } from "./Components";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { AppModule } from "./app.module";
 
-import { Routes } from "./Routes";
-
-export let app = angular
-    .module("myApp", [ "ui.router", COMPONENTS_MODULE_NAME ] )
-    .config(Routes);
-
-angular.element(document).ready(() => {
-    angular.bootstrap(document.body, [app.name]);
-});
+setAngularLib(angular);
+platformBrowserDynamic().bootstrapModule(AppModule);

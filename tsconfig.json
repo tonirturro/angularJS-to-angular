@@ -1,9 +1,17 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "removeComments": true,
     "sourceMap": true,
-    "target": "es2015"
+    "target": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "importHelpers": true,
+    "lib": ["es2018", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "include": [
     "src"
