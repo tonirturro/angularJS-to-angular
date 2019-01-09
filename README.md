@@ -10,6 +10,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 ## Steps
 
 * step0  : Starting point.
+* step1  : Angular/AngularJS dual boot.
 
 To go to a particular step:
 

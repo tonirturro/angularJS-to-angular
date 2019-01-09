@@ -1,6 +1,11 @@
 const WebpackBar = require('webpackbar');
+const webpack = require('webpack');
+const helpers = require('./helpers');
 
 module.exports = {
+    stats: {
+        warningsFilter: /System.import/
+    },
     module: {
         rules: [
             {
@@ -42,7 +47,12 @@ module.exports = {
         extensions: ['.js', '.ts']
     },
     plugins: [
-        new WebpackBar()
+        new WebpackBar(),
+        new webpack.ContextReplacementPlugin(
+            /\@angular(\\|\/)core(\\|\/)fesm5/,
+            helpers.root('./src'),
+            {}
+        )
     ],
     optimization: {
         removeAvailableModules: false,

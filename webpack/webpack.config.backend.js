@@ -7,5 +7,6 @@ module.exports = merge(webpackBaseConfig, {
     },
     target: 'electron-main',
     mode: 'development',
-    devtool: 'inline-source-map'
+    devtool: 'inline-source-map',
+    externals: ['express', 'electron']
 });
