@@ -1,14 +1,14 @@
 import { IServiceProvider } from "angular";
 import * as angular from "angular";
 import { IModalService, IModalSettings } from "../UiLib/definitions";
-import { IModalStates } from "./ModalStateProvider";
+import { IModalStates } from "./modal-state-provider";
 
 describe("Given a modal state provider", () => {
     let modalStates: IModalStates;
     let modalService: IModalService;
 
     beforeEach(() => {
-        angular.mock.module("myApp.services", (modalStateProvider: IServiceProvider) => {
+        angular.mock.module("myApp.routes", (modalStateProvider: IServiceProvider) => {
             modalStates = modalStateProvider.$get();
         });
     });

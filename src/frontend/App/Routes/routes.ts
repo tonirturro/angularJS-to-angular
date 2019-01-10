@@ -1,6 +1,6 @@
-import { IModalStates } from "./Services/ModalStateProvider";
+import { IModalSettings } from "../UiLib/definitions";
+import { IModalStates } from "./modal-state-provider";
 import { IState, IStateProvider, ITransition } from "./ui-routes";
-import { IModalSettings } from "./UiLib/definitions";
 
 export class Routes {
     public static $inject = [ "$stateProvider", "modalStateProvider" ];

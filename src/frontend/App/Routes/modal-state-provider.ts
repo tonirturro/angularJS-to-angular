@@ -1,7 +1,7 @@
 import { IServiceProvider } from "angular";
 import * as angular from "angular";
-import { IState, IStateService, ITransition } from "../ui-routes";
 import { IModalService, IModalSettings } from "../UiLib/definitions";
+import { IState, IStateService, ITransition } from "./ui-routes";
 
 export interface IModalStates {
     create(name: string, options: IModalSettings): IState;

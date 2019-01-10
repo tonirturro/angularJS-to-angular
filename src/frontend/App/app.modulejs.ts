@@ -1,11 +1,9 @@
-import "@uirouter/angularjs";
 import * as angular from "angular";
 import "angular-animate";
 
 import { COMPONENTS_MODULE_NAME } from "./Components";
-
-import { Routes } from "./Routes";
+import { ROUTES_MODULE_NAME } from "./Routes";
 
 export let moduleJs = angular
-    .module("myApp", [ "ui.router", COMPONENTS_MODULE_NAME ] )
-    .config(Routes).name;
+    .module("myApp", [ ROUTES_MODULE_NAME , COMPONENTS_MODULE_NAME ])
+    .name;

@@ -11,6 +11,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 
 * step0  : Starting point.
 * step1  : Angular/AngularJS dual boot.
+* step2  : Decouple routes from services.
 
 To go to a particular step:
 
