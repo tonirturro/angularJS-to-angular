@@ -1,4 +1,4 @@
-import { IDeferred, IHttpService, ILogService, IPromise, IQService } from "angular";
+import { IHttpService, ILogService } from "angular";
 import {
     IDeleteDeviceResponse,
     IDeletePageResponse,
@@ -25,7 +25,7 @@ export class DataService {
     /**
      * Define dependencies
      */
-    public static $inject = ["$http", "$log", "$q"];
+    public static $inject = ["$http", "$log"];
 
     /**
      * Internal constants
@@ -49,12 +49,10 @@ export class DataService {
      * Initializes a new instance of the DataService class.
      * @param $http is the Angular http service.
      * @param $log is the Angular log services.
-     * @param $q is the Angular promise services.
      */
     constructor(
         private $http: IHttpService,
-        private $log: ILogService,
-        private $q: IQService) {
+        private $log: ILogService) {
     }
 
     /**
