@@ -3,7 +3,7 @@ require('jquery');
 // load the code
 require("../src/frontend/App/Boot");
 
-// load the mocks
+// Initialize AngularJS test
 require("angular-mocks");
 
 // Load the tests

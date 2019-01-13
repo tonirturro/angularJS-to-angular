@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {
     IDeleteDeviceResponse,
@@ -6,7 +6,10 @@ import {
     IDevice,
     IPage,
     ISelectableOption,
-    IUpdateResponse } from "../../../common/rest";
+    IUpdateDeviceParams,
+    IUpdateParams,
+    IUpdateResponse
+} from "../../../common/rest";
 import { IDataService } from "./definitions";
 
 interface ICapabilitiesDictionary {
@@ -24,6 +27,9 @@ export class Data implements IDataService {
      * Internal constants
      */
     private readonly REST_URL = "http://localhost:3000/REST";
+    private readonly httpOptions = {
+        headers: new HttpHeaders({ "Content-Type": "application/json" })
+    };
 
     /**
      * Internal properties
@@ -140,6 +146,31 @@ export class Data implements IDataService {
     }
 
     /**
+     * Updates the name for a device
+     * @param id the id for the device to be updated
+     * @param newValue the new value for the update
+     */
+    public updateDeviceName(id: number, newValue: string) {
+        const data: IUpdateDeviceParams = { id, newValue };
+        this.http.put<IUpdateResponse>(`${this.getUrl("devices/name")}`, data, this.httpOptions)
+            .subscribe((response) => {
+                if (response.success) {
+                    this.updateDevices();
+                }
+            });
+    }
+
+    /**
+     * Updates a particular field for a set of pages
+     * @param field The field to be updated
+     * @param pages The pages to be updated
+     * @param newValueToSet The new value to be set
+     */
+    public updatePageField(field: string, pages: number[], newValue: string) {
+        this.performUpdate(field, { pages, newValue } as IUpdateParams);
+    }
+
+    /**
      * Composes the url for an api
      * @param the api to be composed
      */
@@ -183,5 +214,19 @@ export class Data implements IDataService {
                 () => {
                     this.isGettingCapabilities[capability] = false;
                 });
+    }
+
+    /**
+     * Executes the update for the designated field and with the corresponding parameters
+     * @param field is the field to be updated
+     * @param params are the params for the update
+     */
+    private performUpdate(field: string, params: IUpdateParams) {
+        this.http.put<IUpdateResponse>(`${this.getUrl("pages")}${field}`, params, this.httpOptions)
+            .subscribe((response) => {
+                if (response.success) {
+                    this.updatePages();
+                }
+            });
     }
 }
