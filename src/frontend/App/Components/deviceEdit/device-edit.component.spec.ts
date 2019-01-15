@@ -1,3 +1,4 @@
+import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
 import { IDevice } from "../../../../common/rest";
@@ -12,7 +13,12 @@ describe("Given a device edit component", () => {
     let scope: any;
     let element: IAugmentedJQuery;
 
-    beforeEach(angular.mock.module("myApp.components"));
+    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
+        $provide.value("dataService", {
+            // tslint:disable-next-line:no-empty
+            get devices() { return []; }, updateDeviceName: () => {}
+        });
+    }));
 
     beforeEach(inject((
         dataService: IDataService,

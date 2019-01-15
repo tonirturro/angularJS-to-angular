@@ -1,6 +1,10 @@
-import * as angular from "angular";
-import { DataService } from "./DataService";
+import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
 
-export const SERVICES_MODULE_NAME = angular.module("myApp.services", [])
-    .service("dataService", DataService)
-    .name;
+import { Data } from "./data.service";
+
+@NgModule({
+    imports: [ HttpClientModule ],
+    providers: [ Data ]
+})
+export class AppServicesModule {}

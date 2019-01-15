@@ -1,6 +1,6 @@
 import { IAugmentedJQuery, ICompileService, IRootScopeService, IWindowService } from "angular";
 import * as angular from "angular";
-import { IStateService } from "../../ui-routes";
+import { IStateService } from "../../Routes/ui-routes";
 
 describe("Given a toolbar component", () => {
     let element: IAugmentedJQuery;

@@ -4,7 +4,9 @@ import "../UiLib/styles";
 
 import "../templates";
 
-import { SERVICES_MODULE_NAME } from "../Services";
+import { downgradeInjectable } from "@angular/upgrade/static";
+import { Data } from "../Services/data";
+
 import { UI_LIB_NAME } from "../UiLib";
 import { CloseDialog } from "./closeDialog/close-dialog.component";
 import { DeleteDeviceDialog } from "./deleteDevice/delete-device-dialog.component";
@@ -16,7 +18,7 @@ import { ToolBar } from "./toolBar/toolbar.component";
 
 export const COMPONENTS_MODULE_NAME = angular.module(
         "myApp.components",
-        [ "templates", "ui.router", UI_LIB_NAME, SERVICES_MODULE_NAME ])
+        [ "templates", "ui.router", UI_LIB_NAME ])
     .component("closeDialog", CloseDialog)
     .component("deleteDeviceDialog", DeleteDeviceDialog)
     .component("toolbar", ToolBar)

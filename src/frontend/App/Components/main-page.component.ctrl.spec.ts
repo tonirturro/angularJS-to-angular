@@ -1,3 +1,4 @@
+import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import { StateService } from "@uirouter/core";
 import * as angular from "angular";
 import { IPromise, IQService, IWindowService } from "angular";
@@ -36,7 +37,14 @@ describe("Given a main page component controller", () => {
         { value: "1", label: "destination1" }
     ];
 
-    beforeEach(angular.mock.module("myApp.components"));
+    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
+        $provide.value("dataService", {
+            // tslint:disable-next-line:no-empty
+            addNewDevice: () => {}, addNewPage: () => {}, deleteDevice: () => {}, deletePage: () => {},
+            // tslint:disable-next-line:no-empty
+            get devices() { return []; }, getCapabilities: () => {}, updatePageField: () => {}
+        });
+    }));
 
     beforeEach(inject(($componentController, $q, $state: StateService, $window, dataService) => {
         stateServiceToMock = $state;

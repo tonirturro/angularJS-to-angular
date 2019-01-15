@@ -12,7 +12,7 @@ import {
     IUpdateParams,
     IUpdateResponse
 } from "../../../common/rest";
-import { Data } from "./data";
+import { Data } from "./data.service";
 
 describe("Given a data service", () => {
     const restUrl = "http://localhost:3000/REST";

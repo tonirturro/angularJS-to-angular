@@ -1,3 +1,4 @@
+import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
 import { PageFields } from "../../../../common/model";
@@ -40,7 +41,12 @@ describe("Given a page grid component ", () => {
         { value: "1", label: "destination1" }
     ];
 
-    beforeEach(angular.mock.module("myApp.components"));
+    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
+        $provide.value("dataService", {
+            // tslint:disable-next-line:no-empty
+            addNewPage: () => {}, deletePage: () => {}, getCapabilities: () => {}, get pages() { return []; }
+        });
+    }));
 
     beforeEach(() => {
         Capabilities[PageFields.PageSize] = PageSizeCapabilities;
