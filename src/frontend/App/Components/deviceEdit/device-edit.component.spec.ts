@@ -1,13 +1,13 @@
 import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
 import { IDevice } from "../../../../common/rest";
-import { DataService } from "../../Services/DataService";
+import { IDataService } from "../../Services/definitions";
 
 describe("Given a device edit component", () => {
     const Devices: IDevice[] = [
         { id: 0, name: "Device 1" }
     ];
-    let dataServiceToMock: DataService;
+    let dataServiceToMock: IDataService;
     let rootScope: IRootScopeService;
     let scope: any;
     let element: IAugmentedJQuery;
@@ -15,14 +15,14 @@ describe("Given a device edit component", () => {
     beforeEach(angular.mock.module("myApp.components"));
 
     beforeEach(inject((
-        dataService: DataService,
+        dataService: IDataService,
         $compile: ICompileService,
         $rootScope: IRootScopeService) => {
         dataServiceToMock = dataService;
         rootScope = $rootScope;
         scope = $rootScope.$new();
         scope.selectedDeviceID = Devices[0].id.toString();
-        spyOnProperty(dataServiceToMock, "devices").and.returnValue(Devices);
+        spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(Devices);
         element = angular.element(`<device-edit selected-device-id="selectedDeviceID" />`);
         element = $compile(element)(scope);
         rootScope.$apply();

@@ -1,8 +1,8 @@
 import { IAugmentedJQuery, ICompileService, IRootScopeService} from "angular";
 import * as angular from "angular";
 import { IDevice } from "../../../../common/rest";
-import { DataService } from "../../Services/DataService";
-import { IStateService } from "../../ui-routes";
+import { IStateService } from "../../Routes/ui-routes";
+import { IDataService } from "../../Services/definitions";
 
 describe("Given a delete device dialog component", () => {
     const deviceList: IDevice[] = [
@@ -10,7 +10,7 @@ describe("Given a delete device dialog component", () => {
     ];
     let element: IAugmentedJQuery;
     let state: IStateService;
-    let dataServiceToMock: DataService;
+    let dataServiceToMock: IDataService;
     let scope: any;
 
     beforeEach(angular.mock.module("myApp.components"));
@@ -19,10 +19,10 @@ describe("Given a delete device dialog component", () => {
         $compile: ICompileService,
         $rootScope: IRootScopeService,
         $state: IStateService,
-        dataService: DataService) => {
+        dataService: IDataService) => {
         state = $state;
         dataServiceToMock = dataService;
-        spyOnProperty(dataServiceToMock, "devices").and.returnValue(deviceList);
+        spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(deviceList);
         scope = $rootScope.$new();
         scope.resolve = {
             params: {

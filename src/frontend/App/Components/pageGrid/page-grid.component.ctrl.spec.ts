@@ -1,7 +1,7 @@
 import * as angular from "angular";
 import { IComponentControllerService } from "angular";
 import { PageFields } from "../../../../common/model";
-import { DataService } from "../../Services/DataService";
+import { IDataService } from "../../Services/definitions";
 import { PageGridController } from "./page-grid.component.ctrl";
 
 describe("Given a page grid controller", () => {
@@ -22,7 +22,7 @@ describe("Given a page grid controller", () => {
      * Common test resources
      */
     let controller: PageGridController;
-    let dataServiceToMock: DataService;
+    let dataServiceToMock: IDataService;
 
     /**
      * Initialize the test environment
@@ -31,7 +31,7 @@ describe("Given a page grid controller", () => {
 
     beforeEach(inject((
         $componentController: IComponentControllerService,
-        dataService: DataService) => {
+        dataService: IDataService) => {
         dataServiceToMock = dataService;
         controller = $componentController("pageGrid", {});
         controller.selectPage(fakeMouseEvent, selectedPage.id );

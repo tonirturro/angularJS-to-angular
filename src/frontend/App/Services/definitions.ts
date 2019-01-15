@@ -9,4 +9,6 @@ export interface IDataService {
     addNewDevice: () => void;
     deletePage: (idToDelete: number) => void;
     deleteDevice: (idToDelete: number) => void;
+    updateDeviceName: (id: number, newValue: string) => void;
+    updatePageField: (field: string, pages: number[], newValue: string) => void;
 }

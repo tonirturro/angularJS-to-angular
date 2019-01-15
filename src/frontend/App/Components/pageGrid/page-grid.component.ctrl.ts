@@ -1,6 +1,6 @@
 import { PageFields } from "../../../../common/model";
 import { IPage, ISelectableOption } from "../../../../common/rest";
-import { DataService } from "../../Services/DataService";
+import { IDataService } from "../../Services/definitions";
 
 export interface IPageSelectionData {
     pageId: number;
@@ -39,7 +39,7 @@ export class PageGridController {
      * Inuitializes an object from the PageGridController class
      * @param dataService the service that provides data from the model
      */
-    constructor(private dataService: DataService) {}
+    constructor(private dataService: IDataService) {}
 
     /**
      * Retrieves the model pages

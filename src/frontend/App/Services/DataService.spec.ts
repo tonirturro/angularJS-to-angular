@@ -11,7 +11,7 @@ import {
     IUpdateParams,
     IUpdateResponse
 } from "../../../common/rest";
-import { DataService } from "./DataService";
+import { IDataService } from "./definitions";
 
 describe("Given a data service", () => {
         const restUrl = "http://localhost:3000/REST";
@@ -48,7 +48,7 @@ describe("Given a data service", () => {
          * Common test resources
          */
         const SelectedDeviceId = 1;
-        let service: DataService;
+        let service: IDataService;
         let httpBackend: IHttpBackendService;
         let http: IHttpService;
         let q: IQService;
@@ -60,7 +60,7 @@ describe("Given a data service", () => {
         beforeEach(angular.mock.module("myApp.services"));
 
         beforeEach(inject((
-                dataService: DataService,
+                dataService: IDataService,
                 $rootScope: IRootScopeService,
                 $q: IQService,
                 $http: IHttpService,

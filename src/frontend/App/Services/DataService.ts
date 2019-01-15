@@ -9,6 +9,7 @@ import {
     IUpdateParams,
     IUpdateResponse
 } from "../../../common/rest";
+import { IDataService } from "./definitions";
 
 interface ICapabilitiesDictionary {
     [key: string]: ISelectableOption[];
@@ -21,7 +22,7 @@ interface IGettingCapabilitiesDictionary {
 /*
 ** Service to access data from the backend
 */
-export class DataService {
+export class DataService implements IDataService {
     /**
      * Define dependencies
      */

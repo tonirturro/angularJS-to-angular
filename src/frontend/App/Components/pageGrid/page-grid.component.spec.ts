@@ -2,14 +2,14 @@ import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
 import { PageFields } from "../../../../common/model";
 import { IPage, ISelectableOption } from "../../../../common/rest";
-import { DataService } from "../../Services/DataService";
+import { IDataService } from "../../Services/definitions";
 
 describe("Given a page grid component ", () => {
     const SelectedDeviceId = 1;
     let element: IAugmentedJQuery;
     let scope: any;
     let rootScope: IRootScopeService;
-    let dataServiceToMock: DataService;
+    let dataServiceToMock: IDataService;
 
     const InitialPages: IPage[] = [
         {
@@ -50,12 +50,12 @@ describe("Given a page grid component ", () => {
     });
 
     beforeEach(inject((
-        dataService: DataService,
+        dataService: IDataService,
         $compile: ICompileService,
         $rootScope: IRootScopeService) => {
         dataServiceToMock = dataService;
         rootScope = $rootScope;
-        spyOnProperty(dataService, "pages").and.returnValue(InitialPages);
+        spyOnProperty(dataService, "pages", "get").and.returnValue(InitialPages);
         spyOn(dataService, "getCapabilities").and.callFake((capability: string) => Capabilities[capability]);
         scope = $rootScope.$new();
         scope.selectedDeviceID = SelectedDeviceId;

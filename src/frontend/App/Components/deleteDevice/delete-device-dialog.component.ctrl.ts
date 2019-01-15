@@ -1,6 +1,6 @@
 import { IComponentController } from "angular";
-import { DataService } from "../../Services/DataService";
-import { IStateService } from "../../ui-routes";
+import { IStateService } from "../../Routes/ui-routes";
+import { IDataService } from "../../Services/definitions";
 import { IIdParam } from "../definitions";
 
 interface IDialogParamsId {
@@ -18,7 +18,7 @@ export class DeleteDeviceDialogController implements IComponentController {
 
     constructor(
         private $state: IStateService,
-        private dataService: DataService) {}
+        private dataService: IDataService) {}
 
     public $onInit() {
         this.deviceId = this.resolve.params.id;

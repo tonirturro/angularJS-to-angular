@@ -1,5 +1,5 @@
 import { IComponentController } from "angular";
-import { DataService } from "../../Services/DataService";
+import { IDataService } from "../../Services/definitions";
 
 interface IReportDeviceName {
     name: string;
@@ -26,7 +26,7 @@ export class DeviceEditController implements IComponentController {
      * Initializes a new instance from the DeviceEditController class
      * @param dataService injected service to access the model
      */
-    constructor(private dataService: DataService) { }
+    constructor(private dataService: IDataService) { }
 
     /**
      * Initialize from model data

@@ -3,7 +3,7 @@ import * as angular from "angular";
 import { IPromise, IQService, IWindowService } from "angular";
 import { PageFields } from "../../../common/model";
 import { IDevice, ISelectableOption } from "../../../common/rest";
-import { DataService } from "../Services/DataService";
+import { IDataService } from "../Services/definitions";
 import { IIdParam } from "./definitions";
 import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl";
 
@@ -11,7 +11,7 @@ describe("Given a main page component controller", () => {
     let controller: MainPageController;
     let q: IQService;
     let stateServiceToMock: StateService;
-    let dataServiceToMock: DataService;
+    let dataServiceToMock: IDataService;
     let windowServiceToMock: IWindowService;
     let deviceSpy: jasmine.Spy;
 
@@ -44,7 +44,7 @@ describe("Given a main page component controller", () => {
         dataServiceToMock = dataService;
         q = $q;
         spyOn(stateServiceToMock, "go");
-        deviceSpy = spyOnProperty(dataServiceToMock, "devices").and.returnValue(devices);
+        deviceSpy = spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(devices);
         spyOn(dataServiceToMock, "addNewDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "deleteDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "updatePageField").and.returnValue(q.resolve(true));
@@ -138,7 +138,7 @@ describe("Given a main page component controller", () => {
         const currentView = "pages";
         const expectedView = currentView + ".deletedevice";
         const expectedDeviceSelection: IIdParam = { id: idToDelete };
-        spyOnProperty(stateServiceToMock, "current").and.returnValue( { name: currentView });
+        spyOnProperty(stateServiceToMock, "current", "get").and.returnValue( { name: currentView });
 
         controller.deleteDevice(idToDelete);
 

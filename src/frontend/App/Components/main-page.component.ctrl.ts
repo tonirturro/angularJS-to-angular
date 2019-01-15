@@ -1,7 +1,7 @@
 import { IComponentController, ILogService, IRootScopeService } from "angular";
 import { IDevice } from "../../../common/rest";
-import { DataService } from "../Services/DataService";
-import { IStateService } from "../ui-routes";
+import { IStateService } from "../Routes/ui-routes";
+import { IDataService } from "../Services/definitions";
 import { IIdParam } from "./definitions";
 
 export interface IDeviceSelection {
@@ -20,7 +20,7 @@ export class MainPageController implements IComponentController {
 
     constructor(
         private $state: IStateService,
-        private dataService: DataService) {}
+        private dataService: IDataService) {}
 
     /**
      * Exposes the devices from the data service
