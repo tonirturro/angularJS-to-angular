@@ -1,7 +1,12 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
+
 import * as angular from "angular";
 import { IComponentControllerService } from "angular";
+
 import { PageFields } from "../../../../common/model";
+import { DataService } from "../../Services/data.service";
 import { IDataService } from "../../Services/definitions";
 import { PageGridController } from "./page-grid.component.ctrl";
 
@@ -25,14 +30,15 @@ describe("Given a page grid controller", () => {
     let controller: PageGridController;
     let dataServiceToMock: IDataService;
 
-    /**
-     * Initialize the test environment
-     */
-    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
-        $provide.value("dataService", {
-            // tslint:disable-next-line:no-empty
-            updatePageField: () => {}
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [DataService]
         });
+    });
+
+    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
+        $provide.value("dataService", TestBed.get(DataService));
     }));
 
     beforeEach(inject((

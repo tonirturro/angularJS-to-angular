@@ -14,7 +14,7 @@ describe("Given a toolbar component", () => {
     let editPagesButtonClick: boolean;
     let scope: any;
 
-    beforeEach(angular.mock.module("myApp"));
+    beforeEach(angular.mock.module("myApp.components"));
 
     beforeEach(inject((
         $compile: ICompileService,

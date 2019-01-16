@@ -1,8 +1,13 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
+
 import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
+
 import { PageFields } from "../../../../common/model";
 import { IPage, ISelectableOption } from "../../../../common/rest";
+import { DataService } from "../../Services/data.service";
 import { IDataService } from "../../Services/definitions";
 
 describe("Given a page grid component ", () => {
@@ -41,11 +46,15 @@ describe("Given a page grid component ", () => {
         { value: "1", label: "destination1" }
     ];
 
-    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
-        $provide.value("dataService", {
-            // tslint:disable-next-line:no-empty
-            addNewPage: () => {}, deletePage: () => {}, getCapabilities: () => {}, get pages() { return []; }
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [DataService]
         });
+    });
+
+    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
+        $provide.value("dataService", TestBed.get(DataService));
     }));
 
     beforeEach(() => {

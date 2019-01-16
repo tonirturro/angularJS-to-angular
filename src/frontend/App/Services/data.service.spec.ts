@@ -12,7 +12,7 @@ import {
     IUpdateParams,
     IUpdateResponse
 } from "../../../common/rest";
-import { Data } from "./data.service";
+import { DataService } from "./data.service";
 
 describe("Given a data service", () => {
     const restUrl = "http://localhost:3000/REST";
@@ -53,20 +53,20 @@ describe("Given a data service", () => {
     const ExpectedParams: IUpdateDeviceParams = { id: ExpectedDeviceId, newValue: ExpectedDeviceValue };
     const ExpectedCapabilitiesCall = `${deviceOptionsUrl}${PageFields.PageSize}`;
 
-    let service: Data;
+    let service: DataService;
     let httpMock: HttpTestingController;
     let request: TestRequest;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
-            providers: [Data]
+            providers: [DataService]
         });
     });
 
     beforeEach(inject(
-        [Data, HttpTestingController], (
-            serviceToTest: Data,
+        [DataService, HttpTestingController], (
+            serviceToTest: DataService,
             mock: HttpTestingController) => {
             service = serviceToTest;
             httpMock = mock;

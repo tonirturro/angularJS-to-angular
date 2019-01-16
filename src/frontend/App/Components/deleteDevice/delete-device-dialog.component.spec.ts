@@ -1,8 +1,13 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
+
 import { IAugmentedJQuery, ICompileService, IRootScopeService} from "angular";
 import * as angular from "angular";
+
 import { IDevice } from "../../../../common/rest";
 import { IStateService } from "../../Routes/ui-routes";
+import { DataService } from "../../Services/data.service";
 import { IDataService } from "../../Services/definitions";
 
 describe("Given a delete device dialog component", () => {
@@ -14,11 +19,15 @@ describe("Given a delete device dialog component", () => {
     let dataServiceToMock: IDataService;
     let scope: any;
 
-    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
-        $provide.value("dataService", {
-            // tslint:disable-next-line:no-empty
-            get devices() { return []; }, deleteDevice: () => {}
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [DataService]
         });
+    });
+
+    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
+        $provide.value("dataService", TestBed.get(DataService));
     }));
 
     beforeEach(inject((

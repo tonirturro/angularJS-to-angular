@@ -21,7 +21,7 @@ interface IGettingCapabilitiesDictionary {
 }
 
 @Injectable()
-export class Data implements IDataService {
+export class DataService implements IDataService {
 
     /**
      * Internal constants

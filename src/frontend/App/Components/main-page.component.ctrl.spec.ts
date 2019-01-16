@@ -1,9 +1,14 @@
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import { StateService } from "@uirouter/core";
-import * as angular from "angular";
+
 import { IPromise, IQService, IWindowService } from "angular";
+import * as angular from "angular";
+
 import { PageFields } from "../../../common/model";
 import { IDevice, ISelectableOption } from "../../../common/rest";
+import { DataService } from "../Services/data.service";
 import { IDataService } from "../Services/definitions";
 import { IIdParam } from "./definitions";
 import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl";
@@ -14,7 +19,6 @@ describe("Given a main page component controller", () => {
     let stateServiceToMock: StateService;
     let dataServiceToMock: IDataService;
     let windowServiceToMock: IWindowService;
-    let deviceSpy: jasmine.Spy;
 
     const devices: IDevice[] = [{
         id: 1,
@@ -37,13 +41,15 @@ describe("Given a main page component controller", () => {
         { value: "1", label: "destination1" }
     ];
 
-    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
-        $provide.value("dataService", {
-            // tslint:disable-next-line:no-empty
-            addNewDevice: () => {}, addNewPage: () => {}, deleteDevice: () => {}, deletePage: () => {},
-            // tslint:disable-next-line:no-empty
-            get devices() { return []; }, getCapabilities: () => {}, updatePageField: () => {}
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule],
+            providers: [DataService]
         });
+    });
+
+    beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
+        $provide.value("dataService", TestBed.get(DataService));
     }));
 
     beforeEach(inject(($componentController, $q, $state: StateService, $window, dataService) => {
@@ -52,7 +58,7 @@ describe("Given a main page component controller", () => {
         dataServiceToMock = dataService;
         q = $q;
         spyOn(stateServiceToMock, "go");
-        deviceSpy = spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(devices);
+        spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(devices);
         spyOn(dataServiceToMock, "addNewDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "deleteDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "updatePageField").and.returnValue(q.resolve(true));

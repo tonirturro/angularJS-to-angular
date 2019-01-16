@@ -6,7 +6,7 @@ import * as angular from "angular";
 import { moduleJs } from "./app.modulejs";
 
 import { AppServicesModule } from "./Services";
-import { Data } from "./Services/data.service";
+import { DataService } from "./Services/data.service";
 
 @NgModule({
     imports: [
@@ -14,7 +14,7 @@ import { Data } from "./Services/data.service";
         UpgradeModule,
         AppServicesModule
     ],
-    providers: [ Data ]
+    providers: [ DataService ]
 })
 export class AppModule {
     constructor(private upgrade: UpgradeModule) { }
@@ -22,7 +22,7 @@ export class AppModule {
 
       // Downgrades
       angular.module(moduleJs)
-        .factory("dataService", downgradeInjectable(Data));
+        .factory("dataService", downgradeInjectable(DataService));
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }
