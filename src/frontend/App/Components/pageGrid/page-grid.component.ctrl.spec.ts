@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 
@@ -6,6 +5,7 @@ import * as angular from "angular";
 import { IComponentControllerService } from "angular";
 
 import { PageFields } from "../../../../common/model";
+import { AppServicesModule } from "../../Services";
 import { DataService } from "../../Services/data.service";
 import { IDataService } from "../../Services/definitions";
 import { PageGridController } from "./page-grid.component.ctrl";
@@ -32,8 +32,7 @@ describe("Given a page grid controller", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [DataService]
+            imports: [ AppServicesModule ]
         });
     });
 

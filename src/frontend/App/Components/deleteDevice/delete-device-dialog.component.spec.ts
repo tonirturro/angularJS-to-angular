@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 
@@ -7,6 +6,7 @@ import * as angular from "angular";
 
 import { IDevice } from "../../../../common/rest";
 import { IStateService } from "../../Routes/ui-routes";
+import { AppServicesModule } from "../../Services";
 import { DataService } from "../../Services/data.service";
 import { IDataService } from "../../Services/definitions";
 
@@ -21,8 +21,7 @@ describe("Given a delete device dialog component", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [DataService]
+            imports: [ AppServicesModule ]
         });
     });
 

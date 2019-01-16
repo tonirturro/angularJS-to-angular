@@ -11,6 +11,7 @@ import {
     IUpdateResponse
 } from "../../../common/rest";
 import { IDataService } from "./definitions";
+import { LogService } from "./log.service";
 
 interface ICapabilitiesDictionary {
     [key: string]: ISelectableOption[];
@@ -48,7 +49,9 @@ export class DataService implements IDataService {
      * Initializes a new instance from the Data class.
      * @param http the aAngular htt service
      */
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private log: LogService) { }
 
     /**
      * Gets the current cached pages
@@ -106,7 +109,11 @@ export class DataService implements IDataService {
         this.http.post<IUpdateResponse>(`${this.getUrl("pages")}${deviceId}`, {}).subscribe((response) => {
             if (response.success) {
                 this.updatePages();
+            } else {
+                this.log.error(`Error while adding new page to device : ${deviceId}`);
             }
+        }, () => {
+            this.log.error(`Failure to post ${this.getUrl("pages")}${deviceId}`);
         });
     }
 
@@ -117,7 +124,11 @@ export class DataService implements IDataService {
         this.http.put<IUpdateResponse>(this.getUrl("devices"), {}).subscribe((response) => {
             if (response.success) {
                 this.updateDevices();
+            } else {
+                this.log.error("Error while adding new device");
             }
+        }, () => {
+            this.log.error(`Failure to put ${this.getUrl("devices")}`);
         });
     }
 
@@ -129,7 +140,11 @@ export class DataService implements IDataService {
         this.http.delete<IDeletePageResponse>(`${this.getUrl("pages")}${idToDelete}`).subscribe((response) => {
             if (response.success) {
                 this.updatePages();
+            } else {
+                this.log.error(`Error while deleting page id: ${idToDelete}`);
             }
+        }, () => {
+            this.log.error(`Failure to delete ${this.getUrl("pages")}${idToDelete}`);
         });
     }
 
@@ -142,6 +157,8 @@ export class DataService implements IDataService {
             if (response.success) {
                 this.updateDevices();
             }
+        }, () => {
+            this.log.error(`Failure to delete ${this.getUrl("devices")}${idToDelete}`);
         });
     }
 
@@ -156,7 +173,11 @@ export class DataService implements IDataService {
             .subscribe((response) => {
                 if (response.success) {
                     this.updateDevices();
+                } else {
+                    this.log.error(`Error while updating device id : ${id}`);
                 }
+            }, () => {
+                this.log.error(`Failure to put ${this.getUrl("devices/name")}`);
             });
     }
 
@@ -187,6 +208,7 @@ export class DataService implements IDataService {
         },
             () => {
                 this.isGettingPages = false;
+                this.log.error(`Failure to get ${this.getUrl("pages")}`);
             });
     }
 
@@ -198,6 +220,7 @@ export class DataService implements IDataService {
             this.cachedDevices = devices;
         },
             () => {
+                this.log.error(`Failure to get ${this.getUrl("devices")}`);
                 this.isGettingDevices = false;
             });
     }
@@ -213,6 +236,7 @@ export class DataService implements IDataService {
             },
                 () => {
                     this.isGettingCapabilities[capability] = false;
+                    this.log.error(`Failure to get ${capability} device capability`);
                 });
     }
 
@@ -226,7 +250,11 @@ export class DataService implements IDataService {
             .subscribe((response) => {
                 if (response.success) {
                     this.updatePages();
+                } else {
+                    this.log.error(`Error while updating field ${field} for page id: ${params.pages[0]}`);
                 }
+            }, () => {
+                this.log.error(`Failure to put ${this.getUrl("pages")}${field}`);
             });
     }
 }

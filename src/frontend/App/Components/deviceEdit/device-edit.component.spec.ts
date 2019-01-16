@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 
@@ -6,6 +5,7 @@ import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
 
 import { IDevice } from "../../../../common/rest";
+import { AppServicesModule } from "../../Services";
 import { DataService } from "../../Services/data.service";
 import { IDataService } from "../../Services/definitions";
 
@@ -20,8 +20,7 @@ describe("Given a device edit component", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [DataService]
+            imports: [ AppServicesModule ]
         });
     });
 

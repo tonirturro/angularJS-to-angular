@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from "@angular/common/http/testing";
 import { inject, TestBed } from "@angular/core/testing";
 
+import { AppServicesModule } from ".";
 import { PageFields } from "../../../common/model";
 import {
     IDeleteDeviceResponse,
@@ -13,12 +14,15 @@ import {
     IUpdateResponse
 } from "../../../common/rest";
 import { DataService } from "./data.service";
+import { LogService } from "./log.service";
 
 describe("Given a data service", () => {
     const restUrl = "http://localhost:3000/REST";
     const pagesUrl = `${restUrl}/pages/`;
     const devicesUrl = `${restUrl}/devices/`;
     const deviceOptionsUrl = `${restUrl}/deviceOptions/`;
+    const mockErrorResponse = { status: 400, statusText: "Bad Request" };
+    const data = "Invalid request parameters";
     const fieldToSet = "anyField";
     const expectedDevices: IDevice[] = [{
         id: 1,
@@ -55,22 +59,25 @@ describe("Given a data service", () => {
 
     let service: DataService;
     let httpMock: HttpTestingController;
+    let logService: LogService;
     let request: TestRequest;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [DataService]
+            imports: [HttpClientTestingModule, AppServicesModule],
         });
     });
 
     beforeEach(inject(
-        [DataService, HttpTestingController], (
+        [DataService, LogService, HttpTestingController], (
             serviceToTest: DataService,
+            logServiceToMock: LogService,
             mock: HttpTestingController) => {
             service = serviceToTest;
+            logService = logServiceToMock;
             httpMock = mock;
             request = null;
+            spyOn(logService, "error");
         }
     ));
 
@@ -89,6 +96,13 @@ describe("Given a data service", () => {
 
         expect(request.request.method).toEqual("GET");
         expect(pages.length).toBe(expectedPages.length);
+    });
+
+    it("When getting pages query fails Then the log is called", () => {
+        const pages = service.pages;
+        httpMock.expectOne(pagesUrl).error(new ErrorEvent("Query failed"));
+
+        expect(logService.error).toHaveBeenCalled();
     });
 
     it("Can add pages", () => {
@@ -161,10 +175,14 @@ describe("Given a data service", () => {
         expect(devices.length).toBe(0);
     });
 
-    it("When it reads the devices after a query failed Then they are queried again", () => {
-        const mockErrorResponse = { status: 400, statusText: "Bad Request" };
-        const data = "Invalid request parameters";
+    it("When it read the the devices if the query fails the log service is called", () => {
+        const devices = service.devices;
+        httpMock.expectOne(devicesUrl).flush(data, mockErrorResponse);
 
+        expect(logService.error).toHaveBeenCalled();
+    });
+
+    it("When it reads the devices after a query failed Then they are queried again", () => {
         let devices = service.devices;
         httpMock.expectOne(devicesUrl).flush(data, mockErrorResponse);
         devices = service.devices;
