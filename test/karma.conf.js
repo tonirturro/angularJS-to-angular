@@ -3,7 +3,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack/webpack.config.dev');
-const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 webpackConfig.resolve.alias = {
     'angular': path.resolve(path.join(__dirname, '..', 'node_modules', 'angular'))
 };
@@ -12,11 +11,6 @@ webpackConfig.plugins.push(
         'window.jQuery': 'jquery'
     })
 );
-webpackConfig.plugins.push(
-    new FilterWarningsPlugin({
-        exclude: /System.import/
-    })
-)
 
 module.exports = function (config) {
     config.set({

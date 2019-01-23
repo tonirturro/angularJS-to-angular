@@ -13,8 +13,7 @@ import { DataService } from "./Services/data.service";
         BrowserModule,
         UpgradeModule,
         AppServicesModule
-    ],
-    providers: [ DataService ]
+    ]
 })
 export class AppModule {
     constructor(private upgrade: UpgradeModule) { }

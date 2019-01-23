@@ -1,11 +1,9 @@
 const WebpackBar = require('webpackbar');
 const webpack = require('webpack');
 const helpers = require('./helpers');
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 module.exports = {
-    stats: {
-        warningsFilter: /System.import/
-    },
     module: {
         rules: [
             {
@@ -52,7 +50,10 @@ module.exports = {
             /\@angular(\\|\/)core(\\|\/)fesm5/,
             helpers.root('./src'),
             {}
-        )
+        ),
+        new FilterWarningsPlugin({
+            exclude: /System.import/
+        })
     ],
     optimization: {
         removeAvailableModules: false,
