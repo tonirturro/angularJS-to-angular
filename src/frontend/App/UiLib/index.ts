@@ -5,6 +5,7 @@ import { UibModalBackdrop } from "./modal/directives/backdrop";
 import { UibModalTransclude } from "./modal/directives/transclude";
 import { UibModalWindow } from "./modal/directives/window";
 import { UiLibModal } from "./modal/services/modal";
+import { ModalManager } from "./modal/services/modal-manager.service";
 import { ModalStack } from "./modal/services/modalStack";
 import { Resolver } from "./modal/services/resolver";
 import { MultiMapFactory } from "./multiMap/multiMapFactory";
@@ -22,6 +23,7 @@ export const UI_LIB_NAME = angular.module("ui-lib", [])
     .service("$$stackedMap", StackedMapFactory)
     .service("$uibModalStack", ModalStack)
     .service("$uiLibModal", UiLibModal)
+    .service("modalManager", ModalManager)
     .run(["$templateCache", ($templateCache: ITemplateCacheService) => {
         $templateCache.put("uib/template/modal/window.html", require("./modal/window.htm"));
     }]).name;
