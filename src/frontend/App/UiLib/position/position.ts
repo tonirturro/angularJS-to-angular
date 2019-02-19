@@ -484,7 +484,7 @@ export class Position implements IPositionService {
      *   <li>**[2]**: If auto is passed: true, else undefined.</li>
      * </ul>
      */
-    private parsePlacement(placement: string): any[] {
+    public parsePlacement(placement: string): any[] {
         const autoPlace = this.PLACEMENT_REGEX.auto.test(placement);
         if (autoPlace) {
             placement = placement.replace(this.PLACEMENT_REGEX.auto, "");
@@ -509,6 +509,95 @@ export class Position implements IPositionService {
         }
 
         return placements;
+    }
+
+    /**
+     * Provides a way to adjust the top positioning after first
+     * render to correctly align element to top after content
+     * rendering causes resized element height
+     *
+     * @param {array} placementClasses - The array of strings of classes
+     * element should have.
+     * @param {object} containerPosition - The object with container
+     * position information
+     * @param {number} initialHeight - The initial height for the elem.
+     * @param {number} currentHeight - The current height for the elem.
+     */
+    public adjustTop(placementClasses: string[], containerPosition: any, initialHeight: number, currentHeight: number) {
+        if (placementClasses.indexOf("top") !== -1 && initialHeight !== currentHeight) {
+            return {
+                top: containerPosition.top - currentHeight + "px"
+            };
+        }
+    }
+
+    /**
+     * Provides a way for positioning tooltip & dropdown
+     * arrows when using placement options beyond the standard
+     * left, right, top, or bottom.
+     *
+     * @param {element} elem - The tooltip/dropdown element.
+     * @param {string} placement - The placement for the elem.
+     */
+    public positionArrow(elem: any, placement: string) {
+        elem = this.getRawNode(elem);
+
+        const innerElem = elem.querySelector(".tooltip-inner, .popover-inner");
+        if (!innerElem) {
+            return;
+        }
+
+        const isTooltip = angular.element(innerElem).hasClass("tooltip-inner");
+
+        const arrowElem = isTooltip ? elem.querySelector(".tooltip-arrow") : elem.querySelector(".arrow");
+        if (!arrowElem) {
+            return;
+        }
+
+        const arrowCss = {
+            bottom: "",
+            left: "",
+            right: "",
+            top: ""
+        };
+
+        const placements: string[] = this.parsePlacement(placement);
+        if (placements[1] === "center") {
+            // no adjustment necessary - just reset styles
+            angular.element(arrowElem).css(arrowCss);
+            return;
+        }
+
+        const borderProp = "border-" + placement[0] + "-width";
+        const borderWidth = this.$window.getComputedStyle(arrowElem)[borderProp];
+
+        let borderRadiusProp = "border-";
+        if (this.PLACEMENT_REGEX.vertical.test(placement[0])) {
+            borderRadiusProp += placement[0] + "-" + placement[1];
+        } else {
+            borderRadiusProp += placement[1] + "-" + placement[0];
+        }
+        borderRadiusProp += "-radius";
+        const borderRadius = this.$window.getComputedStyle(isTooltip ? innerElem : elem)[borderRadiusProp];
+
+        switch (placement[0]) {
+            case "top":
+                arrowCss.bottom = isTooltip ? "0" : "-" + borderWidth;
+                break;
+            case "bottom":
+                arrowCss.top = isTooltip ? "0" : "-" + borderWidth;
+                break;
+            case "left":
+                arrowCss.right = isTooltip ? "0" : "-" + borderWidth;
+                break;
+            case "right":
+                arrowCss.left = isTooltip ? "0" : "-" + borderWidth;
+                break;
+        }
+
+        arrowCss[placement[1]] = borderRadius;
+
+        angular.element(arrowElem).css(arrowCss);
     }
 
     /**
@@ -558,25 +647,25 @@ export class Position implements IPositionService {
      * @returns {number} The width of the browser scollbar.
      */
     private scrollbarWidth(isBody: boolean) {
-    if (isBody) {
-        if (angular.isUndefined(this.BODY_SCROLLBAR_WIDTH)) {
-            const bodyElem = this.$document.find("body");
-            bodyElem.addClass("uib-position-body-scrollbar-measure");
-            this.BODY_SCROLLBAR_WIDTH = this.$window.innerWidth - bodyElem[0].clientWidth;
-            this.BODY_SCROLLBAR_WIDTH = isFinite(this.BODY_SCROLLBAR_WIDTH) ? this.BODY_SCROLLBAR_WIDTH : 0;
-            bodyElem.removeClass("uib-position-body-scrollbar-measure");
+        if (isBody) {
+            if (angular.isUndefined(this.BODY_SCROLLBAR_WIDTH)) {
+                const bodyElem = this.$document.find("body");
+                bodyElem.addClass("uib-position-body-scrollbar-measure");
+                this.BODY_SCROLLBAR_WIDTH = this.$window.innerWidth - bodyElem[0].clientWidth;
+                this.BODY_SCROLLBAR_WIDTH = isFinite(this.BODY_SCROLLBAR_WIDTH) ? this.BODY_SCROLLBAR_WIDTH : 0;
+                bodyElem.removeClass("uib-position-body-scrollbar-measure");
+            }
+            return this.BODY_SCROLLBAR_WIDTH;
         }
-        return this.BODY_SCROLLBAR_WIDTH;
-    }
 
-    if (angular.isUndefined(this.SCROLLBAR_WIDTH)) {
-        const scrollElem = angular.element('<div class="uib-position-scrollbar-measure"></div>');
-        this.$document.find("body").append(scrollElem);
-        this.SCROLLBAR_WIDTH = scrollElem[0].offsetWidth - scrollElem[0].clientWidth;
-        this.SCROLLBAR_WIDTH = isFinite(this.SCROLLBAR_WIDTH) ? this.SCROLLBAR_WIDTH : 0;
-        scrollElem.remove();
-    }
+        if (angular.isUndefined(this.SCROLLBAR_WIDTH)) {
+            const scrollElem = angular.element('<div class="uib-position-scrollbar-measure"></div>');
+            this.$document.find("body").append(scrollElem);
+            this.SCROLLBAR_WIDTH = scrollElem[0].offsetWidth - scrollElem[0].clientWidth;
+            this.SCROLLBAR_WIDTH = isFinite(this.SCROLLBAR_WIDTH) ? this.SCROLLBAR_WIDTH : 0;
+            scrollElem.remove();
+        }
 
-    return this.SCROLLBAR_WIDTH;
-}
+        return this.SCROLLBAR_WIDTH;
+    }
 }

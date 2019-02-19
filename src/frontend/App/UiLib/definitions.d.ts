@@ -73,6 +73,11 @@ interface IPositionService {
      * Provides a read-only equivalent of jQuery's offset function.
      */
     offset(element: any): IPositionCoordinates;
+
+    /**
+     * Provides an array of placement values parsed from a placement string.
+     */
+    parsePlacement(placement: string);
 }
 
 interface IResolver {
