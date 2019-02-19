@@ -1,7 +1,3 @@
-export interface IIdParam {
-    id: number;
-}
-
 export interface IDialogParam<T> {
     params: T;
 }

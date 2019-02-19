@@ -2,23 +2,28 @@ import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import { StateService } from "@uirouter/core";
 
-import { IPromise, IQService, IWindowService } from "angular";
+import { IComponentControllerService, IPromise, IQService, IRootScopeService, IWindowService } from "angular";
 import * as angular from "angular";
 
+import { EModals } from ".";
 import { PageFields } from "../../../common/model";
 import { IDevice, ISelectableOption } from "../../../common/rest";
+import { IStateService } from "../Routes/ui-routes";
 import { AppServicesModule } from "../Services";
 import { DataService } from "../Services/data.service";
 import { IDataService } from "../Services/definitions";
-import { IIdParam } from "./definitions";
+import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
+import { IMessageParam } from "./definitions";
 import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl";
 
 describe("Given a main page component controller", () => {
     let controller: MainPageController;
     let q: IQService;
+    let rootScope: IRootScopeService;
     let stateServiceToMock: StateService;
     let dataServiceToMock: IDataService;
-    let windowServiceToMock: IWindowService;
+    let windowCloseMock: jasmine.Spy;
+    let modalPushMock: jasmine.Spy;
 
     const devices: IDevice[] = [{
         id: 1,
@@ -51,12 +56,21 @@ describe("Given a main page component controller", () => {
         $provide.value("dataService", TestBed.get(DataService));
     }));
 
-    beforeEach(inject(($componentController, $q, $state: StateService, $window, dataService) => {
+    beforeEach(inject((
+        $componentController: IComponentControllerService,
+        $q: IQService,
+        $rootScope: IRootScopeService,
+        $state: IStateService,
+        $window: IWindowService,
+        dataService: DataService,
+        modalManager: ModalManager) => {
         stateServiceToMock = $state;
-        windowServiceToMock = $window;
         dataServiceToMock = dataService;
         q = $q;
+        rootScope = $rootScope;
         spyOn(stateServiceToMock, "go");
+        modalPushMock = spyOn(modalManager, "push");
+        windowCloseMock = spyOn($window, "close");
         spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(devices);
         spyOn(dataServiceToMock, "addNewDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "deleteDevice").and.returnValue(q.resolve(true));
@@ -78,7 +92,7 @@ describe("Given a main page component controller", () => {
                         return q.reject("Invalid field");
                 }
             });
-        controller = $componentController("mainPage");
+        controller = $componentController("mainPage", {});
     }));
 
     it("When is ititialized Then it gets the existing devices", () => {
@@ -97,14 +111,6 @@ describe("Given a main page component controller", () => {
         controller.$onInit();
 
         expect(stateServiceToMock.go).toHaveBeenCalledWith("pages", expectedDeviceSelection);
-    });
-
-    xit("When calling close Then the window sercice is called to close the window", () => {
-        spyOn(windowServiceToMock, "close");
-
-        controller.close();
-
-        expect(windowServiceToMock.close).toHaveBeenCalled();
     });
 
     it("When calling edit devices Then the view changes to the device edition", () => {
@@ -146,15 +152,56 @@ describe("Given a main page component controller", () => {
         expect(dataServiceToMock.addNewDevice).toHaveBeenCalled();
     });
 
-    it("When deleting the selected device Then the view is changed", () => {
-        const idToDelete = 4;
-        const currentView = "pages";
-        const expectedView = currentView + ".deletedevice";
-        const expectedDeviceSelection: IIdParam = { id: idToDelete };
-        spyOnProperty(stateServiceToMock, "current", "get").and.returnValue( { name: currentView });
+    it("When deleting a device Then a dialog is open", () => {
+        modalPushMock.and.returnValue(q.reject());
+        const expectedDialogMessage: IMessageParam = { message: `Delete Device: ${devices[0].name}` };
 
-        controller.deleteDevice(idToDelete);
+        controller.deleteDevice(devices[0].id);
 
-        expect(stateServiceToMock.go).toHaveBeenCalledWith(expectedView, expectedDeviceSelection);
+        expect(modalPushMock).toHaveBeenCalledWith(EModals.Confimation, expectedDialogMessage);
+    });
+
+    it("When deleting a device dialog is confirmed Then the device is deleted", () => {
+        modalPushMock.and.returnValue(q.resolve());
+
+        controller.deleteDevice(devices[0].id);
+        rootScope.$apply();
+
+        expect(dataServiceToMock.deleteDevice).toHaveBeenCalledWith(devices[0].id);
+    });
+
+    it("When deleting a device dialog is not confirmed Then the device is not deleted", () => {
+        modalPushMock.and.returnValue(q.reject());
+        controller.deleteDevice(devices[0].id);
+        rootScope.$apply();
+
+        expect(dataServiceToMock.deleteDevice).not.toHaveBeenCalled();
+    });
+
+    it("When calling close Then a dialog is open", () => {
+        modalPushMock.and.returnValue(q.reject());
+        const expectedDialogMessage: IMessageParam = { message: "Close Application" };
+
+        controller.close();
+
+        expect(modalPushMock).toHaveBeenCalledWith(EModals.Confimation, expectedDialogMessage);
+    });
+
+    it("When closing app is confirmed then the application is closed", () => {
+        modalPushMock.and.returnValue(q.resolve());
+
+        controller.close();
+        rootScope.$apply();
+
+        expect(windowCloseMock).toHaveBeenCalled();
+    });
+
+    it("When closing app is not confirmed then the application is not closed", () => {
+        modalPushMock.and.returnValue(q.reject());
+
+        controller.close();
+        rootScope.$apply();
+
+        expect(windowCloseMock).not.toHaveBeenCalled();
     });
 });
