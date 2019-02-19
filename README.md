@@ -13,6 +13,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step1  : Angular/AngularJS dual boot.
 * step2  : Decouple routes from services.
 * step3  : Migrate services and setup hybrid test.
+* step4  : Decouple modals from routes.
 
 To go to a particular step:
 
