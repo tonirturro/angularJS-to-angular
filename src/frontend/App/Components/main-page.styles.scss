@@ -1,5 +1,5 @@
 $dashboard-head-height: 34px;
-$dashboard-padding: 12px;
+$dashboard-padding: 24px;
 
 .item-selected {
     background-color:cyan;
@@ -16,7 +16,7 @@ html, body {
     &__head {
         height: $dashboard-head-height;
         padding: $dashboard-padding/2 $dashboard-padding $dashboard-padding/2 $dashboard-padding;
-        background-color: black;
+        background-color: darkgray;
     }
     &__content {
         flex:1;

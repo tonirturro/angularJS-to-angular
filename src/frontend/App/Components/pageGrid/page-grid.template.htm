@@ -5,7 +5,16 @@
             <td>Print Quality</td>
             <td>Media Type</td>
             <td>Destination</td>
-            <td><button type="button" class="btn btn-primary" ng-click="$ctrl.addPage()"><span class="glyphicon glyphicon-plus"></span></button></td>
+            <td>
+                <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    uib-tooltip="{{ $ctrl.addTooltip }}" 
+                    tooltip-placement="left" 
+                    ng-click="$ctrl.addPage()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +42,16 @@
                     <option ng-repeat="destination in $ctrl.DestinationOptions" value="{{ destination.value }}">{{ destination.label }}</option>
                 </select>
             </td>
-            <td><button type="button" class="btn btn-danger" ng-click="$ctrl.deletePage(page.id)"><span class="glyphicon glyphicon-trash"></span></button></td>
+            <td>
+                <button 
+                    type="button"
+                    class="btn btn-danger" 
+                    uib-tooltip="{{ $ctrl.deleteTooltip }}" 
+                    tooltip-placement="left" 
+                    ng-click="$ctrl.deletePage(page.id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>

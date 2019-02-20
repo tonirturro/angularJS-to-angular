@@ -2,6 +2,17 @@
  * Handles the bindings inside the component
  */
 export class ToolBarController {
+    /*
+     * Text output
+     */
+    public readonly addDeviceButton = "Add New Device";
+    public readonly addDeviceTooltip = "Define a new device to operate with";
+    public readonly editDeviceButton = "Edit Devices";
+    public readonly editDeviceTooltip = "Modify properties for the selected device";
+    public readonly editPagesButton = "Edit Pages";
+    public readonly editPagesTooltip = "Add new pages or modify properties for the selected ones";
+    public readonly closeTooltip = "Close the application";
+
     /**
      * Bindings
      */

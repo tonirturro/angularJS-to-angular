@@ -1,14 +1,36 @@
 <div class="toolbar">
     <div class="toolbar__left btn-toolbar">
         <div class="btn-group">
-            <button type="button" class="btn btn-primary" ng-click="toolBarController.addDevice()">Add new device</button>
+            <button 
+                type="button" 
+                class="btn btn-primary" 
+                uib-tooltip="{{ toolBarController.addDeviceTooltip }}"
+                tooltip-placement="bottom"
+                ng-click="toolBarController.addDevice()">{{ toolBarController.addDeviceButton }}</button>
         </div>
         <div class="btn-group">
-            <button type="button" class="btn btn-secondary" ng-disabled="toolBarController.editingDevices" ng-click="toolBarController.editDevices()">Edit Devices</button>
-            <button type="button" class="btn btn-secondary" ng-disabled="!toolBarController.editingDevices" ng-click="toolBarController.editPages()">Edit Pages</button>                
+            <button 
+                type="button"
+                class="btn btn-secondary" 
+                uib-tooltip="{{ toolBarController.editDeviceTooltip }}" 
+                tooltip-placement="bottom" 
+                ng-disabled="toolBarController.editingDevices" 
+                ng-click="toolBarController.editDevices()">{{ toolBarController.editDeviceButton }}</button>
+            <button 
+                type="button" 
+                class="btn btn-secondary" 
+                uib-tooltip="{{ toolBarController.editPagesTooltip }}" 
+                tooltip-placement="bottom" 
+                ng-disabled="!toolBarController.editingDevices" ng-click="toolBarController.editPages()">{{ toolBarController.editPagesButton }}</button>                
         </div>
     </div>
     <div class="toolbar__right">
-        <button type="button" class="btn btn-danger" ng-click="toolBarController.close()"><span class="glyphicon glyphicon-off"></span></button>
+        <button 
+            type="button" class="btn btn-danger" 
+            uib-tooltip="{{ toolBarController.closeTooltip }}" 
+            tooltip-placement="left" 
+            ng-click="toolBarController.close()">
+            <span class="glyphicon glyphicon-off"></span>
+        </button>
     </div>
 </div>

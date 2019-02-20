@@ -1,4 +1,5 @@
 import * as angular from "angular";
+import "./tooltip.css";
 
 export const TooltipProvider = function() {
 

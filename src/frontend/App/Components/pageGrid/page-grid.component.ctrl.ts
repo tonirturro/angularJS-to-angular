@@ -25,6 +25,12 @@ export class PageGridController {
      */
     public static $inject = [ "dataService" ];
 
+    /*
+     * Text
+     */
+    public readonly addTooltip = "Add new page";
+    public readonly deleteTooltip = "Delete this page";
+
     /**
      * From Bindings
      */
