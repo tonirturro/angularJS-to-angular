@@ -13,8 +13,9 @@ import { AppServicesModule } from "../Services";
 import { DataService } from "../Services/data.service";
 import { IDataService } from "../Services/definitions";
 import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
-import { IMessageParam } from "./definitions";
+import { ELanguages, IMessageParam } from "./definitions";
 import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl";
+import { MainPageService } from "./main-page.service";
 
 describe("Given a main page component controller", () => {
     let controller: MainPageController;
@@ -24,6 +25,7 @@ describe("Given a main page component controller", () => {
     let dataServiceToMock: IDataService;
     let windowCloseMock: jasmine.Spy;
     let modalPushMock: jasmine.Spy;
+    let setLanguageMock: jasmine.Spy;
 
     const devices: IDevice[] = [{
         id: 1,
@@ -63,7 +65,8 @@ describe("Given a main page component controller", () => {
         $state: IStateService,
         $window: IWindowService,
         dataService: DataService,
-        modalManager: ModalManager) => {
+        modalManager: ModalManager,
+        mainPageService: MainPageService) => {
         stateServiceToMock = $state;
         dataServiceToMock = dataService;
         q = $q;
@@ -71,6 +74,7 @@ describe("Given a main page component controller", () => {
         spyOn(stateServiceToMock, "go");
         modalPushMock = spyOn(modalManager, "push");
         windowCloseMock = spyOn($window, "close");
+        setLanguageMock = spyOn(mainPageService, "setLanguage");
         spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(devices);
         spyOn(dataServiceToMock, "addNewDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "deleteDevice").and.returnValue(q.resolve(true));
@@ -111,6 +115,12 @@ describe("Given a main page component controller", () => {
         controller.$onInit();
 
         expect(stateServiceToMock.go).toHaveBeenCalledWith("pages", expectedDeviceSelection);
+    });
+
+    it("When it is initialized Then it sets the default language", () => {
+        controller.$onInit();
+
+        expect(setLanguageMock).toHaveBeenCalledWith(ELanguages.English);
     });
 
     it("When calling edit devices Then the view changes to the device edition", () => {

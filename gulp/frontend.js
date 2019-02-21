@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require("fs");
 const gulp = require('gulp');
 const templateCache = require('gulp-angular-templatecache');
+const gettext = require('gulp-angular-gettext');
 const webpack = require('webpack-stream');
 const tslint = require('gulp-tslint');
 const runSequence = require('run-sequence');
@@ -9,6 +10,7 @@ const runSequence = require('run-sequence');
 const webpackConfigDev = require('../webpack/webpack.config.dev');
 const webpackConfigProd = require('../webpack/webpack.config.prod');
 
+const localizationSrcFolder = path.resolve(__dirname, '../localization/*.po')
 const frontendFolder =  path.resolve(__dirname, '../src/frontend');
 const frontEndSources = path.resolve(frontendFolder, 'App');
 const templates = path.resolve(frontEndSources, 'Components/**/*.htm');
@@ -17,7 +19,15 @@ const frontEndTSFiles = path.resolve(frontEndSources, '**/*.ts');
 const appOutput = path.resolve(__dirname, '../dist');
 const frontEndBundle = path.resolve(appOutput, 'bundle.js');
 
-gulp.task('views', function() {
+gulp.task('translations', () => {
+  return gulp.src(localizationSrcFolder)
+  .pipe(gettext.compile({
+      format: 'json'
+  }))
+  .pipe(gulp.dest(path.resolve(appOutput, 'translations')));
+});
+
+gulp.task('views', () => {
   return gulp.src(templates)
     .pipe(templateCache({
       standalone: true
@@ -25,11 +35,11 @@ gulp.task('views', function() {
     .pipe(gulp.dest(frontEndSources));
 });
 
-gulp.task('index', function() {
+gulp.task('index', () => {
   return gulp.src(path.resolve(frontendFolder, 'index.htm')).pipe(gulp.dest(appOutput));
 });
 
-gulp.task('icon', function() {
+gulp.task('icon', () => {
   return gulp.src(path.resolve(frontendFolder, 'favicon.ico')).pipe(gulp.dest(appOutput));
 });
 
@@ -64,7 +74,7 @@ gulp.task('frontend', (done) => {
   if (process.argv.length > 3 && process.argv[3] === "--dev") {
     buildAppTask = 'angular-app-dev';
   }
-  runSequence('tslint', ['index', 'icon', 'views', 'electron-launch-files'], buildAppTask, () => done());
+  runSequence('tslint', ['index', 'icon', 'translations', 'views', 'electron-launch-files'], buildAppTask, () => done());
 });
 
 gulp.task('watch-templates', () => {
@@ -77,5 +87,5 @@ gulp.task('watch-frontend', (done) => {
       ignored: [ 'node_modules' ],
       aggregateTimeout: 500
     };
-    runSequence(['index', 'icon', 'views', 'electron-launch-files'], 'empty-bundle', ['angular-app-dev', 'electron-watch', 'watch-templates'], done);
+    runSequence(['index', 'icon', 'translations', 'views', 'electron-launch-files'], 'empty-bundle', ['angular-app-dev', 'electron-watch', 'watch-templates'], done);
  });

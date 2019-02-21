@@ -1,10 +1,12 @@
 import { IComponentController, ILogService, IWindowService } from "angular";
+
 import { EModals } from ".";
 import { IDevice } from "../../../common/rest";
 import { IStateService } from "../Routes/ui-routes";
 import { DataService } from "../Services/data.service";
 import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
-import { IMessageParam } from "./definitions";
+import { ELanguages, IMessageParam } from "./definitions";
+import { MainPageService } from "./main-page.service";
 
 export interface IDeviceSelection {
     deviceId: number;
@@ -14,7 +16,7 @@ export class MainPageController implements IComponentController {
     /**
      * Define dependencies
      */
-    public static $inject = [ "$log", "$window", "$state", "dataService", "modalManager" ];
+    public static $inject = [ "$log", "$window", "$state", "dataService", "modalManager", "mainPageService" ];
 
     public selectedDeviceId: number = -1;
     public selectedPages: number[] = [];
@@ -25,7 +27,8 @@ export class MainPageController implements IComponentController {
         private $window: IWindowService,
         private $state: IStateService,
         private dataService: DataService,
-        private modalManager: ModalManager) {}
+        private modalManager: ModalManager,
+        private mainPageService: MainPageService) {}
 
     /**
      * Exposes the devices from the data service
@@ -42,6 +45,7 @@ export class MainPageController implements IComponentController {
      * Component initialization
      */
     public $onInit() {
+        this.mainPageService.setLanguage(ELanguages.English);
         this.changeView();
     }
 
