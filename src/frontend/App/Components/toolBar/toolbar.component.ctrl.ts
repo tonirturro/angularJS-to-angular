@@ -8,6 +8,7 @@ export class ToolBarController {
     public readonly addDeviceTooltip = "STR_ Add_Device_Tooltip";
     public readonly editDeviceTooltip = "STR_Edit_Device_Tooltip";
     public readonly editPagesTooltip = "STR_Edit_Pages_Tooltip";
+    public readonly settingsTooltip = "STR_Settings";
     public readonly closeTooltip = "STR_Close_Tooltip";
 
     /**
@@ -15,9 +16,10 @@ export class ToolBarController {
      */
     public editingDevices: boolean;
     public onAddDevice: () => void;
-    public onClose: () => void;
     public onEditDevices: () => void;
     public onEditPages: () => void;
+    public onSettings: () => void;
+    public onClose: () => void;
 
     /**
      * Report add action
@@ -38,6 +40,13 @@ export class ToolBarController {
      */
     public editPages() {
         this.onEditPages();
+    }
+
+    /**
+     * Report settings action
+     */
+    public settings() {
+        this.onSettings();
     }
 
     /**

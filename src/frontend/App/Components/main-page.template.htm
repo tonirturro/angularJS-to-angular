@@ -1,12 +1,14 @@
 <div class="dashboard">
     <div class="dashboard__head ">
         <toolbar editing-devices="mainPageController.editingDevices" on-edit-devices="mainPageController.editDevices()"
-            on-add-device="mainPageController.addDevice()" on-edit-pages="mainPageController.editPages()" on-close="mainPageController.close()" />
+            on-add-device="mainPageController.addDevice()" on-edit-pages="mainPageController.editPages()"
+            on-settings="mainPageController.settings()" on-close="mainPageController.close()" />
     </div>
     <div class="dashboard__content">
         <div class="left-panel">
             <device-panel devices="mainPageController.devices" selected-device-id="mainPageController.selectedDeviceId"
-                on-delete-device="mainPageController.deleteDevice(deviceId)" on-selected-device="mainPageController.selectDevice(deviceId)" />
+                on-delete-device="mainPageController.deleteDevice(deviceId)"
+                on-selected-device="mainPageController.selectDevice(deviceId)" />
         </div>
         <div class="right-panel">
             <ui-view></ui-view>

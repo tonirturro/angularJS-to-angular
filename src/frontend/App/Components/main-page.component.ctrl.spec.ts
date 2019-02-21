@@ -188,7 +188,33 @@ describe("Given a main page component controller", () => {
         expect(dataServiceToMock.deleteDevice).not.toHaveBeenCalled();
     });
 
-    it("When calling close Then a dialog is open", () => {
+    it("When calling settings Then the settings dialog is open", () => {
+        modalPushMock.and.returnValue(q.reject());
+
+        controller.settings();
+
+        expect(modalPushMock).toHaveBeenCalledWith(EModals.Settings);
+    });
+
+    it("When calling settings is applied Then the settings dialog returns application settings to be applied", () => {
+        modalPushMock.and.returnValue(q.resolve(ELanguages.Klingon));
+
+        controller.settings();
+        rootScope.$apply();
+
+        expect(setLanguageMock).toHaveBeenCalledWith(ELanguages.Klingon);
+    });
+
+    it("When calling settings is dismissed Then no settings are applied", () => {
+        modalPushMock.and.returnValue(q.reject());
+
+        controller.settings();
+        rootScope.$apply();
+
+        expect(setLanguageMock).not.toHaveBeenCalled();
+    });
+
+    it("When calling close Then the close confirmation dialog is open", () => {
         modalPushMock.and.returnValue(q.reject());
         const expectedDialogMessage: IMessageParam = { message: "Close Application" };
 

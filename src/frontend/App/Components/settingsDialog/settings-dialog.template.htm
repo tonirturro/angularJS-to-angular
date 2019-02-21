@@ -1,0 +1,10 @@
+<div class="modal-body">
+    <div translate>STR_Languages</div>
+    <select ng-model="settingsDialogController.languageOption">
+        <option ng-repeat="language in settingsDialogController.languageOptions" value="{{ language.value }}" >{{ language.label | translate }}</option>
+    </select>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="settingsDialogController.apply()" translate>STR_Apply</button>
+    <button class="btn btn-warning" ng-click="settingsDialogController.dismiss()" translate>STR_Exit</button>
+</div>

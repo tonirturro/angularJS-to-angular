@@ -12,24 +12,42 @@ msgstr ""
 "X-Generator: XLIFF TOOL 0.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# toolbar
 msgid "STR_Add_New_Device"
-msgstr "Add New Device"
+msgstr "jan chu' chel"
 
 msgid "STR_ Add_Device_Tooltip"
-msgstr "Define a new device to operate with"
+msgstr "chu' jan, Qap je define"
 
 msgid "STR_Edit_Devices"
-msgstr "Edit Devices"
+msgstr "choH jan"
 
 msgid "STR_Edit_Device_Tooltip"
-msgstr "Modify properties for the selected device"
+msgstr "wIv jan bang choH"
 
 msgid "STR_Edit_Pages"
-msgstr "Edit Pages"
+msgstr "choH jan'e'"
 
 msgid "STR_Edit_Pages_Tooltip"
-msgstr "Add new pages or modify properties for the selected ones"
+msgstr "jan'e' chu' chel joq wIv wa' bang choH"
 
 msgid "STR_Close_Tooltip"
-msgstr "Close the application"
+msgstr "ghun SoQ"
+
+msgid "STR_Settings"
+msgstr "ghun SeH"
+
+msgid "STR_Apply"
+msgstr "yan"
+
+msgid "STR_Exit"
+msgstr "mej"
+
+msgid "STR_Languages"
+msgstr "Hol wIv:"
+
+msgid "STR_English"
+msgstr "English Hol"
+
+msgid "STR_Klingon"
+msgstr "tlhIngan"
+

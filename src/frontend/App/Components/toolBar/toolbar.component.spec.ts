@@ -2,13 +2,14 @@ import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
 
 enum ButtonPosition {
-    AddDevice, EditDevice, EditPages, Close
+    AddDevice, EditDevice, EditPages, Settings, Close
 }
 
 describe("Given a toolbar component", () => {
     let element: IAugmentedJQuery;
     let rootScope: IRootScopeService;
     let addButtonClick: boolean;
+    let settingsButtonClick: boolean;
     let closeButtonClick: boolean;
     let editDevicesButtonClick: boolean;
     let editPagesButtonClick: boolean;
@@ -25,6 +26,9 @@ describe("Given a toolbar component", () => {
         scope.addButton = () => {
             addButtonClick = true;
         };
+        scope.settings = () => {
+            settingsButtonClick = true;
+        };
         scope.close = () => {
             closeButtonClick = true;
         };
@@ -39,6 +43,7 @@ describe("Given a toolbar component", () => {
                                     `on-add-device="addButton()" ` +
                                     `on-edit-devices="editDevices()" ` +
                                     `on-edit-pages="editPages()" ` +
+                                    `on-settings="settings()" ` +
                                     `on-close="close()" />`);
         element = $compile(element)(scope);
         rootScope.$apply();
@@ -94,6 +99,14 @@ describe("Given a toolbar component", () => {
         editPagesButton.click();
 
         expect(editPagesButtonClick).toBeFalsy();
+    });
+
+    it("When clicking on settings button Then the action is reported", () => {
+        settingsButtonClick = false;
+        const settingsButton = element.find("button")[ButtonPosition.Settings];
+        settingsButton.click();
+
+        expect(settingsButtonClick).toBeTruthy();
     });
 
     it("When clicking on close button Then the action is reported", () => {

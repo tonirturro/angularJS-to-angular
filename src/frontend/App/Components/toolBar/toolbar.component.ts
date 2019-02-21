@@ -11,7 +11,8 @@ export const ToolBar: IComponentOptions = {
         onAddDevice: "&",
         onClose: "&",
         onEditDevices: "&",
-        onEditPages: "&"
+        onEditPages: "&",
+        onSettings: "&"
     },
     controller: ToolBarController,
     controllerAs: "toolBarController",

@@ -50,6 +50,19 @@ export class MainPageController implements IComponentController {
     }
 
     /**
+     * Launch the settings dialog
+     */
+    public settings() {
+        this.modalManager
+            .push(EModals.Settings)
+            .then((language: ELanguages) => {
+                this.mainPageService.setLanguage(language);
+            }, () => {
+                this.$log.info("Dismissed settings dialog");
+            });
+    }
+
+    /**
      * Close main window
      */
     public close() {

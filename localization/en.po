@@ -12,7 +12,6 @@ msgstr ""
 "X-Generator: XLIFF TOOL 0.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# toolbar
 msgid "STR_Add_New_Device"
 msgstr "Add New Device"
 
@@ -34,6 +33,23 @@ msgstr "Add new pages or modify properties for the selected ones"
 msgid "STR_Close_Tooltip"
 msgstr "Close the application"
 
+msgid "STR_Settings"
+msgstr "Application Settings"
+
+msgid "STR_Apply"
+msgstr "Apply"
+
+msgid "STR_Exit"
+msgstr "Exit"
+
+msgid "STR_Languages"
+msgstr "Select language:"
+
+msgid "STR_English"
+msgstr "English"
+
+msgid "STR_Klingon"
+msgstr "Klingon"
 
 
 
