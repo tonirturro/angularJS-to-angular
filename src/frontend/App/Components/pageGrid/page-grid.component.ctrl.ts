@@ -1,6 +1,8 @@
+import { IComponentController } from "angular";
 import { PageFields } from "../../../../common/model";
 import { IPage, ISelectableOption } from "../../../../common/rest";
 import { IDataService } from "../../Services/definitions";
+import { PageGridService } from "./page-grid.service";
 
 export interface IPageSelectionData {
     pageId: number;
@@ -19,17 +21,17 @@ export interface IPageDeletionData {
 /**
  * Handles the bindings inside the component
  */
-export class PageGridController {
+export class PageGridController implements IComponentController {
     /**
      * Define dependencies
      */
-    public static $inject = [ "dataService" ];
+    public static $inject = [ "dataService", "pageGridService" ];
 
     /*
      * Text
      */
-    public readonly addTooltip = "Add new page";
-    public readonly deleteTooltip = "Delete this page";
+    public readonly addTooltip = "STR_Add_Page_Tooltip";
+    public readonly deleteTooltip = "STR_Delete_Page_Tooltip";
 
     /**
      * From Bindings
@@ -40,12 +42,29 @@ export class PageGridController {
      * Internal properties
      */
     private selectedPages: number[] = [];
+    private localizedPrintQualityCapabilities: ISelectableOption[] = [];
+    private localizedMediaTypeCapabilities: ISelectableOption[] = [];
+    private localizedDestinationCapabilities: ISelectableOption[] = [];
 
     /**
      * Inuitializes an object from the PageGridController class
      * @param dataService the service that provides data from the model
      */
-    constructor(private dataService: IDataService) {}
+    constructor(
+        private dataService: IDataService,
+        private pageGridService: PageGridService) {}
+
+    public $onInit() {
+        this.localizedPrintQualityCapabilities = this.dataService
+            .getCapabilities(PageFields.PrintQuality)
+            .map((capability) => this.pageGridService.getLocalizedCapability(capability));
+        this.localizedMediaTypeCapabilities = this.dataService
+            .getCapabilities(PageFields.MediaType)
+            .map((capability) => this.pageGridService.getLocalizedCapability(capability));
+        this.localizedDestinationCapabilities = this.dataService
+            .getCapabilities(PageFields.Destination)
+            .map((capability) => this.pageGridService.getLocalizedCapability(capability));
+    }
 
     /**
      * Retrieves the model pages
@@ -65,21 +84,21 @@ export class PageGridController {
      * Get the available print quality options
      */
     public get PrintQualityOptions(): ISelectableOption[] {
-        return this.dataService.getCapabilities(PageFields.PrintQuality);
+        return this.localizedPrintQualityCapabilities;
     }
 
     /**
      * Get the available madia type options
      */
     public get MediaTypeOptions(): ISelectableOption[] {
-        return this.dataService.getCapabilities(PageFields.MediaType);
+        return this.localizedMediaTypeCapabilities;
     }
 
     /**
      * Get the available destination options
      */
     public get DestinationOptions(): ISelectableOption[] {
-        return this.dataService.getCapabilities(PageFields.Destination);
+        return this.localizedDestinationCapabilities;
     }
 
     /**

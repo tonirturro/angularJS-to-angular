@@ -51,3 +51,48 @@ msgstr "English Hol"
 msgid "STR_Klingon"
 msgstr "tlhIngan"
 
+msgid "STR_Page_Size"
+msgstr "jan'e' chay' tIn"
+
+msgid "STR_Print_Quality"
+msgstr "laHlIj ghItlh"
+
+msgid "STR_Media_Type"
+msgstr "nav Segh"
+
+msgid "STR_Destination"
+msgstr "ghoch"
+
+msgid "STR_Add_Page_Tooltip"
+msgstr "jan'e' chu' chel"
+
+msgid "STR_Delete_Page_Tooltip"
+msgstr "jan'e' teq"
+
+msgid "STR_Fast"
+msgstr "nom"
+
+msgid "STR_Normal"
+msgstr "motlh"
+
+msgid "STR_Best"
+msgstr "Qaghbe'meH"
+
+msgid "STR_Plain"
+msgstr "nIt"
+
+msgid "STR_Coated"
+msgstr "wep"
+
+msgid "STR_Photo"
+msgstr "mIllogh nav"
+
+msgid "STR_Basket"
+msgstr "nap ngevwI'"
+
+msgid "STR_Stacker"
+msgstr "yor"
+
+msgid "STR_Folder"
+msgstr "logh toD"
+

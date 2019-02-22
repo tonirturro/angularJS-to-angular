@@ -14,6 +14,7 @@ import { DevicePanel } from "./devicePanel/device-panel.component";
 import { MainPage } from "./main-page.component";
 import { MainPageService } from "./main-page.service";
 import { PageGrid } from "./pageGrid/page-grid.component";
+import { PageGridService } from "./pageGrid/page-grid.service";
 import { SettingsDialog } from "./settingsDialog/settings-dialog.component";
 import { ToolBar } from "./toolBar/toolbar.component";
 
@@ -38,6 +39,7 @@ export const COMPONENTS_MODULE_NAME = angular.module(
         "myApp.components",
         [ "templates", "ui.router", "gettext", UI_LIB_NAME ])
     .service("mainPageService", MainPageService)
+    .service("pageGridService", PageGridService)
     .component(getModal(EModals.Confimation), ConfirmationDialog)
     .component(getModal(EModals.Settings), SettingsDialog)
     .component("toolbar", ToolBar)

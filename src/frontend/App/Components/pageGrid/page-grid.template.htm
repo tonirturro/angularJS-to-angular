@@ -1,15 +1,15 @@
     <table class="table table-bordered table-fixed-header" ng-if="$ctrl.selectedDeviceId > -1">
     <thead>
         <tr>
-            <td translate>Page Size</td>
-            <td translate>Print Quality</td>
-            <td translate>Media Type</td>
-            <td translate>Destination</td>
+            <td translate>STR_Page_Size</td>
+            <td translate>STR_Print_Quality</td>
+            <td translate>STR_Media_Type</td>
+            <td translate>STR_Destination</td>
             <td>
                 <button 
                     type="button" 
                     class="btn btn-primary" 
-                    uib-tooltip="{{ $ctrl.addTooltip }}" 
+                    uib-tooltip="{{ $ctrl.addTooltip | translate}}" 
                     tooltip-placement="left" 
                     ng-click="$ctrl.addPage()">
                         <span class="glyphicon glyphicon-plus"></span>
@@ -46,7 +46,7 @@
                 <button 
                     type="button"
                     class="btn btn-danger" 
-                    uib-tooltip="{{ $ctrl.deleteTooltip }}" 
+                    uib-tooltip="{{ $ctrl.deleteTooltip | translate}}" 
                     tooltip-placement="left" 
                     ng-click="$ctrl.deletePage(page.id)">
                         <span class="glyphicon glyphicon-trash"></span>

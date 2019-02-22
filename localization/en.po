@@ -51,6 +51,47 @@ msgstr "English"
 msgid "STR_Klingon"
 msgstr "Klingon"
 
+msgid "STR_Page_Size"
+msgstr "Page Size"
 
+msgid "STR_Print_Quality"
+msgstr "Print Quality"
 
+msgid "STR_Media_Type"
+msgstr "Media Type"
 
+msgid "STR_Destination"
+msgstr "Destination"
+
+msgid "STR_Add_Page_Tooltip"
+msgstr "Add new page"
+
+msgid "STR_Delete_Page_Tooltip"
+msgstr "Delete this page"
+
+msgid "STR_Fast"
+msgstr "Fast"
+
+msgid "STR_Normal"
+msgstr "Normal"
+
+msgid "STR_Best"
+msgstr "Best"
+
+msgid "STR_Plain"
+msgstr "Plain"
+
+msgid "STR_Coated"
+msgstr "Coated"
+
+msgid "STR_Photo"
+msgstr "Photo"
+
+msgid "STR_Basket"
+msgstr "Basket"
+
+msgid "STR_Stacker"
+msgstr "Stacker"
+
+msgid "STR_Folder"
+msgstr "Folder"

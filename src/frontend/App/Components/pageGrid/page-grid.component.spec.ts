@@ -9,6 +9,7 @@ import { IPage, ISelectableOption } from "../../../../common/rest";
 import { AppServicesModule } from "../../Services";
 import { DataService } from "../../Services/data.service";
 import { IDataService } from "../../Services/definitions";
+import { PageGridService } from "./page-grid.service";
 
 describe("Given a page grid component ", () => {
     const SelectedDeviceId = 1;
@@ -66,11 +67,13 @@ describe("Given a page grid component ", () => {
     beforeEach(inject((
         dataService: IDataService,
         $compile: ICompileService,
-        $rootScope: IRootScopeService) => {
+        $rootScope: IRootScopeService,
+        pageGridService: PageGridService) => {
         dataServiceToMock = dataService;
         rootScope = $rootScope;
         spyOnProperty(dataService, "pages", "get").and.returnValue(InitialPages);
         spyOn(dataService, "getCapabilities").and.callFake((capability: string) => Capabilities[capability]);
+        spyOn(pageGridService, "getLocalizedCapability").and.callFake((capability: ISelectableOption) => capability);
         scope = $rootScope.$new();
         scope.selectedDeviceID = SelectedDeviceId;
         element = angular.element(`<page-grid selected-device-id="selectedDeviceID" />`);
