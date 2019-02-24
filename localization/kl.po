@@ -99,6 +99,9 @@ msgstr "yor"
 msgid "STR_Folder"
 msgstr "logh toD"
 
+msgid "STR_Device"
+msgstr "jan"
+
 msgid "STR_Devices"
 msgstr "jan"
 

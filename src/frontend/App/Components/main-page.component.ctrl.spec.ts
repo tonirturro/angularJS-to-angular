@@ -28,6 +28,7 @@ describe("Given a main page component controller", () => {
     let setLanguageMock: jasmine.Spy;
     let closeMessageMock: jasmine.Spy;
     let deleteDeviceMessageMock: jasmine.Spy;
+    let deviceNameMock: jasmine.Spy;
 
     const devices: IDevice[] = [{
         id: 1,
@@ -79,6 +80,7 @@ describe("Given a main page component controller", () => {
         setLanguageMock = spyOn(localizationService, "setLanguage");
         closeMessageMock = spyOnProperty(localizationService, "closeMessage", "get");
         deleteDeviceMessageMock = spyOnProperty(localizationService, "deleteDeviceMessage", "get");
+        deviceNameMock = spyOnProperty(localizationService, "deviceName", "get");
         spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(devices);
         spyOn(dataServiceToMock, "addNewDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "deleteDevice").and.returnValue(q.resolve(true));
@@ -160,10 +162,13 @@ describe("Given a main page component controller", () => {
         expect(stateServiceToMock.go).toHaveBeenCalledWith("device", expectedDeviceSelection);
     });
 
-    it("When adding a device Then the data service is called", () => {
+    it("When adding a device Then the data service is called with thee localized name", () => {
+        const expectedName = "DEVICE";
+        deviceNameMock.and.returnValue(expectedName);
+
         controller.addDevice();
 
-        expect(dataServiceToMock.addNewDevice).toHaveBeenCalled();
+        expect(dataServiceToMock.addNewDevice).toHaveBeenCalledWith(expectedName);
     });
 
     it("When deleting a device Then a dialog is open", () => {

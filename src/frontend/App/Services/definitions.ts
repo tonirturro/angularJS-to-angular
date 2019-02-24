@@ -6,7 +6,7 @@ export interface IDataService {
     devices: IDevice[];
     getCapabilities: (capability: string) => ISelectableOption[];
     addNewPage: (deviceId: number) => void;
-    addNewDevice: () => void;
+    addNewDevice: (name: string) => void;
     deletePage: (idToDelete: number) => void;
     deleteDevice: (idToDelete: number) => void;
     updateDeviceName: (id: number, newValue: string) => void;

@@ -22,6 +22,10 @@ export class LocalizationService {
         return this.gettextCatalog.getString("STR_Close_Message");
     }
 
+    public get deviceName(): string {
+        return this.gettextCatalog.getString("STR_Device");
+    }
+
     public get deleteDeviceMessage(): string {
         return this.gettextCatalog.getString("STR_DeleteDevice");
     }

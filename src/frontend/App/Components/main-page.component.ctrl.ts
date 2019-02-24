@@ -116,7 +116,7 @@ export class MainPageController implements IComponentController {
      * Request to add a new device
      */
     public addDevice() {
-        this.dataService.addNewDevice();
+        this.dataService.addNewDevice(this.localizationService.deviceName);
     }
 
     /**

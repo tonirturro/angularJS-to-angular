@@ -1,6 +1,6 @@
 ﻿import * as express from "express";
 import { PageFields } from "../../common/model";
-import { IUpdateDeviceParams, IUpdateParams, IUpdateResponse } from "../../common/rest";
+import { INewDeviceParams, IUpdateDeviceParams, IUpdateParams, IUpdateResponse } from "../../common/rest";
 import { Capabilities } from "../Repository/Capabilities";
 import { Data } from "../Repository/Data";
 
@@ -52,9 +52,9 @@ export class RestRouter {
         });
 
         // Add new device
-        // tslint:disable-next-line:variable-name
-        this.router.put("/devices", (_req: express.Request, res: express.Response) => {
-            this.data.newDevice();
+        this.router.put("/devices", (req: express.Request, res: express.Response) => {
+            const params = req.body as INewDeviceParams;
+            this.data.newDevice(params.name);
             res.json({ success: true });
         });
 

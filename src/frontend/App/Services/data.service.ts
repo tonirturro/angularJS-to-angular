@@ -4,6 +4,7 @@ import {
     IDeleteDeviceResponse,
     IDeletePageResponse,
     IDevice,
+    INewDeviceParams,
     IPage,
     ISelectableOption,
     IUpdateDeviceParams,
@@ -119,9 +120,10 @@ export class DataService implements IDataService {
 
     /**
      * Request a new device
+     * @param name The name for the new device
      */
-    public addNewDevice() {
-        this.http.put<IUpdateResponse>(this.getUrl("devices"), {}).subscribe((response) => {
+    public addNewDevice(name: string) {
+        this.http.put<IUpdateResponse>(this.getUrl("devices"), { name } as INewDeviceParams).subscribe((response) => {
             if (response.success) {
                 this.updateDevices();
             } else {

@@ -99,6 +99,9 @@ msgstr "Stacker"
 msgid "STR_Folder"
 msgstr "Folder"
 
+msgid "STR_Device"
+msgstr "Device"
+
 msgid "STR_Devices"
 msgstr "Devices"
 

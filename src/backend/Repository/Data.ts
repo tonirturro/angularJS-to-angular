@@ -57,10 +57,10 @@ export class Data {
     /**
      * Adds a new device
      */
-    public newDevice(): void {
+    public newDevice(name: string): void {
         const newDevice: IDevice = {
             id: this.lastDeviceIndex++,
-            name: `Device ${this.lastDeviceIndex}`
+            name: `${name} ${this.lastDeviceIndex}`
         };
         this.entities.devices.push(newDevice);
     }

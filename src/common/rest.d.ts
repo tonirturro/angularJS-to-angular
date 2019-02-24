@@ -40,3 +40,7 @@ export interface IDeleteDeviceResponse {
     deletedDeviceId: number;
     success: boolean;
 }
+
+export interface INewDeviceParams {
+    name: string;
+}

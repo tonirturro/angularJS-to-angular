@@ -4,7 +4,7 @@ import chaiHttp = require("chai-http");
 import * as sinon from "sinon";
 
 import { PageFields } from "../../common/model";
-import { IUpdateParams, IUpdateDeviceParams } from "../../common/rest";
+import { INewDeviceParams, IUpdateDeviceParams, IUpdateParams } from "../../common/rest";
 import { main } from "../app";
 import { Data } from "../Repository/Data";
 
@@ -192,12 +192,18 @@ describe("REST Route", () => {
             });
     });
 
-    it("Put device calls new device", (done) => {
+    it("Put device with name calls new device with the name", (done) => {
         const spy = sinon.spy(main.dependencies.dataLayer, "newDevice");
+        const data: INewDeviceParams = {
+            name: "any"
+        };
         chai.request(main.application)
             .put("/REST/devices")
+            .set("content-type", "application/json")
+            .send(JSON.stringify(data))
             .then(() => {
-                expect(spy.calledOnce).to.equal(true);
+                let r = expect(spy.calledOnce).to.equal(true);
+                r = expect(spy.calledWith(data.name)).to.be.true;
                 done();
             });
     });
@@ -230,10 +236,10 @@ describe("REST Route", () => {
         };
 
         chai.request(main.application)
-        .put(`/REST/devices/name`)
-        .set("content-type", "application/json")
-        .send(JSON.stringify(data))
-        .then(() => {
+            .put(`/REST/devices/name`)
+            .set("content-type", "application/json")
+            .send(JSON.stringify(data))
+            .then(() => {
             let r = expect(spy.calledOnce).to.be.true;
             r = expect(spy.calledWith(data.id, data.newValue)).to.be.true;
             done();
