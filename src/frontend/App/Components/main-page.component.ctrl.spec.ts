@@ -13,9 +13,9 @@ import { AppServicesModule } from "../Services";
 import { DataService } from "../Services/data.service";
 import { IDataService } from "../Services/definitions";
 import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
-import { ELanguages, IMessageParam } from "./definitions";
+import { ELanguages, ILanguageParam, IMessageParam } from "./definitions";
+import { LocalizationService } from "./localization.service";
 import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl";
-import { MainPageService } from "./main-page.service";
 
 describe("Given a main page component controller", () => {
     let controller: MainPageController;
@@ -26,6 +26,8 @@ describe("Given a main page component controller", () => {
     let windowCloseMock: jasmine.Spy;
     let modalPushMock: jasmine.Spy;
     let setLanguageMock: jasmine.Spy;
+    let closeMessageMock: jasmine.Spy;
+    let deleteDeviceMessageMock: jasmine.Spy;
 
     const devices: IDevice[] = [{
         id: 1,
@@ -66,7 +68,7 @@ describe("Given a main page component controller", () => {
         $window: IWindowService,
         dataService: DataService,
         modalManager: ModalManager,
-        mainPageService: MainPageService) => {
+        localizationService: LocalizationService) => {
         stateServiceToMock = $state;
         dataServiceToMock = dataService;
         q = $q;
@@ -74,7 +76,9 @@ describe("Given a main page component controller", () => {
         spyOn(stateServiceToMock, "go");
         modalPushMock = spyOn(modalManager, "push");
         windowCloseMock = spyOn($window, "close");
-        setLanguageMock = spyOn(mainPageService, "setLanguage");
+        setLanguageMock = spyOn(localizationService, "setLanguage");
+        closeMessageMock = spyOnProperty(localizationService, "closeMessage", "get");
+        deleteDeviceMessageMock = spyOnProperty(localizationService, "deleteDeviceMessage", "get");
         spyOnProperty(dataServiceToMock, "devices", "get").and.returnValue(devices);
         spyOn(dataServiceToMock, "addNewDevice").and.returnValue(q.resolve(true));
         spyOn(dataServiceToMock, "deleteDevice").and.returnValue(q.resolve(true));
@@ -163,8 +167,10 @@ describe("Given a main page component controller", () => {
     });
 
     it("When deleting a device Then a dialog is open", () => {
+        const deleteMessage = "Delete Device";
+        deleteDeviceMessageMock.and.returnValue(deleteMessage);
         modalPushMock.and.returnValue(q.reject());
-        const expectedDialogMessage: IMessageParam = { message: `Delete Device: ${devices[0].name}` };
+        const expectedDialogMessage: IMessageParam = { message: `${deleteMessage}: ${devices[0].name}` };
 
         controller.deleteDevice(devices[0].id);
 
@@ -190,10 +196,13 @@ describe("Given a main page component controller", () => {
 
     it("When calling settings Then the settings dialog is open", () => {
         modalPushMock.and.returnValue(q.reject());
+        controller.$onInit();
 
         controller.settings();
 
-        expect(modalPushMock).toHaveBeenCalledWith(EModals.Settings);
+        expect(modalPushMock).toHaveBeenCalledWith(
+            EModals.Settings,
+            { language: ELanguages.English } as ILanguageParam);
     });
 
     it("When calling settings is applied Then the settings dialog returns application settings to be applied", () => {
@@ -215,8 +224,10 @@ describe("Given a main page component controller", () => {
     });
 
     it("When calling close Then the close confirmation dialog is open", () => {
+        const closeMessage = "Close Application";
+        closeMessageMock.and.returnValue(closeMessage);
         modalPushMock.and.returnValue(q.reject());
-        const expectedDialogMessage: IMessageParam = { message: "Close Application" };
+        const expectedDialogMessage: IMessageParam = { message: closeMessage };
 
         controller.close();
 

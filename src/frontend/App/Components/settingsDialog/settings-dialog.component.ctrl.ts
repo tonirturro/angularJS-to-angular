@@ -1,9 +1,10 @@
 import { IComponentController } from "angular";
 import { ISelectableOption } from "../../../../common/rest";
-import { ELanguages } from "../definitions";
+import { ELanguages, IDialogParam, ILanguageParam } from "../definitions";
 
 export class SettingsDialogController implements IComponentController {
     // from/to bindings
+    public resolve: IDialogParam<ILanguageParam>;
     public dismiss: () => void;
     public close: (result: any) => void;
 
@@ -21,7 +22,7 @@ export class SettingsDialogController implements IComponentController {
     ];
 
     public $onInit() {
-        this.languageOption = this.languageOptionsSupported[0].value;
+        this.languageOption = this.resolve.params.language.toString();
     }
 
     public apply() {

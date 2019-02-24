@@ -10,3 +10,7 @@ export interface IDialogParam<T> {
 export interface IMessageParam {
     message: string;
 }
+
+export interface ILanguageParam {
+    language: ELanguages;
+}

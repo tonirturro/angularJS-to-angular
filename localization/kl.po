@@ -33,6 +33,9 @@ msgstr "jan'e' chu' chel joq wIv wa' bang choH"
 msgid "STR_Close_Tooltip"
 msgstr "ghun SoQ"
 
+msgid "STR_Close_Message"
+msgstr "ghun SoQ"
+
 msgid "STR_Settings"
 msgstr "ghun SeH"
 
@@ -95,4 +98,22 @@ msgstr "yor"
 
 msgid "STR_Folder"
 msgstr "logh toD"
+
+msgid "STR_Devices"
+msgstr "jan"
+
+msgid "STR_DeleteDevice"
+msgstr "jan teq"
+
+msgid "STR_DeviceName"
+msgstr "jan pong"
+
+msgid "STR_Yes"
+msgstr "HIja'"
+
+msgid "STR_No"
+msgstr "Qo'"
+
+
+
 

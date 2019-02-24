@@ -1,8 +1,9 @@
 import { IComponentController } from "angular";
+import { Subscription } from "rxjs";
 import { PageFields } from "../../../../common/model";
 import { IPage, ISelectableOption } from "../../../../common/rest";
 import { IDataService } from "../../Services/definitions";
-import { PageGridService } from "./page-grid.service";
+import { LocalizationService } from "../localization.service";
 
 export interface IPageSelectionData {
     pageId: number;
@@ -25,7 +26,7 @@ export class PageGridController implements IComponentController {
     /**
      * Define dependencies
      */
-    public static $inject = [ "dataService", "pageGridService" ];
+    public static $inject = [ "dataService", "localizationService" ];
 
     /*
      * Text
@@ -45,6 +46,7 @@ export class PageGridController implements IComponentController {
     private localizedPrintQualityCapabilities: ISelectableOption[] = [];
     private localizedMediaTypeCapabilities: ISelectableOption[] = [];
     private localizedDestinationCapabilities: ISelectableOption[] = [];
+    private localizationSubscription: Subscription;
 
     /**
      * Inuitializes an object from the PageGridController class
@@ -52,18 +54,24 @@ export class PageGridController implements IComponentController {
      */
     constructor(
         private dataService: IDataService,
-        private pageGridService: PageGridService) {}
+        private localizationService: LocalizationService) {}
 
+    /**
+     * Initializes localization support when initializing the component
+     */
     public $onInit() {
-        this.localizedPrintQualityCapabilities = this.dataService
-            .getCapabilities(PageFields.PrintQuality)
-            .map((capability) => this.pageGridService.getLocalizedCapability(capability));
-        this.localizedMediaTypeCapabilities = this.dataService
-            .getCapabilities(PageFields.MediaType)
-            .map((capability) => this.pageGridService.getLocalizedCapability(capability));
-        this.localizedDestinationCapabilities = this.dataService
-            .getCapabilities(PageFields.Destination)
-            .map((capability) => this.pageGridService.getLocalizedCapability(capability));
+        this.loadLocalizedCapabilities();
+        this.localizationSubscription = this.localizationService
+            .language$.subscribe(() => {
+                this.loadLocalizedCapabilities();
+            });
+    }
+
+    /**
+     * Unsubscribe from the localization when destroying the component
+     */
+    public $onDestroy() {
+        this.localizationSubscription.unsubscribe();
     }
 
     /**
@@ -201,5 +209,20 @@ export class PageGridController implements IComponentController {
         } else {
             this.selectedPages = [pageId];
         }
+    }
+
+    /**
+     * Gets the capabilites that need to be translated and translates them
+     */
+    private loadLocalizedCapabilities() {
+        this.localizedPrintQualityCapabilities = this.dataService
+            .getCapabilities(PageFields.PrintQuality)
+            .map((capability) => this.localizationService.getLocalizedCapability(capability));
+        this.localizedMediaTypeCapabilities = this.dataService
+            .getCapabilities(PageFields.MediaType)
+            .map((capability) => this.localizationService.getLocalizedCapability(capability));
+        this.localizedDestinationCapabilities = this.dataService
+            .getCapabilities(PageFields.Destination)
+            .map((capability) => this.localizationService.getLocalizedCapability(capability));
     }
 }

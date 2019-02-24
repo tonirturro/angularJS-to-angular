@@ -33,6 +33,9 @@ msgstr "Add new pages or modify properties for the selected ones"
 msgid "STR_Close_Tooltip"
 msgstr "Close the application"
 
+msgid "STR_Close_Message"
+msgstr "Close Application"
+
 msgid "STR_Settings"
 msgstr "Application Settings"
 
@@ -95,3 +98,19 @@ msgstr "Stacker"
 
 msgid "STR_Folder"
 msgstr "Folder"
+
+msgid "STR_Devices"
+msgstr "Devices"
+
+msgid "STR_DeleteDevice"
+msgstr "Delete Device"
+
+msgid "STR_DeviceName"
+msgstr "Device Name"
+
+msgid "STR_Yes"
+msgstr "Yes"
+
+msgid "STR_No"
+msgstr "No"
+

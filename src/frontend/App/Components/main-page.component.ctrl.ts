@@ -5,8 +5,8 @@ import { IDevice } from "../../../common/rest";
 import { IStateService } from "../Routes/ui-routes";
 import { DataService } from "../Services/data.service";
 import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
-import { ELanguages, IMessageParam } from "./definitions";
-import { MainPageService } from "./main-page.service";
+import { ELanguages, ILanguageParam, IMessageParam } from "./definitions";
+import { LocalizationService } from "./localization.service";
 
 export interface IDeviceSelection {
     deviceId: number;
@@ -16,11 +16,13 @@ export class MainPageController implements IComponentController {
     /**
      * Define dependencies
      */
-    public static $inject = [ "$log", "$window", "$state", "dataService", "modalManager", "mainPageService" ];
+    public static $inject = [ "$log", "$window", "$state", "dataService", "modalManager", "localizationService" ];
 
     public selectedDeviceId: number = -1;
     public selectedPages: number[] = [];
     public editingDevices: boolean = false;
+
+    private currentLanguage: ELanguages;
 
     constructor(
         private $log: ILogService,
@@ -28,14 +30,21 @@ export class MainPageController implements IComponentController {
         private $state: IStateService,
         private dataService: DataService,
         private modalManager: ModalManager,
-        private mainPageService: MainPageService) {}
+        private localizationService: LocalizationService) {}
 
     /**
      * Exposes the devices from the data service
      */
     public get devices(): IDevice[] {
-        if ((this.selectedDeviceId === -1 && this.dataService.devices.length > 0)
-            || (!this.dataService.devices.some((d) => d.id === this.selectedDeviceId) && this.selectedDeviceId > -1 )) {
+        if (this.selectedDeviceId === -1 && this.dataService.devices.length > 0) {
+            this.selectDevice(this.dataService.devices[0].id);
+        } else if (this.dataService.devices.length === 0) {
+            if (this.selectedDeviceId !== -1) {
+                this.selectedDeviceId = -1;
+                this.$state.go("pages", { deviceId: -1 });
+            }
+
+        } else if (this.dataService.devices.every((item) => item.id !== this.selectedDeviceId)) {
             this.selectDevice(this.dataService.devices[0].id);
         }
         return this.dataService.devices;
@@ -45,7 +54,8 @@ export class MainPageController implements IComponentController {
      * Component initialization
      */
     public $onInit() {
-        this.mainPageService.setLanguage(ELanguages.English);
+        this.currentLanguage = ELanguages.English;
+        this.localizationService.setLanguage(this.currentLanguage);
         this.changeView();
     }
 
@@ -54,9 +64,10 @@ export class MainPageController implements IComponentController {
      */
     public settings() {
         this.modalManager
-            .push(EModals.Settings)
+            .push(EModals.Settings, { language: this.currentLanguage } as ILanguageParam)
             .then((language: ELanguages) => {
-                this.mainPageService.setLanguage(language);
+                this.localizationService.setLanguage(language);
+                this.currentLanguage = language;
             }, () => {
                 this.$log.info("Dismissed settings dialog");
             });
@@ -66,8 +77,9 @@ export class MainPageController implements IComponentController {
      * Close main window
      */
     public close() {
+        const message = this.localizationService.closeMessage;
         this.modalManager
-        .push(EModals.Confimation, { message: "Close Application" } as IMessageParam)
+        .push(EModals.Confimation, { message } as IMessageParam)
         .then(() => {
             this.$window.close();
         }, () => {
@@ -113,7 +125,8 @@ export class MainPageController implements IComponentController {
      */
     public deleteDevice(deviceId: number): void {
         const name = this.dataService.devices.find((d) => d.id === deviceId).name;
-        this.modalManager.push(EModals.Confimation, { message: `Delete Device: ${name}`})
+        const message = this.localizationService.deleteDeviceMessage;
+        this.modalManager.push(EModals.Confimation, { message: `${message}: ${name}`})
             .then(() => {
                 this.dataService.deleteDevice(deviceId);
             }, () => {

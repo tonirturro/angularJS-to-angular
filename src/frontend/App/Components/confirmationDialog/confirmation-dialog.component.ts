@@ -1,4 +1,4 @@
-import "./confirmation-dialog.component.css";
+import "./confirmation-dialog.styles.css";
 
 import { IComponentOptions } from "angular";
 import { ConfirmationDialogController } from "./confirmation-dialog.component.ctrl";

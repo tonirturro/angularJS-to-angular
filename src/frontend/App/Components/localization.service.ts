@@ -1,7 +1,10 @@
 import { IHttpPromiseCallbackArg, IHttpService } from "angular";
+import { Observable, Subject } from "rxjs";
+
+import { ISelectableOption } from "../../../common/rest";
 import { ELanguages } from "./definitions";
 
-export class MainPageService {
+export class LocalizationService {
     /**
      * Define dependencies
      */
@@ -9,6 +12,19 @@ export class MainPageService {
 
     private currentLoadedLanguages: string[] = [];
     private currentLanguageCode: string = "";
+    private readonly languageSubject: Subject<any> = new Subject<any>();
+
+    public get language$(): Observable<any> {
+        return this.languageSubject;
+    }
+
+    public get closeMessage(): string {
+        return this.gettextCatalog.getString("STR_Close_Message");
+    }
+
+    public get deleteDeviceMessage(): string {
+        return this.gettextCatalog.getString("STR_DeleteDevice");
+    }
 
     constructor(
         private gettextCatalog: angular.gettext.gettextCatalog,
@@ -23,8 +39,17 @@ export class MainPageService {
                 this.loadStrings(languageCode);
             } else {
                 this.gettextCatalog.setCurrentLanguage(languageCode);
+                this.languageSubject.next();
             }
         }
+    }
+
+    public getLocalizedCapability(capability: ISelectableOption): ISelectableOption {
+        const localizationKey = `STR_${capability.label}`;
+        return {
+            label: this.gettextCatalog.getString(localizationKey),
+            value: capability.value
+        } as ISelectableOption;
     }
 
     private loadStrings(languageCode: string) {
@@ -33,6 +58,7 @@ export class MainPageService {
             .then((resp: IHttpPromiseCallbackArg<any>) => {
                 this.gettextCatalog.setStrings(languageCode, resp.data[languageCode]);
                 this.gettextCatalog.setCurrentLanguage(languageCode);
+                this.languageSubject.next();
             });
     }
 

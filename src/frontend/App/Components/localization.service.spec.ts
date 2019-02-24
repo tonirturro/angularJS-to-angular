@@ -1,35 +1,42 @@
 import * as angular from "angular";
 import { IHttpService, IQService, IRootScopeService } from "angular";
+import { ISelectableOption } from "../../../common/rest";
 import { ELanguages } from "./definitions";
-import { MainPageService } from "./main-page.service";
+import { LocalizationService } from "./localization.service";
 
-describe("Given a main page service", () => {
+describe("Given a localization service", () => {
     const expectedEnglishLanguageCode = "en";
     const expectedStrings = {
         data: {
             en: {}
         }
     };
-    let service: MainPageService;
+    const capability: ISelectableOption = {
+        label: "Name",
+        value: "0"
+    };
+    let service: LocalizationService;
     let rootScope: IRootScopeService;
     let httpGetMock: jasmine.Spy;
     let loadStringsMock: jasmine.Spy;
     let setLanguageMock: jasmine.Spy;
+    let getStringMock: jasmine.Spy;
 
     beforeEach(angular.mock.module("myApp.components"));
 
     beforeEach(inject((
-        mainPageService: MainPageService,
+        localizationService: LocalizationService,
         $http: IHttpService,
         $q: IQService,
         $rootScope: IRootScopeService,
         gettextCatalog: angular.gettext.gettextCatalog
     ) => {
-        service = mainPageService;
+        service = localizationService;
         rootScope = $rootScope;
         httpGetMock = spyOn($http, "get").and.returnValue($q.resolve(expectedStrings));
         loadStringsMock = spyOn(gettextCatalog, "setStrings");
         setLanguageMock = spyOn(gettextCatalog, "setCurrentLanguage");
+        getStringMock = spyOn(gettextCatalog, "getString");
     }));
 
     it("When setting the language Then definitions are queried", () => {
@@ -38,6 +45,15 @@ describe("Given a main page service", () => {
         service.setLanguage(ELanguages.English);
 
         expect(httpGetMock).toHaveBeenCalledWith(expectedGetUrl);
+    });
+
+    it("When setting the language Then the change is broadcasted", (done) => {
+        service.language$.subscribe(() => {
+            done();
+        });
+
+        service.setLanguage(ELanguages.English);
+        rootScope.$apply();
     });
 
     it("When setting the language Then strings are set", () => {
@@ -76,5 +92,25 @@ describe("Given a main page service", () => {
 
         expect(loadStringsMock).toHaveBeenCalledTimes(2);
         expect(setLanguageMock).toHaveBeenCalledTimes(3);
+    });
+
+    it("When asking for a capability literal Then the localization service is called", () => {
+        const expectedLocalizationKey =  `STR_${capability.label}`;
+
+        service.getLocalizedCapability(capability);
+
+        expect(getStringMock).toHaveBeenCalledWith(expectedLocalizationKey);
+    });
+
+    it("When asking for a capability literal Then it returns the expected localization", () => {
+        const expectedLocalizedCapability: ISelectableOption =  {
+            label: "Translated Name",
+            value: capability.value
+        };
+        getStringMock.and.returnValue(expectedLocalizedCapability.label);
+
+        const localizedCapability = service.getLocalizedCapability(capability);
+
+        expect(localizedCapability).toEqual(expectedLocalizedCapability);
     });
 });
