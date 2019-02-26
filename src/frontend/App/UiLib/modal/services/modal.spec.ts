@@ -99,6 +99,16 @@ describe("Given a modal service", () => {
                     elem.focus();
                 }
             };
+        }).component("fooBarAngular", {
+            bindings: {
+                "(close)": "&",
+                "(dismiss)": "&",
+                "[modalInstance]": "<",
+                "[resolve]": "<"
+            },
+            controller: angular.noop,
+            controllerAs: "foobar",
+            template: "<div>Foo Angular Bar</div>"
         }).component("fooBar", {
             bindings: {
                 close: "&",
@@ -1034,6 +1044,43 @@ describe("Given a modal service", () => {
                 });
 
                 expect(modal.result).toBeRejectedWith("baz");
+            });
+        });
+
+        describe("downgraded Angular Component", () => {
+            function getModalComponent($document) {
+                return $document.find("body > div.modal > div.modal-dialog > div.modal-content foo-bar-angular");
+            }
+
+            it("should use as modal content", () => {
+                open({
+                    component: "fooBarAngular"
+                });
+
+                const component = getModalComponent(documentService);
+                expect(component.html()).toBe("<div>Foo Angular Bar</div>");
+            });
+
+            it("should bind expected values", () => {
+                const modal = open({
+                    component: "fooBarAngular",
+                    downgradedComponent: true,
+                    resolve: {
+                        foo() {
+                            return "bar";
+                        }
+                    }
+                }) as IModalSettings;
+
+                const component = getModalComponent(documentService);
+                const componentScope = component.isolateScope();
+
+                const scope = componentScope.foobar;
+
+                expect(scope["[resolve]"].foo).toBe("bar");
+                expect(scope["[modalInstance]"]).toBe(modal);
+                expect(scope["(close)"]).toEqual(jasmine.any(Function));
+                expect(scope["(dismiss)"]).toEqual(jasmine.any(Function));
             });
         });
 

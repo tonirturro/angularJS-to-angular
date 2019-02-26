@@ -294,6 +294,11 @@ export interface IModalSettings {
     component?: string;
 
     /**
+     * A boolean that will tell if the component originally was an Angular 2+ component downgraded to AngularJS
+     */
+    downgradedComponent?: boolean;
+
+    /**
      * Sets the `aria-describedby` property on the modal.
      * The string should be an id (without the leading '#') pointing to the element that describes your modal.
      * @type {string}

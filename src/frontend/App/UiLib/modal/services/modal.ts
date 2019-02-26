@@ -120,6 +120,7 @@ export class UiLibModal implements IModalService {
                     component: undefined,
                     content: undefined,
                     deferred: modalResultDeferred,
+                    downgradedComponent: undefined,
                     keyboard: modalOptions.keyboard,
                     openedClass: modalOptions.openedClass,
                     renderDeferred: modalRenderDeferred,
@@ -149,6 +150,7 @@ export class UiLibModal implements IModalService {
                     constructLocals(component, false, true, false);
                     component.name = modalOptions.component;
                     modal.component = component;
+                    modal.downgradedComponent = modalOptions.downgradedComponent;
                 } else if (modalOptions.controller) {
                     constructLocals(ctrlLocals, true, false, true);
 

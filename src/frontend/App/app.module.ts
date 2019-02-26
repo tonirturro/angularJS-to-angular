@@ -1,18 +1,19 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { downgradeInjectable, UpgradeModule } from "@angular/upgrade/static";
+import { downgradeComponent, downgradeInjectable, UpgradeModule } from "@angular/upgrade/static";
 
 import * as angular from "angular";
 import { moduleJs } from "./app.modulejs";
 
-import { AppServicesModule } from "./Services";
+import { EModals, getModal } from "./Components";
+import { ComponentsModule, ConfirmationDialogComponent } from "./Ng-Components";
 import { DataService } from "./Services/data.service";
 
 @NgModule({
     imports: [
         BrowserModule,
         UpgradeModule,
-        AppServicesModule
+        ComponentsModule
     ]
 })
 export class AppModule {
@@ -21,7 +22,10 @@ export class AppModule {
 
       // Downgrades
       angular.module(moduleJs)
-        .factory("dataService", downgradeInjectable(DataService));
+        .factory("dataService", downgradeInjectable(DataService))
+        .directive(
+          getModal(EModals.Confimation),
+          downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory);
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }

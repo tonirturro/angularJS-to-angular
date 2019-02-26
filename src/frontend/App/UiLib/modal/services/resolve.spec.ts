@@ -35,7 +35,7 @@ describe("Given a resolve provider", () => {
         beforeEach(angular.mock.module(($provide, $uibResolveProvider) => {
             $provide.factory("$resolve", () => {
                 return {
-                    resolve: jasmine.createSpy()
+                    resolve: jasmine.createSpy(undefined)
                 };
             });
 

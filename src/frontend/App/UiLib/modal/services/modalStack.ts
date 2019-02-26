@@ -116,14 +116,26 @@ export class ModalStack implements IModalStackService {
 
         let content;
         if (modal.component) {
-            content = document.createElement(this.snake_case(modal.component.name));
-            content = angular.element(content);
-            content.attr({
-                "close": "$close($value)",
-                "dismiss": "$dismiss($value)",
-                "modal-instance": "$uibModalInstance",
-                "resolve": "$resolve",
-            });
+            if (modal.downgradedComponent) {
+                const componentName = this.snake_case(modal.component.name);
+                const componentTemplate =
+                    `<${componentName} ` +
+                    `(close)="$close($value)" ` +
+                    `(dismiss)="$dismiss($value)" ` +
+                    `[modal-instance]="$uibModalInstance" ` +
+                    `[resolve]="$resolve">` +
+                    `</${componentName}>`;
+                content = angular.element(componentTemplate);
+            } else {
+                content = document.createElement(this.snake_case(modal.component.name));
+                content = angular.element(content);
+                content.attr({
+                    "close": "$close($value)",
+                    "dismiss": "$dismiss($value)",
+                    "modal-instance": "$uibModalInstance",
+                    "resolve": "$resolve",
+                });
+            }
         } else {
             content = modal.content;
         }
