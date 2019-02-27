@@ -30,9 +30,9 @@ describe("Given a confirmation dialog component", () => {
     it("When clicking on first button Then the close method is called", () => {
         let closed = false;
         const firstButton = element.querySelectorAll("button").item(0);
-        component.close = () => {
+        component.close.subscribe(() => {
             closed = true;
-        };
+        });
 
         firstButton.click();
 
@@ -42,9 +42,9 @@ describe("Given a confirmation dialog component", () => {
     it("When clicking on second button Then the close method is called", () => {
         let dismissed = false;
         const secondButton = element.querySelectorAll("button").item(1);
-        component.dismiss = () => {
+        component.dismiss.subscribe(() => {
             dismissed = true;
-        };
+        });
 
         secondButton.click();
 
