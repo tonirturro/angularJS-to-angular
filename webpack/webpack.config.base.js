@@ -20,17 +20,33 @@ module.exports = {
             },
             {
                 test: /\.css$/,
+                exclude: /\.component.css$/,
                 use: [
                     'style-loader',
                     'css-loader'
                 ]
             },
             {
+                test: /\.component.css$/,
+                use: ['raw-loader']
+            },
+            {
                 test: /\.(eot|ttf|woff|woff2|svg)$/,
                 use: 'file-loader'
             },
             {
+                test: /\.component.ng2.ts$/,
+                use: [{
+                    loader: 'ts-loader',
+                    options: {
+                        transpileOnly: true,
+                        experimentalWatchApi: true
+                    }
+                }, 'angular2-template-loader']
+            },
+            {
                 test: /\.ts$/,
+                exclude:  /\.component.ng2.ts$/,
                 use: [{
                     loader: 'ts-loader',
                     options: {

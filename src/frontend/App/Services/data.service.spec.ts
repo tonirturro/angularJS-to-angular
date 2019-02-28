@@ -201,14 +201,14 @@ describe("Given a data service", () => {
     });
 
     it("Can add devices", () => {
-        service.addNewDevice();
+        service.addNewDevice("name");
 
         request = httpMock.expectOne(devicesUrl);
         expect(request.request.method).toEqual("PUT");
     });
 
     it("When adding devices Then the device list is reloaded", () => {
-        service.addNewDevice();
+        service.addNewDevice("name");
         httpMock.expectOne(devicesUrl).flush(response);
 
         request = httpMock.expectOne(devicesUrl);

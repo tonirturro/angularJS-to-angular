@@ -3,8 +3,8 @@ import { IDialogParam, IMessageParam } from "../../Components/definitions";
 
 @Component({
     selector: "confirmation-dialog",
-    styles: [ ".centered-header { display: flex;  width: 100%; justify-content: center; }" ],
-    template: require("./confirmation-dialog.template.htm")
+    styleUrls: [ "./confirmation-dialog.component.css" ],
+    templateUrl: "./confirmation-dialog.component.htm"
 })
 export class ConfirmationDialogComponent {
     @Input() public resolve: IDialogParam<IMessageParam>;
