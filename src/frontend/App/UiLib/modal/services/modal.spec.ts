@@ -292,7 +292,7 @@ describe("Given a modal service", () => {
 
                         return result;
                     }
-                };
+                } as any;
             },
             toHaveModalsOpen: (
                 util: jasmine.MatchersUtil,

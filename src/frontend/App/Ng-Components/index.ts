@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 import { AppServicesModule } from "../Services";
 import { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-dialog.component";
 
@@ -11,6 +12,9 @@ export { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-d
     entryComponents: [
         ConfirmationDialogComponent
     ],
-    imports: [ AppServicesModule ]
+    imports: [
+        AppServicesModule,
+        TranslateModule
+     ]
 })
 export class ComponentsModule {}

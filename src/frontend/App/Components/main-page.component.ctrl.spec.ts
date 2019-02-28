@@ -1,4 +1,3 @@
-import { TestBed } from "@angular/core/testing";
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import { StateService } from "@uirouter/core";
 
@@ -9,13 +8,14 @@ import { EModals } from ".";
 import { PageFields } from "../../../common/model";
 import { IDevice, ISelectableOption } from "../../../common/rest";
 import { IStateService } from "../Routes/ui-routes";
-import { AppServicesModule } from "../Services";
 import { DataService } from "../Services/data.service";
+import { DataServiceMock } from "../Services/data.service.mock";
 import { IDataService } from "../Services/definitions";
 import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
 import { ELanguages, ILanguageParam, IMessageParam } from "./definitions";
 import { LocalizationService } from "./localization.service";
 import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl";
+import { NgTranslateServiceMock } from "./ng-translate.service.mock";
 
 describe("Given a main page component controller", () => {
     let controller: MainPageController;
@@ -51,14 +51,9 @@ describe("Given a main page component controller", () => {
         { value: "1", label: "destination1" }
     ];
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ AppServicesModule ]
-        });
-    });
-
     beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
-        $provide.value("dataService", TestBed.get(DataService));
+        $provide.value("dataService", new DataServiceMock());
+        $provide.value("ngTranslateService", new NgTranslateServiceMock());
     }));
 
     beforeEach(inject((

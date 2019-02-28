@@ -1,12 +1,10 @@
-import { TestBed } from "@angular/core/testing";
-import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 
+import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import * as angular from "angular";
 import { IAugmentedJQuery, ICompileService, IRootScopeService } from "angular";
 
 import { IDevice } from "../../../../common/rest";
-import { AppServicesModule } from "../../Services";
-import { DataService } from "../../Services/data.service";
+import { DataServiceMock } from "../../Services/data.service.mock";
 import { IDataService } from "../../Services/definitions";
 
 describe("Given a device edit component", () => {
@@ -18,14 +16,9 @@ describe("Given a device edit component", () => {
     let scope: any;
     let element: IAugmentedJQuery;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [ AppServicesModule ]
-        });
-    });
-
     beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
-        $provide.value("dataService", TestBed.get(DataService));
+        $provide.value("dataService", new DataServiceMock());
+        $provide.value("ngTranslateService", {});
     }));
 
     beforeEach(inject((

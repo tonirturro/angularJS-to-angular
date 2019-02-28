@@ -1,6 +1,8 @@
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { downgradeComponent, downgradeInjectable, UpgradeModule } from "@angular/upgrade/static";
+import { TranslateLoader, TranslateModule, TranslateService } from "@ngx-translate/core";
 
 import * as angular from "angular";
 import { moduleJs } from "./app.modulejs";
@@ -8,12 +10,26 @@ import { moduleJs } from "./app.modulejs";
 import { EModals, getModal } from "./Components";
 import { ComponentsModule, ConfirmationDialogComponent } from "./Ng-Components";
 import { DataService } from "./Services/data.service";
+import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
+
+// AoT requires an exported function for factories
+export function GettextLoaderLoaderFactory(http: HttpClient) {
+  return new GettextTranslationsLoader(http);
+}
 
 @NgModule({
     imports: [
         BrowserModule,
         UpgradeModule,
-        ComponentsModule
+        HttpClientModule,
+        ComponentsModule,
+        TranslateModule.forRoot({
+          loader: {
+            deps: [HttpClient],
+            provide: TranslateLoader,
+            useFactory: GettextLoaderLoaderFactory
+          }
+        })
     ]
 })
 export class AppModule {
@@ -23,6 +39,7 @@ export class AppModule {
       // Downgrades
       angular.module(moduleJs)
         .factory("dataService", downgradeInjectable(DataService))
+        .factory("ngTranslateService", downgradeInjectable(TranslateService))
         .directive(
           getModal(EModals.Confimation),
           downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory);

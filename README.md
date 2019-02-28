@@ -14,8 +14,9 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step2  : Decouple routes from services.
 * step3  : Migrate services and setup hybrid test.
 * step4  : Decouple modals from routes.
-* step5  : Add extra user interface and localization
-* step6  : First working Angular component in AngularJS context
+* step5  : Add extra user interface and localization.
+* step6  : First working Angular component in AngularJS context.
+* step7  : Adding localization to the Angular component.
 
 To go to a particular step:
 
