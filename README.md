@@ -17,6 +17,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step5  : Add extra user interface and localization.
 * step6  : First working Angular component in AngularJS context.
 * step7  : Adding localization to the Angular component.
+* step8  : Adapt build to Angular components.
 
 To go to a particular step:
 
