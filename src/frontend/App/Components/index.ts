@@ -13,7 +13,6 @@ import { DevicePanel } from "./devicePanel/device-panel.component";
 import { LocalizationService } from "./localization.service";
 import { MainPage } from "./main-page.component";
 import { PageGrid } from "./pageGrid/page-grid.component";
-import { SettingsDialog } from "./settingsDialog/settings-dialog.component";
 import { ToolBar } from "./toolBar/toolbar.component";
 
 export enum EModals {
@@ -28,7 +27,7 @@ interface IModalDefinition {
 
 const modals: IModalDefinition[] = [
     { name: EModals.Confimation, settings: { component: "confirmationDialog", size: "md", downgradedComponent: true }},
-    { name: EModals.Settings, settings: { component: "settingsDialog" }},
+    { name: EModals.Settings, settings: { component: "settingsDialog", downgradedComponent: true }},
 ];
 
 export const getModal = (name: EModals) => modals.find((modal) => modal.name === name).settings.component;
@@ -37,7 +36,6 @@ export const COMPONENTS_MODULE_NAME = angular.module(
         "myApp.components",
         [ "templates", "ui.router", "gettext", UI_LIB_NAME ])
     .service("localizationService", LocalizationService)
-    .component(getModal(EModals.Settings), SettingsDialog)
     .component("toolbar", ToolBar)
     .component("devicePanel", DevicePanel)
     .component("deviceEdit", DeviceEdit)

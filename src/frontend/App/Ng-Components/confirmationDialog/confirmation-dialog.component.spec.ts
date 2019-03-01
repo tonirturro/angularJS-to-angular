@@ -39,7 +39,7 @@ describe("Given a confirmation dialog component", () => {
         expect(closed).toBeTruthy();
     });
 
-    it("When clicking on second button Then the close method is called", () => {
+    it("When clicking on second button Then the dismiss method is called", () => {
         let dismissed = false;
         const secondButton = element.querySelectorAll("button").item(1);
         component.dismiss.subscribe(() => {

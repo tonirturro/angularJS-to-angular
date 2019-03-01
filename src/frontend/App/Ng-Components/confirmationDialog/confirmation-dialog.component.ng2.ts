@@ -4,7 +4,7 @@ import { IDialogParam, IMessageParam } from "../../Components/definitions";
 @Component({
     selector: "confirmation-dialog",
     styleUrls: [ "./confirmation-dialog.component.css" ],
-    templateUrl: "./confirmation-dialog.component.htm"
+    templateUrl: "./confirmation-dialog.component.html"
 })
 export class ConfirmationDialogComponent {
     @Input() public resolve: IDialogParam<IMessageParam>;

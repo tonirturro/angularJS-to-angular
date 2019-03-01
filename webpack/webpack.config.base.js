@@ -7,7 +7,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.htm$/,
+                test: /\.(htm|html)$/,
                 use: ["html-loader"]
             },
             {

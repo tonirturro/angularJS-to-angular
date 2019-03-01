@@ -120,8 +120,8 @@ export class ModalStack implements IModalStackService {
                 const componentName = this.snake_case(modal.component.name);
                 const componentTemplate =
                     `<${componentName} ` +
-                    `(close)="$close($value)" ` +
-                    `(dismiss)="$dismiss($value)" ` +
+                    `(close)="$close($event)" ` +
+                    `(dismiss)="$dismiss($event)" ` +
                     `[modal-instance]="$uibModalInstance" ` +
                     `[resolve]="$resolve">` +
                     `</${componentName}>`;

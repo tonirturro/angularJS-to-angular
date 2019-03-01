@@ -8,7 +8,7 @@ import * as angular from "angular";
 import { moduleJs } from "./app.modulejs";
 
 import { EModals, getModal } from "./Components";
-import { ComponentsModule, ConfirmationDialogComponent } from "./Ng-Components";
+import { ComponentsModule, ConfirmationDialogComponent, SettingsDialogComponent } from "./Ng-Components";
 import { DataService } from "./Services/data.service";
 import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
 
@@ -42,7 +42,9 @@ export class AppModule {
         .factory("ngTranslateService", downgradeInjectable(TranslateService))
         .directive(
           getModal(EModals.Confimation),
-          downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory);
+          downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory)
+        .directive(getModal(EModals.Settings),
+          downgradeComponent({ component: SettingsDialogComponent}) as angular.IDirectiveFactory);
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }
