@@ -1,0 +1,9 @@
+<div class="device-edit-centered_content">
+    <div *ngIf="deviceId > -1" >
+        <div [translate]>STR_DeviceName</div>
+        <div>
+            <input type="text" [(ngModel)]="deviceName">
+            <button class="btn btn-primary btn-sm" (click)="apply()" [translate]>STR_Apply</button>
+        </div>
+    </div>
+</div>

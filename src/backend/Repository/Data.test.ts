@@ -24,8 +24,8 @@ describe("Given a data layer", () => {
      * Aux method to add devices
      */
     const addDevices = (): number => {
-        dataLayer.newDevice();
-        dataLayer.newDevice();
+        dataLayer.newDevice("");
+        dataLayer.newDevice("");
         return 2;
     };
 
@@ -162,7 +162,7 @@ describe("Given a data layer", () => {
     });
 
     it("Can add devices", () => {
-        dataLayer.newDevice();
+        dataLayer.newDevice("");
 
         const pages = dataLayer.getDevices();
         expect(pages.length).to.be.greaterThan(0);

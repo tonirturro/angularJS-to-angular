@@ -11,6 +11,7 @@ import { EModals, getModal } from "./Components";
 import {
   ComponentsModule,
   ConfirmationDialogComponent,
+  DeviceEditComponent,
   DevicePanelComponent,
   SettingsDialogComponent } from "./Ng-Components";
 import { DataService } from "./Services/data.service";
@@ -49,7 +50,8 @@ export class AppModule {
           downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory)
         .directive(getModal(EModals.Settings),
           downgradeComponent({ component: SettingsDialogComponent}) as angular.IDirectiveFactory)
-        .directive("devicePanel", downgradeComponent({ component: DevicePanelComponent }));
+        .directive("devicePanel", downgradeComponent({ component: DevicePanelComponent }))
+        .directive("deviceEdit", downgradeComponent({component: DeviceEditComponent }));
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }

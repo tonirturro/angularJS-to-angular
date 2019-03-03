@@ -8,7 +8,6 @@ import "../templates";
 import { UI_LIB_NAME } from "../UiLib";
 import { IModalSettings } from "../UiLib/definitions";
 import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
-import { DeviceEdit } from "./deviceEdit/device-edit.component";
 import { LocalizationService } from "./localization.service";
 import { MainPage } from "./main-page.component";
 import { PageGrid } from "./pageGrid/page-grid.component";
@@ -36,7 +35,6 @@ export const COMPONENTS_MODULE_NAME = angular.module(
         [ "templates", "ui.router", "gettext", UI_LIB_NAME ])
     .service("localizationService", LocalizationService)
     .component("toolbar", ToolBar)
-    .component("deviceEdit", DeviceEdit)
     .component("pageGrid", PageGrid)
     .component("mainPage", MainPage)
     .run(["modalManager", (modalManager: ModalManager) => {
