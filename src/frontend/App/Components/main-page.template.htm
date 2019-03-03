@@ -6,9 +6,9 @@
     </div>
     <div class="dashboard__content">
         <div class="left-panel">
-            <device-panel devices="mainPageController.devices" selected-device-id="mainPageController.selectedDeviceId"
-                on-delete-device="mainPageController.deleteDevice(deviceId)"
-                on-selected-device="mainPageController.selectDevice(deviceId)" />
+            <device-panel [devices]="mainPageController.devices" [selected-device-id]="mainPageController.selectedDeviceId"
+                (on-delete-device)="mainPageController.deleteDevice($event)"
+                (on-selected-device)="mainPageController.selectDevice($event)" />
         </div>
         <div class="right-panel">
             <ui-view></ui-view>

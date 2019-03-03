@@ -8,7 +8,11 @@ import * as angular from "angular";
 import { moduleJs } from "./app.modulejs";
 
 import { EModals, getModal } from "./Components";
-import { ComponentsModule, ConfirmationDialogComponent, SettingsDialogComponent } from "./Ng-Components";
+import {
+  ComponentsModule,
+  ConfirmationDialogComponent,
+  DevicePanelComponent,
+  SettingsDialogComponent } from "./Ng-Components";
 import { DataService } from "./Services/data.service";
 import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
 
@@ -44,7 +48,8 @@ export class AppModule {
           getModal(EModals.Confimation),
           downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory)
         .directive(getModal(EModals.Settings),
-          downgradeComponent({ component: SettingsDialogComponent}) as angular.IDirectiveFactory);
+          downgradeComponent({ component: SettingsDialogComponent}) as angular.IDirectiveFactory)
+        .directive("devicePanel", downgradeComponent({ component: DevicePanelComponent }));
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }

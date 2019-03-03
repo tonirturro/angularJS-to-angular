@@ -1,0 +1,23 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>
+                <strong [translate]>STR_Devices</strong>
+            </td>  
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let device of devices">
+            <td 
+                [class.item-selected]="device.id === selectedDeviceId"
+                (click)="selectDevice(device.id)">
+                <span>
+                    <button type="button" class="btn btn-danger" (click)="deleteDevice($event, device.id)">
+                        <span  class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    {{device.name}}
+                </span>              
+            </td>
+        </tr>
+    </tbody>
+</table>
