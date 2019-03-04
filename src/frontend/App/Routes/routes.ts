@@ -5,7 +5,7 @@ export class Routes {
 
     constructor(private $stateProvider: IStateProvider ) {
         const deviceEditState: IState = {
-            component: "deviceEdit",
+            component: "deviceEditWrapper",
             name: "device",
             resolve: {
                 selectedDeviceId: [ "$transition$", ($transition$: ITransition) => $transition$.params().deviceId]
