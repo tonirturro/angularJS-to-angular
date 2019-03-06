@@ -1,16 +1,6 @@
 // Karma configuration
 // Generated on Tue Mar 21 2017 21:29:48 GMT+0100 (Romance Standard Time)
-const path = require('path');
-const webpack = require('webpack');
-const webpackConfig = require('../webpack/webpack.config.dev');
-webpackConfig.resolve.alias = {
-    'angular': path.resolve(path.join(__dirname, '..', 'node_modules', 'angular'))
-};
-webpackConfig.plugins.push(
-    new webpack.ProvidePlugin({
-        'window.jQuery': 'jquery'
-    })
-);
+const webpackConfig = require('../webpack/webpack.config.test');
 
 module.exports = function (config) {
     config.set({
@@ -24,9 +14,15 @@ module.exports = function (config) {
         ],
 
         preprocessors: {
-            "unitFrontend.js": [ "webpack", "sourcemap" ]
+            "unitFrontend.js": ["webpack", "sourcemap"]
         },
 
+        webpackMiddleware: {
+            stats: 'errors-only'
+        },
+        webpackServer: {
+            noInfo: true
+        },
         webpack: webpackConfig,
 
         // test results reporter to use
@@ -41,8 +37,6 @@ module.exports = function (config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: ['Chrome'],
 
-        mime: {
-            'text/x-typescript': ['ts']
-        }
+        concurrency: Infinity
     });
 };

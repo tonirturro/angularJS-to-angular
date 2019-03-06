@@ -78,6 +78,7 @@
     "karma-webpack": "3.0.0",
     "mocha": "3.3.0",
     "node-sass": "4.11.0",
+    "null-loader": "^0.1.1",
     "raw-loader": "0.5.1",
     "require-dir": "1.0.0",
     "run-sequence": "2.2.1",
