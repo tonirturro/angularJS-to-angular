@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
+import { UserInterfaceLibModule } from "../Ng-Ui-Lib";
 import { AppServicesModule } from "../Services";
 import { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-dialog.component.ng2";
 import { DeviceEditComponent } from "./deviceEdit/device-edit.component.ng2";
@@ -30,7 +31,8 @@ export { DeviceEditComponent } from "./deviceEdit/device-edit.component.ng2";
         CommonModule,
         FormsModule,
         AppServicesModule,
-        TranslateModule
+        TranslateModule,
+        UserInterfaceLibModule
      ]
 })
 export class ComponentsModule {}
