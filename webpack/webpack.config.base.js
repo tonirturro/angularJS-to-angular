@@ -31,6 +31,13 @@ module.exports = {
                 use: ['raw-loader']
             },
             {
+                test: /\.component.scss$/,
+                use: [
+                    'raw-loader',
+                    'sass-loader'
+                ]
+            },
+            {
                 test: /\.(eot|ttf|woff|woff2|svg)$/,
                 use: 'file-loader'
             },

@@ -15,17 +15,20 @@ module.exports = {
                 use: ["html-loader"]
             },
             {
-                test: /\.scss$/,
-                use: 'null-loader'
-            },
-            {
-                test: /\.css$/,
-                exclude: /\.component.css$/,
+                test: /\.(css|scss)$/,
+                exclude: /\.component.(css|scss)$/,
                 use: 'null-loader'
             },
             {
                 test: /\.component.css$/,
                 use: ['raw-loader']
+            },
+            {
+                test: /\.component.scss$/,
+                use: [
+                    'raw-loader',
+                    'sass-loader'
+                ]
             },
             {
                 test: /\.component.ng2.ts$/,
