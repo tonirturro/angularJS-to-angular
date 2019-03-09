@@ -1,8 +1,6 @@
 import * as angular from "angular";
 import "angular-gettext";
 
-import "../UiLib/styles";
-
 import "../templates";
 
 import { UI_LIB_NAME } from "../UiLib";
