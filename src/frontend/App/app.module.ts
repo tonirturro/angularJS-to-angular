@@ -13,7 +13,8 @@ import {
   ConfirmationDialogComponent,
   DeviceEditComponent,
   DevicePanelComponent,
-  SettingsDialogComponent } from "./Ng-Components";
+  SettingsDialogComponent,
+  ToolBarComponent} from "./Ng-Components";
 import { DataService } from "./Services/data.service";
 import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
 
@@ -51,7 +52,8 @@ export class AppModule {
         .directive(getModal(EModals.Settings),
           downgradeComponent({ component: SettingsDialogComponent}) as angular.IDirectiveFactory)
         .directive("devicePanel", downgradeComponent({ component: DevicePanelComponent }))
-        .directive("deviceEdit", downgradeComponent({component: DeviceEditComponent }));
+        .directive("deviceEdit", downgradeComponent({component: DeviceEditComponent }))
+        .directive("toolbar", downgradeComponent({ component: ToolBarComponent }));
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }

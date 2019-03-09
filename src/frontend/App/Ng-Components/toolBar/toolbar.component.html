@@ -1,0 +1,29 @@
+<div class="toolbar">
+    <div class="toolbar__left btn-toolbar">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary"
+                ngbTooltip="{{ addDeviceTooltip | translate }}" tooltip-placement="bottom"
+                (click)="addDevice()" [translate]>STR_Add_New_Device</button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary"
+                ngbTooltip="{{ editDeviceTooltip | translate }}" tooltip-placement="bottom"
+                [disabled]="editingDevices" (click)="editDevices()"
+                [translate]>STR_Edit_Devices</button>
+            <button type="button" class="btn btn-secondary"
+                ngbTooltip="{{ editPagesTooltip | translate }}" tooltip-placement="bottom"
+                [disabled]="!editingDevices" (click)="editPages()"
+                [translate]>STR_Edit_Pages</button>
+        </div>
+    </div>
+    <div class="toolbar__right">
+        <button type="button" class="btn btn-secondary" ngbTooltip="{{ settingsTooltip | translate }}"
+            tooltip-placement="left" (click)="settings()">
+            <span class="glyphicon glyphicon-cog"></span>
+        </button>
+        <button type="button" class="btn btn-danger" ngbTooltip="{{ closeTooltip | translate }}"
+            tooltip-placement="left" (click)="close()">
+            <span class="glyphicon glyphicon-off"></span>
+        </button>
+    </div>
+</div>

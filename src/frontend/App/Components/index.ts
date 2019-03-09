@@ -11,7 +11,6 @@ import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
 import { LocalizationService } from "./localization.service";
 import { MainPage } from "./main-page.component";
 import { PageGrid } from "./pageGrid/page-grid.component";
-import { ToolBar } from "./toolBar/toolbar.component";
 
 export enum EModals {
     Confimation = "confirmation",
@@ -34,7 +33,6 @@ export const COMPONENTS_MODULE_NAME = angular.module(
         "myApp.components",
         [ "templates", "ui.router", "gettext", UI_LIB_NAME ])
     .service("localizationService", LocalizationService)
-    .component("toolbar", ToolBar)
     .component("pageGrid", PageGrid)
     .component("mainPage", MainPage)
     .run(["modalManager", (modalManager: ModalManager) => {

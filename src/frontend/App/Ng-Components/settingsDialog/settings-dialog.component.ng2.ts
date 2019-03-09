@@ -4,7 +4,7 @@ import { ELanguages, IDialogParam, ILanguageParam } from "../../Components/defin
 
 @Component({
     selector: "settings-dialog",
-    styleUrls: [ "./settings-dialog.component.css" ],
+    styleUrls: [ "./settings-dialog.component.scss" ],
     templateUrl: "./settings-dialog.component.html"
 })
 

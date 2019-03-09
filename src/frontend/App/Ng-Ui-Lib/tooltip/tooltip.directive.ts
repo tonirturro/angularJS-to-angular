@@ -30,7 +30,7 @@ import { NgbTooltipWindowComponent } from "./tooltip.component.ng2";
 
   export class NgbTooltipDirective implements OnInit, OnDestroy {
 
-    private static nextId: number = 0;
+    public static nextId: number = 0;
 
     /**
      * Indicates whether the tooltip should be closed on Escape key and inside/outside clicks.

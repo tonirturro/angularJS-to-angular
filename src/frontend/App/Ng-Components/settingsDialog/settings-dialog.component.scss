@@ -1,10 +1,9 @@
 .language-selection-block {
+    & > div {
+        margin-right: 5px;
+    }
     padding-top: 10px;
     display: flex;
     width: 100%;
     justify-content: center;
-}
-
-.language-selection-block > div {
-    margin-right: 5px;
 }

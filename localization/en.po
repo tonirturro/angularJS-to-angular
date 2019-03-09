@@ -15,7 +15,7 @@ msgstr ""
 msgid "STR_Add_New_Device"
 msgstr "Add New Device"
 
-msgid "STR_ Add_Device_Tooltip"
+msgid "STR_Add_Device_Tooltip"
 msgstr "Define a new device to operate with"
 
 msgid "STR_Edit_Devices"

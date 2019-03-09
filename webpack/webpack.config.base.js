@@ -12,6 +12,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
+                exclude: /\.component.scss$/,
                 use: [
                     'style-loader',
                     'css-loader',

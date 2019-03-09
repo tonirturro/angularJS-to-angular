@@ -15,7 +15,7 @@ msgstr ""
 msgid "STR_Add_New_Device"
 msgstr "jan chu' chel"
 
-msgid "STR_ Add_Device_Tooltip"
+msgid "STR_Add_Device_Tooltip"
 msgstr "chu' jan, Qap je define"
 
 msgid "STR_Edit_Devices"

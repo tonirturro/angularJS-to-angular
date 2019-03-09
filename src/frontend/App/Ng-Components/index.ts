@@ -8,24 +8,28 @@ import { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-d
 import { DeviceEditComponent } from "./deviceEdit/device-edit.component.ng2";
 import { DevicePanelComponent } from "./devicePanel/device-panel.component.ng2";
 import { SettingsDialogComponent } from "./settingsDialog/settings-dialog.component.ng2";
+import { ToolBarComponent } from "./toolBar/toolbar.component.ng2";
 
 export { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-dialog.component.ng2";
 export { SettingsDialogComponent } from "./settingsDialog/settings-dialog.component.ng2";
 export { DevicePanelComponent } from "./devicePanel/device-panel.component.ng2";
 export { DeviceEditComponent } from "./deviceEdit/device-edit.component.ng2";
+export { ToolBarComponent } from "./toolBar/toolbar.component.ng2";
 
 @NgModule({
     declarations: [
         ConfirmationDialogComponent,
         SettingsDialogComponent,
         DevicePanelComponent,
-        DeviceEditComponent
+        DeviceEditComponent,
+        ToolBarComponent
     ],
     entryComponents: [
         ConfirmationDialogComponent,
         SettingsDialogComponent,
         DevicePanelComponent,
-        DeviceEditComponent
+        DeviceEditComponent,
+        ToolBarComponent
     ],
     imports: [
         CommonModule,
