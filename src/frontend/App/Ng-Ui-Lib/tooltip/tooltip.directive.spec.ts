@@ -10,6 +10,7 @@ import {
     ViewContainerRef
 } from "@angular/core";
 import { NgbTooltipConfig, NgbTooltipDirective, UserInterfaceLibModule } from "..";
+import { CustomMatchers } from "../../../../../test/CustomMatchers";
 
 function createGenericTestComponent<T>(html: string, type: new (...args: any[]) => T): ComponentFixture<T> {
     TestBed.overrideComponent(type, { set: { template: html } });
@@ -27,27 +28,7 @@ describe("ngb-tooltip", () => {
 
     // Matchers
     beforeEach(() => {
-        jasmine.addMatchers({
-            toHaveCssClass(
-                util: jasmine.MatchersUtil,
-                customEqualityTests: jasmine.CustomEqualityTester[]): jasmine.CustomMatcher {
-                return {
-                    compare: buildError(false),
-                    negativeCompare: buildError(true)
-                } as jasmine.CustomMatcher;
-
-                function buildError(isNot: boolean) {
-                    return (actual: HTMLElement, className: string): jasmine.CustomMatcherResult => {
-                        return {
-                            message:
-                                `Expected ${actual.outerHTML} ${isNot ? "not " : ""}` +
-                                `to contain the CSS class "${className}"`,
-                            pass: actual.classList.contains(className) === !isNot
-                        };
-                    };
-                }
-            }
-        });
+        jasmine.addMatchers(CustomMatchers);
     });
 
     beforeEach(() => {

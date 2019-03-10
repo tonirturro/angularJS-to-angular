@@ -1,29 +1,12 @@
 import { TestBed } from "@angular/core/testing";
+import { CustomMatchers } from "../../../../../test/CustomMatchers";
 import { NgbTooltipWindowComponent } from "./tooltip.component.ng2";
 
 describe("ngb-tooltip-window", () => {
 
   // Matchers
   beforeEach(() => {
-    jasmine.addMatchers({
-      toHaveCssClass(
-        util: jasmine.MatchersUtil,
-        customEqualityTests: jasmine.CustomEqualityTester[]): jasmine.CustomMatcher {
-        return {
-          compare: buildError(false),
-          negativeCompare: buildError(true)
-        } as jasmine.CustomMatcher;
-
-        function buildError(isNot: boolean) {
-          return (actual: HTMLElement, className: string): jasmine.CustomMatcherResult => {
-            return {
-              message: `Expected ${actual.outerHTML} ${isNot ? "not " : ""}to contain the CSS class "${className}"`,
-              pass: actual.classList.contains(className) === !isNot
-            };
-          };
-        }
-      }
-    });
+    jasmine.addMatchers(CustomMatchers);
   });
 
   beforeEach(() => { TestBed.configureTestingModule({ declarations: [NgbTooltipWindowComponent] }); });
