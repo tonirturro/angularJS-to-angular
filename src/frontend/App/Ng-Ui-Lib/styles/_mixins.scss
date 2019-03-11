@@ -1,5 +1,8 @@
 // Utilities
+@import "mixins/breakpoints";
 @import "mixins/reset-text";
 
 // Skins
 @import "mixins/border-radius";
+@import "mixins/box-shadow";
+@import "mixins/transition";
