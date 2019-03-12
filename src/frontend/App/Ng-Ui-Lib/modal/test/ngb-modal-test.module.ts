@@ -9,7 +9,9 @@ import { TestComponent } from "./test.component.ng2";
 import { WithActiveModalComponent } from "./with-active-modal.component.ng2";
 import { WithAutofocusModalComponent } from "./with-autofocus-modal.component";
 import { WithFirstFocusableModalComponent } from "./with-first-focusable-modal.component.ng2";
-import { WithSkipTabindexFirstFocusableModalComponent } from "./with-skip-tableindex-first-focusable-modal.component.ng2";
+import {
+  WithSkipTabindexFirstFocusableModalComponent
+} from "./with-skip-tableindex-first-focusable-modal.component.ng2";
 
 @NgModule({
     declarations: [
