@@ -2,8 +2,8 @@ import { IHttpPromiseCallbackArg, IHttpService } from "angular";
 import { Observable, Subject } from "rxjs";
 
 import { ISelectableOption } from "../../../common/rest";
-import { INgTranslateService } from "../Services/definitions";
-import { ELanguages } from "./definitions";
+
+import { ELanguages, INgTranslateService } from "./definitions";
 
 export class LocalizationService {
     /**
@@ -35,21 +35,18 @@ export class LocalizationService {
         private gettextCatalog: angular.gettext.gettextCatalog,
         private $http: IHttpService,
         private ngTranslateService: INgTranslateService
-    ) {
-        this.ngTranslateService.setDefaultLang(this.getLanguageCode(ELanguages.English));
-    }
+    ) {}
 
     public setLanguage(language: ELanguages) {
         const languageCode = this.getLanguageCode(language);
         if (languageCode !== this.currentLanguageCode) {
             this.currentLanguageCode = languageCode;
+            this.ngTranslateService.setLanguage(language);
             if (this.currentLoadedLanguages.every((item) => item !== languageCode)) {
                 this.loadStrings(languageCode);
             } else {
                 this.gettextCatalog.setCurrentLanguage(languageCode);
-                this.ngTranslateService.use(languageCode).subscribe(() => {
-                    this.languageSubject.next();
-                });
+                this.languageSubject.next();
             }
         }
     }
@@ -68,9 +65,7 @@ export class LocalizationService {
             .then((resp: IHttpPromiseCallbackArg<any>) => {
                 this.gettextCatalog.setStrings(languageCode, resp.data[languageCode]);
                 this.gettextCatalog.setCurrentLanguage(languageCode);
-                this.ngTranslateService.use(languageCode).subscribe(() => {
-                    this.languageSubject.next();
-                });
+                this.languageSubject.next();
             });
     }
 

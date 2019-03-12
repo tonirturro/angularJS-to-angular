@@ -13,6 +13,7 @@ import {
   ConfirmationDialogComponent,
   DeviceEditComponent,
   DevicePanelComponent,
+  LocalizationService,
   SettingsDialogComponent,
   ToolBarComponent} from "./Ng-Components";
 import { DataService } from "./Services/data.service";
@@ -45,7 +46,7 @@ export class AppModule {
       // Downgrades
       angular.module(moduleJs)
         .factory("dataService", downgradeInjectable(DataService))
-        .factory("ngTranslateService", downgradeInjectable(TranslateService))
+        .factory("ngTranslateService", downgradeInjectable(LocalizationService))
         .directive(
           getModal(EModals.Confimation),
           downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory)

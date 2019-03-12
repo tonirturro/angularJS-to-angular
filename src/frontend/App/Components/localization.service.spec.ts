@@ -4,8 +4,7 @@ import { IHttpService, IQService, IRootScopeService } from "angular";
 import { of } from "rxjs";
 import { ISelectableOption } from "../../../common/rest";
 import { DataServiceMock } from "../Services/data.service.mock";
-import { INgTranslateService } from "../Services/definitions";
-import { ELanguages } from "./definitions";
+import { ELanguages, INgTranslateService } from "./definitions";
 import { LocalizationService } from "./localization.service";
 import { NgTranslateServiceMock } from "./ng-translate.service.mock";
 
@@ -46,7 +45,7 @@ describe("Given a localization service", () => {
         httpGetMock = spyOn($http, "get").and.returnValue($q.resolve(expectedStrings));
         loadStringsMock = spyOn(gettextCatalog, "setStrings");
         setLanguageMock = spyOn(gettextCatalog, "setCurrentLanguage");
-        setNgLanguageMock = spyOn(ngTranslateService, "use").and.returnValue(of({}));
+        setNgLanguageMock = spyOn(ngTranslateService, "setLanguage");
         getStringMock = spyOn(gettextCatalog, "getString");
     }));
 
@@ -80,7 +79,7 @@ describe("Given a localization service", () => {
         rootScope.$apply();
 
         expect(setLanguageMock).toHaveBeenCalledWith(expectedEnglishLanguageCode);
-        expect(setNgLanguageMock).toHaveBeenCalledWith(expectedEnglishLanguageCode);
+        expect(setNgLanguageMock).toHaveBeenCalledWith(ELanguages.English);
     });
 
     it("When setting the same language Then the current language is not set", () => {
