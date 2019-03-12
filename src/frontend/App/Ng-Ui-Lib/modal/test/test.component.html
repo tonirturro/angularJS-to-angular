@@ -1,0 +1,24 @@
+<div id="testContainer"></div>
+<ng-template #content>Hello, {{name}}!</ng-template>
+<ng-template #destroyableContent><destroyable-cmpt></destroyable-cmpt></ng-template>
+<ng-template #contentWithClose let-close="close">
+  <button id="close" (click)="close('myResult')">Close me</button>
+</ng-template>
+<ng-template #contentWithDismiss let-dismiss="dismiss">
+  <button id="dismiss" (click)="dismiss('myReason')">Dismiss me</button>
+</ng-template>
+<ng-template #contentWithImplicitContext let-modal>
+  <button id="close" (click)="modal.close('myResult')">Close me</button>
+  <button id="dismiss" (click)="modal.dismiss('myReason')">Dismiss me</button>
+</ng-template>
+<ng-template #contentWithIf>
+  <ng-template [ngIf]="show">
+    <button id="if" (click)="show = false">Click me</button>
+  </ng-template>
+</ng-template>
+<button id="open" (click)="open('from button')">Open</button>
+<div id="open-no-focus" (click)="open('from non focusable element')">Open</div>
+<div
+  id="open-no-focus-ie"
+  (click)="open('from non focusable element but stored as activeElement on IE')"
+  style="display: inline-block;">Open</div>

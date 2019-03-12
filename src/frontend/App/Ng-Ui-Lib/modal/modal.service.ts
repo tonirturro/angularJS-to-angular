@@ -1,6 +1,6 @@
 import { ComponentFactoryResolver, Injectable, Injector } from "@angular/core";
 
-import { NgbModalConfig, NgbModalOptions } from "./modal-config";
+import { IModalSettings, NgbModalConfig } from "./modal-config";
 import { NgbModalRef } from "./modal-ref";
 import { NgbModalStackService } from "./modal-stack.service";
 
@@ -22,7 +22,7 @@ export class NgbModalService {
    * components can be injected with an instance of the NgbActiveModal class. You can use methods on the
    * NgbActiveModal class to close / dismiss modals from "inside" of a component.
    */
-  public open(content: any, options: NgbModalOptions = {}): NgbModalRef {
+  public open(content: any, options: IModalSettings = {}): NgbModalRef {
     const combinedOptions = Object.assign({}, this.config, options);
     return this.modalStack.open(this.moduleCFR, this.injector, content, combinedOptions);
   }

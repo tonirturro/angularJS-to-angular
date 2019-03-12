@@ -3,8 +3,7 @@ import {Injectable, Injector} from "@angular/core";
 /**
  * Represent options available when opening new modal windows.
  */
-// tslint:disable-next-line: interface-name
-export interface NgbModalOptions {
+export interface IModalSettings {
   /**
    * Sets the aria attribute aria-labelledby to a modal window.
    *
@@ -73,7 +72,7 @@ export interface NgbModalOptions {
  * @since 3.1.0
  */
 @Injectable({providedIn: "root"})
-export class NgbModalConfig implements NgbModalOptions {
+export class NgbModalConfig implements IModalSettings {
   public backdrop: boolean | "static" = true;
   public keyboard = true;
 }
