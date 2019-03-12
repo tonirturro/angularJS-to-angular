@@ -4,7 +4,7 @@ import { NgbActiveModal } from "../..";
 
 @Component({
     selector: "modal-content-cmpt",
-    template: "./with-active-modal.component.html"
+    templateUrl: "./with-active-modal.component.html"
 })
 export class WithActiveModalComponent {
   constructor(public activeModal: NgbActiveModal) {}

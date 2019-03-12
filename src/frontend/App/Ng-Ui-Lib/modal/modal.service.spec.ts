@@ -23,7 +23,7 @@ import {
 // tslint:disable-next-line: no-empty
 const NOOP = () => {};
 
-fdescribe("ngb-modal", () => {
+describe("ngb-modal", () => {
 
   let fixture: ComponentFixture<TestComponent>;
 
@@ -74,7 +74,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should properly destroy TemplateRef content", () => {
+      it("should properly destroy TemplateRef content", () => {
         const spyService = fixture.debugElement.injector.get(SpyService);
         const modalInstance = fixture.componentInstance.openDestroyableTpl();
         fixture.detectChanges();
@@ -87,7 +87,7 @@ fdescribe("ngb-modal", () => {
         expect(spyService.called).toBeTruthy();
       });
 
-      xit("should open and close modal from a component type", () => {
+      it("should open and close modal from a component type", () => {
         const spyService = fixture.debugElement.injector.get(SpyService);
         const modalInstance = fixture.componentInstance.openCmpt(DestroyableComponent);
         fixture.detectChanges();
@@ -100,7 +100,7 @@ fdescribe("ngb-modal", () => {
         expect(spyService.called).toBeTruthy();
       });
 
-      xit("should inject active modal ref when component is used as content", () => {
+      it("should inject active modal ref when component is used as content", () => {
         fixture.componentInstance.openCmpt(WithActiveModalComponent);
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal("Close");
@@ -110,7 +110,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should expose component used as modal content", () => {
+      it("should expose component used as modal content", () => {
         const modalInstance = fixture.componentInstance.openCmpt(WithActiveModalComponent);
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal("Close");
@@ -121,7 +121,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should open and close modal from inside", () => {
+      it("should open and close modal from inside", () => {
         fixture.componentInstance.openTplClose();
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal();
@@ -131,7 +131,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should open and dismiss modal from inside", () => {
+      it("should open and dismiss modal from inside", () => {
         fixture.componentInstance.openTplDismiss().result.catch(NOOP);
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal();
@@ -141,7 +141,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should open and close modal from template implicit context", () => {
+      it("should open and close modal from template implicit context", () => {
         fixture.componentInstance.openTplImplicitContext();
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal();
@@ -151,7 +151,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should open and dismiss modal from template implicit context", () => {
+      it("should open and dismiss modal from template implicit context", () => {
         fixture.componentInstance.openTplImplicitContext().result.catch(NOOP);
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal();
@@ -161,7 +161,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should resolve result promise on close", () => {
+      it("should resolve result promise on close", () => {
         let resolvedResult;
         fixture.componentInstance.openTplClose().result.then((result) => resolvedResult = result);
         fixture.detectChanges();
@@ -174,7 +174,7 @@ fdescribe("ngb-modal", () => {
         fixture.whenStable().then(() => { expect(resolvedResult).toBe("myResult"); });
       });
 
-      xit("should reject result promise on dismiss", () => {
+      it("should reject result promise on dismiss", () => {
         let rejectReason;
         fixture.componentInstance.openTplDismiss().result.catch((reason) => rejectReason = reason);
         fixture.detectChanges();
@@ -187,7 +187,7 @@ fdescribe("ngb-modal", () => {
         fixture.whenStable().then(() => { expect(rejectReason).toBe("myReason"); });
       });
 
-      xit("should add / remove \"modal-open\" class to body when modal is open", async(() => {
+      it("should add / remove \"modal-open\" class to body when modal is open", async(() => {
            const modalRef = fixture.componentInstance.open("bar");
            fixture.detectChanges();
            expect(fixture.nativeElement).toHaveModal();
@@ -201,7 +201,7 @@ fdescribe("ngb-modal", () => {
            });
          }));
 
-      xit("should not throw when close called multiple times", () => {
+      it("should not throw when close called multiple times", () => {
         const modalInstance = fixture.componentInstance.open("foo");
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal("foo");
@@ -215,7 +215,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should dismiss with dismissAll", () => {
+      it("should dismiss with dismissAll", () => {
         fixture.componentInstance.open("foo");
         fixture.detectChanges();
         expect(fixture.nativeElement).toHaveModal("foo");
@@ -225,7 +225,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should not throw when dismissAll called with no active modal", () => {
+      it("should not throw when dismissAll called with no active modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
 
         fixture.componentInstance.dismissAll();
@@ -233,7 +233,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should not throw when dismiss called multiple times", () => {
+      it("should not throw when dismiss called multiple times", () => {
         const modalRef = fixture.componentInstance.open("foo");
         modalRef.result.catch(NOOP);
 
@@ -249,7 +249,7 @@ fdescribe("ngb-modal", () => {
         expect(fixture.nativeElement).not.toHaveModal();
       });
 
-      xit("should indicate if there are open modal windows", async(() => {
+      it("should indicate if there are open modal windows", async(() => {
            fixture.componentInstance.open("foo");
            fixture.detectChanges();
            expect(fixture.nativeElement).toHaveModal("foo");
@@ -263,7 +263,7 @@ fdescribe("ngb-modal", () => {
          }));
     });
 
-    xdescribe("stacked  modals", () => {
+    describe("stacked  modals", () => {
 
       it("should not remove \"modal-open\" class on body when closed modal is not last", async(() => {
            const modalRef1 = fixture.componentInstance.open("foo");
@@ -308,7 +308,7 @@ fdescribe("ngb-modal", () => {
       });
     });
 
-    xdescribe("backdrop options", () => {
+    describe("backdrop options", () => {
 
       it("should have backdrop by default", () => {
         const modalInstance = fixture.componentInstance.open("foo");
@@ -413,7 +413,7 @@ fdescribe("ngb-modal", () => {
       });
     });
 
-    xdescribe("beforeDismiss options", () => {
+    describe("beforeDismiss options", () => {
 
       it("should not dismiss when the callback returns false", () => {
         const modalInstance = fixture.componentInstance.openTplDismiss({beforeDismiss: () => false});
@@ -494,7 +494,7 @@ fdescribe("ngb-modal", () => {
       });
     });
 
-    xdescribe("container options", () => {
+    describe("container options", () => {
 
       it("should attach window and backdrop elements to the specified container", () => {
         const modalInstance = fixture.componentInstance.open("foo", {container: "#testContainer"});
@@ -514,7 +514,7 @@ fdescribe("ngb-modal", () => {
       });
     });
 
-    xdescribe("keyboard options", () => {
+    describe("keyboard options", () => {
 
       it("should dismiss modals on ESC by default", () => {
         fixture.componentInstance.open("foo").result.catch(NOOP);
@@ -557,7 +557,7 @@ fdescribe("ngb-modal", () => {
       });
     });
 
-    xdescribe("size options", () => {
+    describe("size options", () => {
 
       it("should render modals with specified size", () => {
         const modalInstance = fixture.componentInstance.open("foo", {size: "sm"});
@@ -572,7 +572,7 @@ fdescribe("ngb-modal", () => {
 
     });
 
-    xdescribe("window custom class options", () => {
+    describe("window custom class options", () => {
 
       it("should render modals with the correct window custom classes", () => {
         const modalInstance = fixture.componentInstance.open("foo", {windowClass: "bar"});
@@ -587,7 +587,7 @@ fdescribe("ngb-modal", () => {
 
     });
 
-    xdescribe("backdrop custom class options", () => {
+    describe("backdrop custom class options", () => {
 
       it("should render modals with the correct backdrop custom classes", () => {
         const modalInstance = fixture.componentInstance.open("foo", {backdropClass: "my-fancy-backdrop"});
@@ -602,7 +602,7 @@ fdescribe("ngb-modal", () => {
 
     });
 
-    xdescribe("custom injector option", () => {
+    describe("custom injector option", () => {
 
       it("should render modal with a custom injector", () => {
         const customInjector =
@@ -618,7 +618,7 @@ fdescribe("ngb-modal", () => {
 
     });
 
-    xdescribe("focus management", () => {
+    describe("focus management", () => {
 
       it("should return focus to previously focused element", () => {
         fixture.detectChanges();
@@ -713,7 +713,7 @@ fdescribe("ngb-modal", () => {
       });
     });
 
-    xdescribe("window element ordering", () => {
+    describe("window element ordering", () => {
       it("should place newer windows on top of older ones", () => {
         const modalInstance1 = fixture.componentInstance.open("foo", {windowClass: "window-1"});
         fixture.detectChanges();
@@ -732,7 +732,7 @@ fdescribe("ngb-modal", () => {
       });
     });
 
-    xdescribe("vertically centered", () => {
+    describe("vertically centered", () => {
 
       it("should render modals vertically centered", () => {
         const modalInstance = fixture.componentInstance.open("foo", {centered: true});
@@ -887,7 +887,7 @@ fdescribe("ngb-modal", () => {
 
   });
 
-  xdescribe("custom global configuration", () => {
+  describe("custom global configuration", () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule(
