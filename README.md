@@ -19,6 +19,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step7  : Adding localization to the Angular component.
 * step8  : Adapt build to Angular components.
 * step9  : Migrate components not depending on ui-lib.
+* step10 : Migrate components depending on ui-lib.
 
 To go to a particular step:
 
