@@ -13,7 +13,7 @@ export class Routes {
             url: "/device/{deviceId}"
         };
         const pagesEditState: IState = {
-            component: "pageGrid",
+            component: "pageGridWrapper",
             name: "pages",
             resolve: {
                 selectedDeviceId: [ "$transition$", ($transition$: ITransition) => $transition$.params().deviceId]

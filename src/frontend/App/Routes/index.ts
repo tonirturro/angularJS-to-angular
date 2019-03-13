@@ -10,5 +10,11 @@ export const ROUTES_MODULE_NAME = angular.module("myApp.routes", [ uiRouter ])
         },
         template: `<device-edit [selected-device-id]="$ctrl.selectedDeviceId"></device-edit>`
     } as IComponentOptions)
+    .component("pageGridWrapper", {
+        bindings: {
+            selectedDeviceId: "<"
+        },
+        template: `<page-grid [selected-device-id]="$ctrl.selectedDeviceId"></page-grid>`
+    } as IComponentOptions)
     .config(Routes)
     .name;

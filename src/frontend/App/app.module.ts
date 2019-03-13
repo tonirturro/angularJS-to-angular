@@ -2,7 +2,7 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { downgradeComponent, downgradeInjectable, UpgradeModule } from "@angular/upgrade/static";
-import { TranslateLoader, TranslateModule, TranslateService } from "@ngx-translate/core";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 
 import * as angular from "angular";
 import { moduleJs } from "./app.modulejs";
@@ -14,6 +14,7 @@ import {
   DeviceEditComponent,
   DevicePanelComponent,
   LocalizationService,
+  PageGridComponent,
   SettingsDialogComponent,
   ToolBarComponent} from "./Ng-Components";
 import { DataService } from "./Services/data.service";
@@ -54,7 +55,8 @@ export class AppModule {
           downgradeComponent({ component: SettingsDialogComponent}) as angular.IDirectiveFactory)
         .directive("devicePanel", downgradeComponent({ component: DevicePanelComponent }))
         .directive("deviceEdit", downgradeComponent({component: DeviceEditComponent }))
-        .directive("toolbar", downgradeComponent({ component: ToolBarComponent }));
+        .directive("toolbar", downgradeComponent({ component: ToolBarComponent }))
+        .directive("pageGrid", downgradeComponent({ component: PageGridComponent }));
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }

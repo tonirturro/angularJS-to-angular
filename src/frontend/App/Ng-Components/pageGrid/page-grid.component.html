@@ -1,1 +1,56 @@
-<div></div>
+<table class="table table-bordered table-fixed-header" *ngIf="deviceId > -1">
+    <thead>
+        <tr>
+            <td [translate]>STR_Page_Size</td>
+            <td [translate]>STR_Print_Quality</td>
+            <td [translate]>STR_Media_Type</td>
+            <td [translate]>STR_Destination</td>
+            <td>
+                <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    ngbTooltip="{{ addTooltip | translate}}" 
+                    placement="left" 
+                    (click)="addPage()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr 
+            *ngFor="let page of pages" 
+            (click)="selectPage($event, page.id)">
+            <td>
+                <select [(ngModel)]="page.pageSize" ng-change="updatePageSize(page.pageSize)">
+                    <option *ngFor="let size of PageSizeOptions" value="{{ size.value }}">{{ size.label }}</option>
+                </select>
+            </td>
+            <td>
+                <select [(ngModel)]="page.printQuality" ng-change="updatePrintQuality(page.printQuality)">
+                    <option *ngFor="let quality of PrintQualityOptions" value="{{ quality.value }}">{{ quality.label }}</option>
+                </select>
+            </td>
+            <td>
+                <select [(ngModel)]="page.mediaType" ng-change="updateMediaType(page.mediaType)">
+                    <option *ngFor="let medium of MediaTypeOptions" value="{{ medium.value }}">{{ medium.label }}</option>
+                </select>
+            </td>
+            <td>
+                <select [(ngModel)]="page.destination" ng-change="updateDestination(page.destination)">
+                    <option *ngFor="let destination of DestinationOptions" value="{{ destination.value }}">{{ destination.label }}</option>
+                </select>
+            </td>
+            <td>
+                <button 
+                    type="button"
+                    class="btn btn-danger" 
+                    ngbTooltip="{{ deleteTooltip | translate}}" 
+                    placement="left" 
+                    (click)="deletePage(page.id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
