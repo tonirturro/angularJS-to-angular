@@ -4,14 +4,13 @@ import { StateService } from "@uirouter/core";
 import { IComponentControllerService, IPromise, IQService, IRootScopeService, IWindowService } from "angular";
 import * as angular from "angular";
 
-import { EModals } from ".";
 import { PageFields } from "../../../common/model";
 import { IDevice, ISelectableOption } from "../../../common/rest";
+import { EModals } from "../Ng-Components";
 import { IStateService } from "../Routes/ui-routes";
 import { DataService } from "../Services/data.service";
 import { DataServiceMock } from "../Services/data.service.mock";
 import { IDataService } from "../Services/definitions";
-import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
 import { ELanguages, ILanguageParam, IMessageParam } from "./definitions";
 import { LocalizationService } from "./localization.service";
 import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl";
@@ -54,6 +53,8 @@ describe("Given a main page component controller", () => {
     beforeEach(angular.mock.module("myApp.components", ($provide: IProvideService) => {
         $provide.value("dataService", new DataServiceMock());
         $provide.value("ngTranslateService", new NgTranslateServiceMock());
+// tslint:disable-next-line: no-empty
+        $provide.value("modalManager", { push: () => {}});
     }));
 
     beforeEach(inject((
@@ -63,7 +64,7 @@ describe("Given a main page component controller", () => {
         $state: IStateService,
         $window: IWindowService,
         dataService: DataService,
-        modalManager: ModalManager,
+        modalManager: any,
         localizationService: LocalizationService) => {
         stateServiceToMock = $state;
         dataServiceToMock = dataService;

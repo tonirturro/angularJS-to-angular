@@ -7,16 +7,14 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import * as angular from "angular";
 import { moduleJs } from "./app.modulejs";
 
-import { EModals, getModal } from "./Components";
 import {
   ComponentsModule,
-  ConfirmationDialogComponent,
   DeviceEditComponent,
   DevicePanelComponent,
   LocalizationService,
   PageGridComponent,
-  SettingsDialogComponent,
   ToolBarComponent} from "./Ng-Components";
+import { ModalManagerService } from "./Ng-Ui-Lib";
 import { DataService } from "./Services/data.service";
 import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
 
@@ -48,11 +46,7 @@ export class AppModule {
       angular.module(moduleJs)
         .factory("dataService", downgradeInjectable(DataService))
         .factory("ngTranslateService", downgradeInjectable(LocalizationService))
-        .directive(
-          getModal(EModals.Confimation),
-          downgradeComponent({ component: ConfirmationDialogComponent }) as angular.IDirectiveFactory)
-        .directive(getModal(EModals.Settings),
-          downgradeComponent({ component: SettingsDialogComponent}) as angular.IDirectiveFactory)
+        .factory("modalManager", downgradeInjectable(ModalManagerService))
         .directive("devicePanel", downgradeComponent({ component: DevicePanelComponent }))
         .directive("deviceEdit", downgradeComponent({component: DeviceEditComponent }))
         .directive("toolbar", downgradeComponent({ component: ToolBarComponent }))

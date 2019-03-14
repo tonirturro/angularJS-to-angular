@@ -4,7 +4,6 @@ import { EModals } from ".";
 import { IDevice } from "../../../common/rest";
 import { IStateService } from "../Routes/ui-routes";
 import { DataService } from "../Services/data.service";
-import { ModalManager } from "../UiLib/modal/services/modal-manager.service";
 import { ELanguages, ILanguageParam, IMessageParam } from "./definitions";
 import { LocalizationService } from "./localization.service";
 
@@ -29,7 +28,7 @@ export class MainPageController implements IComponentController {
         private $window: IWindowService,
         private $state: IStateService,
         private dataService: DataService,
-        private modalManager: ModalManager,
+        private modalManager: any,
         private localizationService: LocalizationService) {}
 
     /**
@@ -65,7 +64,7 @@ export class MainPageController implements IComponentController {
     public settings() {
         this.modalManager
             .push(EModals.Settings, { language: this.currentLanguage } as ILanguageParam)
-            .then((language: ELanguages) => {
+            .subscribe((language: ELanguages) => {
                 this.localizationService.setLanguage(language);
                 this.currentLanguage = language;
             }, () => {
@@ -80,7 +79,7 @@ export class MainPageController implements IComponentController {
         const message = this.localizationService.closeMessage;
         this.modalManager
         .push(EModals.Confimation, { message } as IMessageParam)
-        .then(() => {
+        .subscribe(() => {
             this.$window.close();
         }, () => {
             this.$log.info("Dismissed close application");
@@ -127,7 +126,7 @@ export class MainPageController implements IComponentController {
         const name = this.dataService.devices.find((d) => d.id === deviceId).name;
         const message = this.localizationService.deleteDeviceMessage;
         this.modalManager.push(EModals.Confimation, { message: `${message}: ${name}`})
-            .then(() => {
+            .subscribe(() => {
                 this.dataService.deleteDevice(deviceId);
             }, () => {
                 this.$log.info(`Dismissed delete device: ${name}`);

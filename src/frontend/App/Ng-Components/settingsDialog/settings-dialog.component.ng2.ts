@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ISelectableOption } from "../../../../common/rest";
-import { ELanguages, IDialogParam, ILanguageParam } from "../../Components/definitions";
+import { ELanguages, ILanguageParam } from "../../Components/definitions";
+import { NgbActiveModal } from "../../Ng-Ui-Lib";
 
 @Component({
     selector: "settings-dialog",
@@ -9,9 +10,7 @@ import { ELanguages, IDialogParam, ILanguageParam } from "../../Components/defin
 })
 
 export class SettingsDialogComponent implements OnInit {
-    @Input() public resolve: IDialogParam<ILanguageParam>;
-    @Output() public dismiss = new EventEmitter<any>();
-    @Output() public close = new EventEmitter<any>();
+    @Input() public params: ILanguageParam;
 
     public languageOption: string;
 
@@ -26,16 +25,18 @@ export class SettingsDialogComponent implements OnInit {
         },
     ];
 
+    constructor(private activeModal: NgbActiveModal) {}
+
     public ngOnInit() {
-        this.languageOption = this.resolve.params.language.toString();
+        this.languageOption = this.params.language.toString();
     }
 
     public onDismiss() {
-        this.dismiss.emit();
+        this.activeModal.dismiss();
     }
 
     public onApply() {
-        this.close.emit(Number.parseInt(this.languageOption, 10));
+        this.activeModal.close(Number.parseInt(this.languageOption, 10));
     }
 
     public get languageOptions(): ISelectableOption[] {

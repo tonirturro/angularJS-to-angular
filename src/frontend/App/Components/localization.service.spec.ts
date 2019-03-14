@@ -1,7 +1,6 @@
 import { IProvideService } from "@angular/upgrade/static/src/common/angular1";
 import * as angular from "angular";
 import { IHttpService, IQService, IRootScopeService } from "angular";
-import { of } from "rxjs";
 import { ISelectableOption } from "../../../common/rest";
 import { DataServiceMock } from "../Services/data.service.mock";
 import { ELanguages, INgTranslateService } from "./definitions";

@@ -41,7 +41,6 @@ export const UI_LIB_NAME = angular.module("ui-lib", [])
     .service("$$stackedMap", StackedMapFactory)
     .service("$uibModalStack", ModalStack)
     .service("$uiLibModal", UiLibModal)
-    .service("modalManager", ModalManager)
     .run(["$templateCache", ($templateCache: ITemplateCacheService) => {
         $templateCache.put(
             "uib/template/modal/window.html",

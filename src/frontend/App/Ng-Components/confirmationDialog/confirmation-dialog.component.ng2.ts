@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IDialogParam, IMessageParam } from "../../Components/definitions";
+import { IMessageParam } from "../../Components/definitions";
+import { NgbActiveModal } from "../../Ng-Ui-Lib";
 
 @Component({
     selector: "confirmation-dialog",
@@ -7,19 +8,19 @@ import { IDialogParam, IMessageParam } from "../../Components/definitions";
     templateUrl: "./confirmation-dialog.component.html"
 })
 export class ConfirmationDialogComponent {
-    @Input() public resolve: IDialogParam<IMessageParam>;
-    @Output() public dismiss = new EventEmitter<any>();
-    @Output() public close = new EventEmitter<any>();
+    @Input() public params: IMessageParam;
+
+    constructor(private activeModal: NgbActiveModal) {}
 
     public get message(): string {
-        return this.resolve.params.message;
+        return this.params.message;
     }
 
     public onClose() {
-        this.close.emit();
+        this.activeModal.close();
     }
 
     public onDismiss() {
-        this.dismiss.emit();
+        this.activeModal.dismiss();
     }
 }
