@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { IMessageParam } from "../../Components/definitions";
 import { NgbActiveModal } from "../../Ng-Ui-Lib";
 

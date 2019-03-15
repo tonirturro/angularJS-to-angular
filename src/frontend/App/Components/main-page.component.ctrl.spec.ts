@@ -4,6 +4,7 @@ import { StateService } from "@uirouter/core";
 import { IComponentControllerService, IPromise, IQService, IRootScopeService, IWindowService } from "angular";
 import * as angular from "angular";
 
+import { Subject } from "rxjs";
 import { PageFields } from "../../../common/model";
 import { IDevice, ISelectableOption } from "../../../common/rest";
 import { EModals } from "../Ng-Components";
@@ -17,9 +18,9 @@ import { IDeviceSelection, MainPageController } from "./main-page.component.ctrl
 import { NgTranslateServiceMock } from "./ng-translate.service.mock";
 
 describe("Given a main page component controller", () => {
+    let observableMock: Subject<any>;
     let controller: MainPageController;
     let q: IQService;
-    let rootScope: IRootScopeService;
     let stateServiceToMock: StateService;
     let dataServiceToMock: IDataService;
     let windowCloseMock: jasmine.Spy;
@@ -60,7 +61,6 @@ describe("Given a main page component controller", () => {
     beforeEach(inject((
         $componentController: IComponentControllerService,
         $q: IQService,
-        $rootScope: IRootScopeService,
         $state: IStateService,
         $window: IWindowService,
         dataService: DataService,
@@ -69,9 +69,9 @@ describe("Given a main page component controller", () => {
         stateServiceToMock = $state;
         dataServiceToMock = dataService;
         q = $q;
-        rootScope = $rootScope;
         spyOn(stateServiceToMock, "go");
-        modalPushMock = spyOn(modalManager, "push");
+        observableMock = new Subject<any>();
+        modalPushMock = spyOn(modalManager, "push").and.returnValue(observableMock);
         windowCloseMock = spyOn($window, "close");
         setLanguageMock = spyOn(localizationService, "setLanguage");
         closeMessageMock = spyOnProperty(localizationService, "closeMessage", "get");
@@ -170,35 +170,30 @@ describe("Given a main page component controller", () => {
     it("When deleting a device Then a dialog is open", () => {
         const deleteMessage = "Delete Device";
         deleteDeviceMessageMock.and.returnValue(deleteMessage);
-        modalPushMock.and.returnValue(q.reject());
         const expectedDialogMessage: IMessageParam = { message: `${deleteMessage}: ${devices[0].name}` };
 
         controller.deleteDevice(devices[0].id);
+        observableMock.next();
 
         expect(modalPushMock).toHaveBeenCalledWith(EModals.Confimation, expectedDialogMessage);
     });
 
     it("When deleting a device dialog is confirmed Then the device is deleted", () => {
-        modalPushMock.and.returnValue(q.resolve());
-
         controller.deleteDevice(devices[0].id);
-        rootScope.$apply();
+        observableMock.next();
 
         expect(dataServiceToMock.deleteDevice).toHaveBeenCalledWith(devices[0].id);
     });
 
     it("When deleting a device dialog is not confirmed Then the device is not deleted", () => {
-        modalPushMock.and.returnValue(q.reject());
         controller.deleteDevice(devices[0].id);
-        rootScope.$apply();
+        observableMock.error({});
 
         expect(dataServiceToMock.deleteDevice).not.toHaveBeenCalled();
     });
 
     it("When calling settings Then the settings dialog is open", () => {
-        modalPushMock.and.returnValue(q.reject());
         controller.$onInit();
-
         controller.settings();
 
         expect(modalPushMock).toHaveBeenCalledWith(
@@ -207,19 +202,15 @@ describe("Given a main page component controller", () => {
     });
 
     it("When calling settings is applied Then the settings dialog returns application settings to be applied", () => {
-        modalPushMock.and.returnValue(q.resolve(ELanguages.Klingon));
-
         controller.settings();
-        rootScope.$apply();
+        observableMock.next(ELanguages.Klingon);
 
         expect(setLanguageMock).toHaveBeenCalledWith(ELanguages.Klingon);
     });
 
     it("When calling settings is dismissed Then no settings are applied", () => {
-        modalPushMock.and.returnValue(q.reject());
-
         controller.settings();
-        rootScope.$apply();
+        observableMock.error({});
 
         expect(setLanguageMock).not.toHaveBeenCalled();
     });
@@ -227,7 +218,6 @@ describe("Given a main page component controller", () => {
     it("When calling close Then the close confirmation dialog is open", () => {
         const closeMessage = "Close Application";
         closeMessageMock.and.returnValue(closeMessage);
-        modalPushMock.and.returnValue(q.reject());
         const expectedDialogMessage: IMessageParam = { message: closeMessage };
 
         controller.close();
@@ -236,19 +226,15 @@ describe("Given a main page component controller", () => {
     });
 
     it("When closing app is confirmed then the application is closed", () => {
-        modalPushMock.and.returnValue(q.resolve());
-
         controller.close();
-        rootScope.$apply();
+        observableMock.next();
 
         expect(windowCloseMock).toHaveBeenCalled();
     });
 
     it("When closing app is not confirmed then the application is not closed", () => {
-        modalPushMock.and.returnValue(q.reject());
-
         controller.close();
-        rootScope.$apply();
+        observableMock.error({});
 
         expect(windowCloseMock).not.toHaveBeenCalled();
     });

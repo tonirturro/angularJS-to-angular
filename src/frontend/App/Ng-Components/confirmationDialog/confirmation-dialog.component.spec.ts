@@ -1,19 +1,23 @@
 import { TestBed } from "@angular/core/testing";
+import { NgbActiveModal } from "../../Ng-Ui-Lib";
 import { ConfirmationDialogComponent } from "./confirmation-dialog.component.ng2";
 
 describe("Given a confirmation dialog component", () => {
 
     let element: Element;
     let component: ConfirmationDialogComponent;
+    let modal: NgbActiveModal;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({declarations: [ ConfirmationDialogComponent]});
+        TestBed.configureTestingModule({
+            declarations: [ ConfirmationDialogComponent],
+            providers: [ NgbActiveModal ]
+        });
         const fixture = TestBed.createComponent(ConfirmationDialogComponent);
+        modal = TestBed.get(NgbActiveModal);
         component = fixture.componentInstance;
-        component.resolve  = {
-            params: {
-                message: "Message"
-            }
+        component.params = {
+            message: "Message"
         };
         element = fixture.nativeElement;
         fixture.detectChanges();
@@ -24,30 +28,24 @@ describe("Given a confirmation dialog component", () => {
     });
 
     it("When created Then it contains the message at h2 header", () => {
-        expect(element.querySelector("h2").innerText).toEqual(component.resolve.params.message);
+        expect(element.querySelector("h2").innerText).toEqual(component.params.message);
     });
 
     it("When clicking on first button Then the close method is called", () => {
-        let closed = false;
+        const closeSpy = spyOn(modal, "close");
         const firstButton = element.querySelectorAll("button").item(0);
-        component.close.subscribe(() => {
-            closed = true;
-        });
 
         firstButton.click();
 
-        expect(closed).toBeTruthy();
+        expect(closeSpy).toHaveBeenCalled();
     });
 
     it("When clicking on second button Then the dismiss method is called", () => {
-        let dismissed = false;
+        const dismissSpy = spyOn(modal, "dismiss");
         const secondButton = element.querySelectorAll("button").item(1);
-        component.dismiss.subscribe(() => {
-            dismissed = true;
-        });
 
         secondButton.click();
 
-        expect(dismissed).toBeTruthy();
+        expect(dismissSpy).toHaveBeenCalled();
     });
 });

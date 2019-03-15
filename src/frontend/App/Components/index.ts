@@ -3,7 +3,8 @@ import "angular-gettext";
 
 import "../templates";
 
-import { UI_LIB_NAME } from "../UiLib";
+import "../UiLib/styles";
+
 import { LocalizationService } from "./localization.service";
 import { MainPage } from "./main-page.component";
 
@@ -14,7 +15,7 @@ export enum EModals {
 
 export const COMPONENTS_MODULE_NAME = angular.module(
         "myApp.components",
-        [ "templates", "ui.router", "gettext", UI_LIB_NAME ])
+        [ "templates", "ui.router", "gettext"])
     .service("localizationService", LocalizationService)
     .component("mainPage", MainPage)
     .name;

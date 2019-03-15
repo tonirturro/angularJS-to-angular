@@ -2,13 +2,15 @@ import { TestBed } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { Observable, of } from "rxjs";
-import { ELanguages, IDialogParam, ILanguageParam } from "../../Components/definitions";
+import { ELanguages, ILanguageParam } from "../../Components/definitions";
+import { NgbActiveModal } from "../../Ng-Ui-Lib";
 import { SettingsDialogComponent } from "./settings-dialog.component.ng2";
 
 describe("Given a settings dialog component", () => {
 
     let element: Element;
     let component: SettingsDialogComponent;
+    let modal: NgbActiveModal;
 
     const translations: any = { STR_Apply: "This is a test" };
 
@@ -28,14 +30,15 @@ describe("Given a settings dialog component", () => {
                 })
 
             ],
+            providers: [ NgbActiveModal ]
+
         });
         const fixture = TestBed.createComponent(SettingsDialogComponent);
+        modal = TestBed.get(NgbActiveModal);
         component = fixture.componentInstance;
-        component.resolve = {
-            params: {
+        component.params = {
                 language: ELanguages.Klingon
-            }
-        } as IDialogParam<ILanguageParam>;
+            } as ILanguageParam;
         element = fixture.nativeElement;
         fixture.detectChanges();
     });
@@ -45,30 +48,24 @@ describe("Given a settings dialog component", () => {
     });
 
     it("When setting a language Then it is selected", () => {
-        expect(Number.parseInt(component.languageOption, 10)).toEqual(component.resolve.params.language);
+        expect(Number.parseInt(component.languageOption, 10)).toEqual(component.params.language);
     });
 
     it("When clicking on first button Then the close method is called", () => {
-        let returnedValue: ELanguages;
+        const closeSpy = spyOn(modal, "close");
         const firstButton = element.querySelectorAll("button").item(0);
-        component.close.subscribe((result: ELanguages) => {
-            returnedValue = result;
-        });
 
         firstButton.click();
 
-        expect(returnedValue).toEqual(component.resolve.params.language);
+        expect(closeSpy).toHaveBeenCalledWith(component.params.language);
     });
 
     it("When clicking on second button Then the dismiss method is called", () => {
-        let dismissed = false;
+        const dismissSpy = spyOn(modal, "dismiss");
         const secondButton = element.querySelectorAll("button").item(1);
-        component.dismiss.subscribe(() => {
-            dismissed = true;
-        });
 
         secondButton.click();
 
-        expect(dismissed).toBeTruthy();
+        expect(dismissSpy).toHaveBeenCalled();
     });
 });
