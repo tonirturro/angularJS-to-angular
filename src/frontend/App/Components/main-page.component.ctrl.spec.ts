@@ -56,6 +56,8 @@ describe("Given a main page component controller", () => {
         $provide.value("ngTranslateService", new NgTranslateServiceMock());
 // tslint:disable-next-line: no-empty
         $provide.value("modalManager", { push: () => {}});
+// tslint:disable-next-line: no-empty
+        $provide.value("$state", { go: () => {}});
     }));
 
     beforeEach(inject((

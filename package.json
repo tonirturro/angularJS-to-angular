@@ -31,7 +31,7 @@
     "@angular/router": "7.1.0",
     "@angular/upgrade": "7.1.0",
     "@ngx-translate/core": "11.0.1",
-    "@uirouter/angularjs": "1.0.20",
+    "@uirouter/angular": "3.0.0",
     "angular": "1.7.5",
     "angular-animate": "1.7.5",
     "angular-gettext": "2.4.1",

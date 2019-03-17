@@ -15,7 +15,7 @@ export enum EModals {
 
 export const COMPONENTS_MODULE_NAME = angular.module(
         "myApp.components",
-        [ "templates", "ui.router", "gettext"])
+        [ "templates", "gettext"])
     .service("localizationService", LocalizationService)
     .component("mainPage", MainPage)
     .name;

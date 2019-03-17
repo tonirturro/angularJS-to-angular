@@ -14,6 +14,9 @@ import {
   LocalizationService,
   PageGridComponent,
   ToolBarComponent} from "./Ng-Components";
+import { RoutesModule } from "./Ng-Routes/routes.module";
+import { StateWrapperService } from "./Ng-Routes/state-wrapper.service";
+import { ViewWrapperComponent } from "./Ng-Routes/view-wrapper.component";
 import { ModalManagerService } from "./Ng-Ui-Lib";
 import { DataService } from "./Services/data.service";
 import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
@@ -29,6 +32,7 @@ export function GettextLoaderLoaderFactory(http: HttpClient) {
         UpgradeModule,
         HttpClientModule,
         ComponentsModule,
+        RoutesModule,
         TranslateModule.forRoot({
           loader: {
             deps: [HttpClient],
@@ -47,10 +51,12 @@ export class AppModule {
         .factory("dataService", downgradeInjectable(DataService))
         .factory("ngTranslateService", downgradeInjectable(LocalizationService))
         .factory("modalManager", downgradeInjectable(ModalManagerService))
+        .factory("$state", downgradeInjectable(StateWrapperService))
         .directive("devicePanel", downgradeComponent({ component: DevicePanelComponent }))
         .directive("deviceEdit", downgradeComponent({component: DeviceEditComponent }))
         .directive("toolbar", downgradeComponent({ component: ToolBarComponent }))
-        .directive("pageGrid", downgradeComponent({ component: PageGridComponent }));
+        .directive("pageGrid", downgradeComponent({ component: PageGridComponent }))
+        .directive("uiViewWrapper", downgradeComponent({ component: ViewWrapperComponent }));
 
       this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
     }
