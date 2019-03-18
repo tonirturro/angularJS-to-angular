@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
+import { UIRouterModule } from "@uirouter/angular";
 import { ModalManagerService, UserInterfaceLibModule } from "../Ng-Ui-Lib";
 import { IModalDescription } from "../Ng-Ui-Lib/modal/modal-manager.service";
 import { AppServicesModule } from "../Services";
@@ -9,6 +10,7 @@ import { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-d
 import { DeviceEditComponent } from "./deviceEdit/device-edit.component.ng2";
 import { DevicePanelComponent } from "./devicePanel/device-panel.component.ng2";
 import { LocalizationService } from "./localization.service";
+import { MainPageComponent } from "./main-page.component.ng2";
 import { PageGridComponent } from "./pageGrid/page-grid.component.ng2";
 import { SettingsDialogComponent } from "./settingsDialog/settings-dialog.component.ng2";
 import { ToolBarComponent } from "./toolBar/toolbar.component.ng2";
@@ -32,8 +34,8 @@ interface IModalDefinition {
 }
 
 const modals: IModalDefinition[] = [
-    { name: EModals.Confimation, description: { content: ConfirmationDialogComponent, settings: { size: "lg"}}},
-    { name: EModals.Settings, description: { content: SettingsDialogComponent, settings: { size: "sm"}}},
+    { name: EModals.Confimation, description: { content: ConfirmationDialogComponent, settings: { size: "lg" }}},
+    { name: EModals.Settings, description: { content: SettingsDialogComponent, settings: { size: "sm" }}},
 ];
 
 @NgModule({
@@ -43,7 +45,8 @@ const modals: IModalDefinition[] = [
         DevicePanelComponent,
         DeviceEditComponent,
         ToolBarComponent,
-        PageGridComponent
+        PageGridComponent,
+        MainPageComponent
     ],
     entryComponents: [
         ConfirmationDialogComponent,
@@ -51,13 +54,15 @@ const modals: IModalDefinition[] = [
         DevicePanelComponent,
         DeviceEditComponent,
         ToolBarComponent,
-        PageGridComponent
+        PageGridComponent,
+        MainPageComponent
     ],
     imports: [
         CommonModule,
         FormsModule,
         AppServicesModule,
         TranslateModule,
+        UIRouterModule.forChild(),
         UserInterfaceLibModule
      ],
      providers: [ LocalizationService ]

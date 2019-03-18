@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { IMessageParam } from "../../Components/definitions";
 import { NgbActiveModal } from "../../Ng-Ui-Lib";
+import { IMessageParam } from "../definitions";
 
 @Component({
     selector: "confirmation-dialog",

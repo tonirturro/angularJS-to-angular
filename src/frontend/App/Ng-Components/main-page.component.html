@@ -1,0 +1,23 @@
+<div class="dashboard">
+    <div class="dashboard__head ">
+        <toolbar 
+            [editingDevices]="editingDevices"
+            (onEditDevices)="editDevices()"
+            (onAddDevice)="addDevice()"
+            (onEditPages)="editPages()"
+            (onSettings)="settings()" 
+            (onClose)="close()"></toolbar>
+    </div>
+    <div class="dashboard__content">
+        <div class="left-panel">
+            <device-panel 
+                [devices]="devices"
+                [selectedDeviceId]="selectedDeviceId"
+                (onDeleteDevice)="deleteDevice($event)"
+                (onSelectedDevice)="selectDevice($event)"></device-panel>
+        </div>
+        <div class="right-panel">
+            <ui-view></ui-view>
+        </div>
+    </div>
+</div>

@@ -2,8 +2,8 @@ import { TestBed } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { Observable, of } from "rxjs";
-import { ELanguages, ILanguageParam } from "../../Components/definitions";
 import { NgbActiveModal } from "../../Ng-Ui-Lib";
+import { ELanguages, ILanguageParam } from "../definitions";
 import { SettingsDialogComponent } from "./settings-dialog.component.ng2";
 
 describe("Given a settings dialog component", () => {

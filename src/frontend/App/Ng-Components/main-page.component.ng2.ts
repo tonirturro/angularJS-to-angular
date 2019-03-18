@@ -1,21 +1,21 @@
-import { IComponentController, ILogService, IWindowService } from "angular";
-
+import { Component, OnInit } from "@angular/core";
+import { StateService } from "@uirouter/angular";
 import { EModals } from ".";
 import { IDevice } from "../../../common/rest";
-import { IStateService } from "../Routes/ui-routes";
+import { ModalManagerService } from "../Ng-Ui-Lib";
+import { ApplicationService } from "../Services/application.service";
 import { DataService } from "../Services/data.service";
-import { ELanguages, ILanguageParam, IMessageParam } from "./definitions";
+import { LogService } from "../Services/log.service";
+import { ELanguages, IDeviceSelection, ILanguageParam, IMessageParam } from "./definitions";
 import { LocalizationService } from "./localization.service";
 
-export interface IDeviceSelection {
-    deviceId: number;
-}
+@Component({
+    selector: "main-page",
+    styleUrls: [ "./main-page.component.scss" ],
+    templateUrl: "./main-page.component.html"
+})
 
-export class MainPageController implements IComponentController {
-    /**
-     * Define dependencies
-     */
-    public static $inject = [ "$log", "$window", "$state", "dataService", "modalManager", "localizationService" ];
+export class MainPageComponent implements OnInit {
 
     public selectedDeviceId: number = -1;
     public selectedPages: number[] = [];
@@ -24,12 +24,21 @@ export class MainPageController implements IComponentController {
     private currentLanguage: ELanguages;
 
     constructor(
-        private $log: ILogService,
-        private $window: IWindowService,
-        private $state: IStateService,
+        private $log: LogService,
+        private applicationService: ApplicationService,
+        private $state: StateService,
         private dataService: DataService,
-        private modalManager: any,
+        private modalManager: ModalManagerService,
         private localizationService: LocalizationService) {}
+
+    /**
+     * Component initialization
+     */
+    public ngOnInit() {
+        this.currentLanguage = ELanguages.English;
+        this.localizationService.setLanguage(this.currentLanguage);
+        this.changeView();
+     }
 
     /**
      * Exposes the devices from the data service
@@ -50,15 +59,6 @@ export class MainPageController implements IComponentController {
     }
 
     /**
-     * Component initialization
-     */
-    public $onInit() {
-        this.currentLanguage = ELanguages.English;
-        this.localizationService.setLanguage(this.currentLanguage);
-        this.changeView();
-    }
-
-    /**
      * Launch the settings dialog
      */
     public settings() {
@@ -76,13 +76,14 @@ export class MainPageController implements IComponentController {
      * Close main window
      */
     public close() {
-        const message = this.localizationService.closeMessage;
-        this.modalManager
-        .push(EModals.Confimation, { message } as IMessageParam)
-        .subscribe(() => {
-            this.$window.close();
-        }, () => {
-            this.$log.info("Dismissed close application");
+        this.localizationService.closeMessage.subscribe((message) => {
+            this.modalManager
+            .push(EModals.Confimation, { message } as IMessageParam)
+            .subscribe(() => {
+                this.applicationService.close();
+            }, () => {
+                this.$log.info("Dismissed close application");
+            });
         });
     }
 
@@ -115,7 +116,9 @@ export class MainPageController implements IComponentController {
      * Request to add a new device
      */
     public addDevice() {
-        this.dataService.addNewDevice(this.localizationService.deviceName);
+        this.localizationService.deviceName.subscribe((name) => {
+            this.dataService.addNewDevice(name);
+        });
     }
 
     /**

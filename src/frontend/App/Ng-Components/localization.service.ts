@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { ISelectableOption } from "../../../common/rest";
 import { ELanguages } from "./definitions";
 
-@Injectable({providedIn: "root"})
+@Injectable()
 export class LocalizationService {
 
     private currentLanguageCode: string = "";

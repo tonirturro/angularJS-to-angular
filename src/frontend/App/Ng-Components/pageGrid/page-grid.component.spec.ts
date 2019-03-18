@@ -44,7 +44,7 @@ describe("Given a page grid controller", () => {
         }
     }
 
-    beforeEach(() => {
+    beforeEach(async () => {
         TestBed.configureTestingModule({
             declarations: [PageGridComponent, NgbTooltipDirective ],
             imports: [
@@ -53,8 +53,9 @@ describe("Given a page grid controller", () => {
                 TranslateModule.forRoot({
                     loader: { provide: TranslateLoader, useClass: FakeLoader }
                 })
-            ]
-        }).compileComponents();
+            ],
+            providers: [ LocalizationService ],
+        });
     });
 
     beforeEach(() => {

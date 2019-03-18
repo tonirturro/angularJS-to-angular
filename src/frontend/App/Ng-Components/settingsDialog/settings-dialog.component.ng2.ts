@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { ISelectableOption } from "../../../../common/rest";
-import { ELanguages, ILanguageParam } from "../../Components/definitions";
 import { NgbActiveModal } from "../../Ng-Ui-Lib";
+import { ELanguages, ILanguageParam } from "../definitions";
 
 @Component({
     selector: "settings-dialog",

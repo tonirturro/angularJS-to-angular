@@ -14,3 +14,7 @@ export interface IMessageParam {
 export interface ILanguageParam {
     language: ELanguages;
 }
+
+export interface IDeviceSelection {
+    deviceId: number;
+}

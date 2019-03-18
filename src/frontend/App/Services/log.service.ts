@@ -9,4 +9,8 @@ export class LogService {
         // tslint:disable-next-line:no-console
         console.error(msg);
     }
+    public info(msg: string): any {
+        // tslint:disable-next-line: no-console
+        console.info(msg);
+    }
 }
