@@ -21,6 +21,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step9  : Migrate components not depending on ui-lib.
 * step10 : Migrate components depending on ui-lib.
 * step11 : Use Ng-uUi-Lib from main conponent and remove UiLib
+* step12 : Manage routes from Angular version of ui-router
 
 To go to a particular step:
 
