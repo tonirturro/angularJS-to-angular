@@ -7,6 +7,7 @@ import { LocalizationService } from "../localization.service";
 
 @Component({
     selector: "page-grid",
+    styleUrls: [ "./page-grid.component.scss" ],
     templateUrl: "./page-grid.component.html"
 })
 

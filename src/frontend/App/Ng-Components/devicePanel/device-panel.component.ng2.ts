@@ -3,6 +3,7 @@ import { IDevice } from "../../../../common/rest";
 
 @Component({
     selector: "device-panel",
+    styleUrls: [ "./device-panel.component.scss" ],
     templateUrl: "./device-panel.component.html"
 })
 
