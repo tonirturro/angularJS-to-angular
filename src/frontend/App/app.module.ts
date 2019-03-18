@@ -14,10 +14,11 @@ import {
   LocalizationService,
   PageGridComponent,
   ToolBarComponent} from "./Ng-Components";
-import { RoutesModule } from "./Ng-Routes/routes.module";
-import { StateWrapperService } from "./Ng-Routes/state-wrapper.service";
-import { ViewWrapperComponent } from "./Ng-Routes/view-wrapper.component";
+
 import { ModalManagerService } from "./Ng-Ui-Lib";
+import { RoutesModule } from "./Routes/routes.module";
+import { StateWrapperService } from "./Routes/state-wrapper.service";
+import { ViewWrapperComponent } from "./Routes/view-wrapper.component";
 import { DataService } from "./Services/data.service";
 import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
 

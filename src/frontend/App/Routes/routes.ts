@@ -1,27 +1,27 @@
-import { IState, IStateProvider, ITransition } from "./ui-routes";
+import { Ng2StateDeclaration } from "@uirouter/angular";
+import { Transition } from "@uirouter/angular";
+import { DeviceEditComponent, PageGridComponent } from "../Ng-Components";
 
-export class Routes {
-    public static $inject = [ "$stateProvider" ];
+const deviceEditState: Ng2StateDeclaration = {
+    component: DeviceEditComponent,
+    name: "device",
+    resolve: [{
+        deps: [ Transition ],
+        resolveFn: (transition: Transition) => transition.params().deviceId,
+        token: "selectedDeviceId"
+    }],
+    url: "/device/:deviceId",
+};
 
-    constructor(private $stateProvider: IStateProvider ) {
-        const deviceEditState: IState = {
-            component: "deviceEditWrapper",
-            name: "device",
-            resolve: {
-                selectedDeviceId: [ "$transition$", ($transition$: ITransition) => $transition$.params().deviceId]
-            },
-            url: "/device/{deviceId}"
-        };
-        const pagesEditState: IState = {
-            component: "pageGridWrapper",
-            name: "pages",
-            resolve: {
-                selectedDeviceId: [ "$transition$", ($transition$: ITransition) => $transition$.params().deviceId]
-            },
-            url: "/pages/{deviceId}"
-        };
+const pagesEditState: Ng2StateDeclaration = {
+    component: PageGridComponent,
+    name: "pages",
+    resolve: [{
+        deps: [ Transition ],
+        resolveFn: (transition: Transition) => transition.params().deviceId,
+        token: "selectedDeviceId"
+    }],
+    url: "/pages/:deviceId"
+};
 
-        this.$stateProvider.state(deviceEditState);
-        this.$stateProvider.state(pagesEditState);
-    }
-}
+export const STATES: Ng2StateDeclaration[] = [ deviceEditState,  pagesEditState ];
