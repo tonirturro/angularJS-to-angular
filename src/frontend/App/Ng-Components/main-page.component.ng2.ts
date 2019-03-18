@@ -127,13 +127,14 @@ export class MainPageComponent implements OnInit {
      */
     public deleteDevice(deviceId: number): void {
         const name = this.dataService.devices.find((d) => d.id === deviceId).name;
-        const message = this.localizationService.deleteDeviceMessage;
-        this.modalManager.push(EModals.Confimation, { message: `${message}: ${name}`})
+        this.localizationService.deleteDeviceMessage.subscribe((message) => {
+            this.modalManager.push(EModals.Confimation, { message: `${message}: ${name}`})
             .subscribe(() => {
                 this.dataService.deleteDevice(deviceId);
             }, () => {
                 this.$log.info(`Dismissed delete device: ${name}`);
             });
+        });
     }
 
     /**

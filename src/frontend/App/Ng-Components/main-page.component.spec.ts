@@ -153,7 +153,7 @@ describe("Given a main page component", () => {
 
     it("When deleting a device Then a dialog is open", () => {
         const deleteMessage = "Delete Device";
-        deleteDeviceMessageSpy.and.returnValue(deleteMessage);
+        deleteDeviceMessageSpy.and.returnValue(of(deleteMessage));
         const expectedDialogMessage: IMessageParam = { message: `${deleteMessage}: ${devices[0].name}` };
         modalPushSpy.and.returnValue(of({}));
 
@@ -163,6 +163,7 @@ describe("Given a main page component", () => {
     });
 
     it("When deleting a device dialog is confirmed Then the device is deleted", () => {
+        deleteDeviceMessageSpy.and.returnValue(of(""));
         modalPushSpy.and.returnValue(of({}));
 
         component.deleteDevice(devices[0].id);
@@ -171,6 +172,7 @@ describe("Given a main page component", () => {
     });
 
     it("When deleting a device dialog is not confirmed Then the device is not deleted", () => {
+        deleteDeviceMessageSpy.and.returnValue(of(""));
         const observableMock = new Subject<any>();
         modalPushSpy.and.returnValue(observableMock);
 
