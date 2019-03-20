@@ -71,7 +71,11 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             'window.jQuery': 'jquery'
-        })    
+        }),
+        new webpack.DefinePlugin({
+            'PRODUCTION': JSON.stringify(false),
+            'TEST': JSON.stringify(true)
+        }) 
     ],
     optimization: {
         removeAvailableModules: false,

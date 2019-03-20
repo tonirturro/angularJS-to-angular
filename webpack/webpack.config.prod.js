@@ -1,4 +1,5 @@
 const merge = require('webpack-merge');
+const webpack = require("webpack");
 const webpackBaseConfig = require('./webpack.config.base');
 
 module.exports = merge(webpackBaseConfig, {
@@ -7,5 +8,11 @@ module.exports = merge(webpackBaseConfig, {
         filename: 'bundle.js' 
     },
     mode: 'production',
-    target: "electron-renderer"
+    target: "electron-renderer",
+    plugins: [
+        new webpack.DefinePlugin({
+            'PRODUCTION': JSON.stringify(true),
+            'TEST': JSON.stringify(false)
+        })
+    ]
 });
