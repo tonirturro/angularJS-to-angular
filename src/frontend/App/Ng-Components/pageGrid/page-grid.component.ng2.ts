@@ -167,7 +167,7 @@ export class PageGridComponent implements OnInit, OnDestroy {
      */
     public selectPage(event: MouseEvent, pageId: number): void {
         // Do dot break multiselection if clicked on control
-        const isSelector = event.srcElement.attributes.getNamedItem("[(ngModel)]");
+        const isSelector = event.srcElement.attributes.getNamedItem("(change)");
         const isButton = event.srcElement.attributes.getNamedItem("(click)");
         if (isSelector || isButton) {
             this.updatePageSelection(pageId, true);
