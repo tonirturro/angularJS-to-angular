@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { NgbActiveModal } from "../../Ng-Ui-Lib";
-import { ConfirmationDialogComponent } from "./confirmation-dialog.component.ng2";
+import { ConfirmationDialogComponent } from "./confirmation-dialog.component";
 
 describe("Given a confirmation dialog component", () => {
 

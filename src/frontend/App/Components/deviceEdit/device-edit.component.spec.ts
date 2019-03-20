@@ -3,7 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { IDevice } from "../../../../common/rest";
 import { AppServicesModule } from "../../Services";
 import { DataService } from "../../Services/data.service";
-import { DeviceEditComponent } from "./device-edit.component.ng2";
+import { DeviceEditComponent } from "./device-edit.component";
 
 describe("Given a device edit component", () => {
     const Devices: IDevice[] = [

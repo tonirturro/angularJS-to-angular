@@ -1,6 +1,6 @@
 import { Ng2StateDeclaration } from "@uirouter/angular";
 import { Transition } from "@uirouter/angular";
-import { DeviceEditComponent, PageGridComponent } from "../Ng-Components";
+import { DeviceEditComponent, PageGridComponent } from "../Components";
 
 const deviceEditState: Ng2StateDeclaration = {
     component: DeviceEditComponent,

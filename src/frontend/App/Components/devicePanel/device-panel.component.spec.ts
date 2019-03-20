@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { IDevice } from "../../../../common/rest";
-import { DevicePanelComponent } from "./device-panel.component.ng2";
+import { DevicePanelComponent } from "./device-panel.component";
 
 describe("Given a device panel component", () => {
     const InitialDevices: IDevice[] = [

@@ -10,10 +10,10 @@ import { AppServicesModule } from "../Services";
 import { ApplicationService } from "../Services/application.service";
 import { DataService } from "../Services/data.service";
 import { ELanguages, IDeviceSelection, ILanguageParam, IMessageParam } from "./definitions";
-import { DevicePanelComponent } from "./devicePanel/device-panel.component.ng2";
+import { DevicePanelComponent } from "./devicePanel/device-panel.component";
 import { LocalizationService } from "./localization.service";
-import { MainPageComponent } from "./main-page.component.ng2";
-import { ToolBarComponent } from "./toolBar/toolbar.component.ng2";
+import { MainPageComponent } from "./main-page.component";
+import { ToolBarComponent } from "./toolBar/toolbar.component";
 
 describe("Given a main page component", () => {
 

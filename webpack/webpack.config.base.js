@@ -43,7 +43,7 @@ module.exports = {
                 use: 'file-loader'
             },
             {
-                test: /\.component.ng2.ts$/,
+                test: /\.ts$/,
                 use: [{
                     loader: 'ts-loader',
                     options: {
@@ -51,17 +51,6 @@ module.exports = {
                         experimentalWatchApi: true
                     }
                 }, 'angular2-template-loader']
-            },
-            {
-                test: /\.ts$/,
-                exclude:  /\.component.ng2.ts$/,
-                use: [{
-                    loader: 'ts-loader',
-                    options: {
-                        transpileOnly: true,
-                        experimentalWatchApi: true
-                    }
-                }]
             }
         ]
     },

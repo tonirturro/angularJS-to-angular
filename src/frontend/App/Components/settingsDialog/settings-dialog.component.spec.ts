@@ -4,7 +4,7 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { Observable, of } from "rxjs";
 import { NgbActiveModal } from "../../Ng-Ui-Lib";
 import { ELanguages, ILanguageParam } from "../definitions";
-import { SettingsDialogComponent } from "./settings-dialog.component.ng2";
+import { SettingsDialogComponent } from "./settings-dialog.component";
 
 describe("Given a settings dialog component", () => {
 

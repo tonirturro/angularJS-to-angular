@@ -31,7 +31,6 @@
     "@angular/router": "7.1.0",
     "@ngx-translate/core": "11.0.1",
     "@uirouter/angular": "3.0.0",
-    "angular-gettext": "2.4.1",
     "body-parser": "1.18.3",
     "core-js": "2.5.4",
     "electron": "2.0.8",
