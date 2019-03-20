@@ -1,10 +1,5 @@
 // load jquery
 require('jquery');
-// load the code
-require("../src/frontend/App/app.modulejs");
-
-// Load AngularJS test dependencies
-require("angular-mocks");
 
 // Load Angular test dependencies
 Error.stackTraceLimit = Infinity;

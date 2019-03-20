@@ -1,10 +1,7 @@
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { UpgradeModule } from "@angular/upgrade/static";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
-
-import { moduleJs } from "./app.modulejs";
 
 import { ComponentsModule } from "./Ng-Components";
 
@@ -21,7 +18,6 @@ export function GettextLoaderLoaderFactory(http: HttpClient) {
     bootstrap: [ MainPageComponent ],
     imports: [
         BrowserModule,
-        UpgradeModule,
         HttpClientModule,
         ComponentsModule,
         RoutesModule,
@@ -34,9 +30,4 @@ export function GettextLoaderLoaderFactory(http: HttpClient) {
         })
     ]
 })
-export class AppModule {
-    constructor(private upgrade: UpgradeModule) { }
-    public ngDoBootstrap() {
-      this.upgrade.bootstrap(document.body, [moduleJs], { strictDi: true });
-    }
-}
+export class AppModule {}

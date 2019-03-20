@@ -14,13 +14,13 @@ gulp.task('test-backend', () => {
          }))
 });
 
-gulp.task('test-frontend', ['views', 'watch-templates'], (done) => {
+gulp.task('test-frontend', (done) => {
     new KarmaServer({
         configFile: karmaConfig
     }, done).start();
 });
 
-gulp.task('test-frontend-single', ['views'], (done) => {
+gulp.task('test-frontend-single', (done) => {
     new KarmaServer({
         configFile: karmaConfig,
         singleRun: true

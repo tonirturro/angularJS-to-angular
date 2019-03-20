@@ -13,9 +13,6 @@ dist/
 #server dist stuff
 server/**/*.*
 
-#templates
-src/frontend/App/templates.js
-
 #do not lock versions
 package-lock.json
 
