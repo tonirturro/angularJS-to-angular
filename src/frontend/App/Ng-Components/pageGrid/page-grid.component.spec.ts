@@ -65,7 +65,7 @@ describe("Given a page grid controller", () => {
         const dataService = TestBed.get(DataService);
         updatePageMock = spyOn(dataService, "updatePageField");
         getCapabilitiesMock = spyOn(dataService, "getCapabilities");
-        getCapabilitiesMock.and.returnValue(capabilities);
+        getCapabilitiesMock.and.returnValue(of(capabilities));
         const localizationService = TestBed.get(LocalizationService);
         getLocalizedCapabilityMock = spyOn(localizationService, "getLocalizedCapability");
         getLocalizedCapabilityMock.and.returnValue(of({}));

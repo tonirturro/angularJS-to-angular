@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
+import { combineLatest, Subscription } from "rxjs";
 import { PageFields } from "../../../../common/model";
 import { IPage, ISelectableOption } from "../../../../common/rest";
 import { DataService } from "../../Services/data.service";
@@ -30,6 +30,9 @@ export class PageGridComponent implements OnInit, OnDestroy {
     private localizedMediaTypeCapabilities: ISelectableOption[] = [];
     private localizedDestinationCapabilities: ISelectableOption[] = [];
     private localizationSubscription: Subscription;
+    private readonly defaultPageSizes: ISelectableOption[] = [];
+    private cachedPageSizes: ISelectableOption[];
+    private readingPageSizes: boolean;
 
     constructor(
         private dataService: DataService,
@@ -65,7 +68,20 @@ export class PageGridComponent implements OnInit, OnDestroy {
      * Get the available page options
      */
     public get PageSizeOptions(): ISelectableOption[] {
-        return this.dataService.getCapabilities(PageFields.PageSize);
+        if (this.cachedPageSizes) {
+            return this.cachedPageSizes;
+        }
+
+        if (!this.readingPageSizes) {
+            this.readingPageSizes = true;
+            this.dataService
+                .getCapabilities(PageFields.PageSize)
+                .subscribe((capabilities) => {
+                    this.cachedPageSizes = capabilities;
+                });
+        }
+
+        return this.defaultPageSizes;
     }
 
     /**
@@ -195,20 +211,32 @@ export class PageGridComponent implements OnInit, OnDestroy {
      * Gets the capabilites that need to be translated and translates them
      */
     private loadLocalizedCapabilities() {
-        this.localizedPrintQualityCapabilities = [];
         this.dataService
             .getCapabilities(PageFields.PrintQuality)
-            .map((capability) => this.localizationService.getLocalizedCapability(capability)
-                .subscribe((result) => this.localizedPrintQualityCapabilities.push(result)));
-        this.localizedMediaTypeCapabilities = [];
+            .subscribe((capabilities) => {
+                const requests = capabilities.
+                    map((capability) => this.localizationService.getLocalizedCapability(capability));
+                combineLatest(requests).subscribe((localizedCapabilities) => {
+                        this.localizedPrintQualityCapabilities = localizedCapabilities;
+                });
+            });
         this.dataService
             .getCapabilities(PageFields.MediaType)
-            .map((capability) => this.localizationService.getLocalizedCapability(capability)
-                .subscribe((result) => this.localizedMediaTypeCapabilities.push(result)));
-        this.localizedDestinationCapabilities = [];
+            .subscribe((capabilities) => {
+                const requests = capabilities.
+                    map((capability) => this.localizationService.getLocalizedCapability(capability));
+                combineLatest(requests).subscribe((localizedCapabilities) => {
+                        this.localizedMediaTypeCapabilities = localizedCapabilities;
+                });
+            });
         this.dataService
             .getCapabilities(PageFields.Destination)
-            .map((capability) => this.localizationService.getLocalizedCapability(capability)
-                .subscribe((result) => this.localizedDestinationCapabilities.push(result)));
+            .subscribe((capabilities) => {
+                const requests = capabilities.
+                    map((capability) => this.localizationService.getLocalizedCapability(capability));
+                combineLatest(requests).subscribe((localizedCapabilities) => {
+                        this.localizedDestinationCapabilities = localizedCapabilities;
+                });
+            });
     }
 }

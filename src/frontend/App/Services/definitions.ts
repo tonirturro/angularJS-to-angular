@@ -5,7 +5,7 @@ import { IDevice, IPage, ISelectableOption } from "../../../common/rest";
 export interface IDataService {
     pages: IPage[];
     devices: IDevice[];
-    getCapabilities: (capability: string) => ISelectableOption[];
+    getCapabilities: (capability: string) => Observable<ISelectableOption[]>;
     addNewPage: (deviceId: number) => void;
     addNewDevice: (name: string) => void;
     deletePage: (idToDelete: number) => void;

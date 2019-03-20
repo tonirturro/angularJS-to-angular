@@ -246,33 +246,32 @@ describe("Given a data service", () => {
         expect(request.request.method).toEqual("GET");
     });
 
-    it("When reading capabilities for the first time Then they are got from the model", () => {
-        const capabilities = service.getCapabilities(PageFields.PageSize);
-
-        request = httpMock.expectOne(ExpectedCapabilitiesCall);
-        expect(capabilities.length).toBe(0);
-    });
-
-    it("When reading capabilities after the first time and before the model responds" +
-        "Then they are'nt got from the model", () => {
-        let capabilities = service.getCapabilities(PageFields.PageSize);
-        request = httpMock.expectOne(ExpectedCapabilitiesCall);
-        capabilities = service.getCapabilities(PageFields.PageSize);
-
-        httpMock.expectNone(ExpectedCapabilitiesCall);
-        expect(capabilities.length).toBe(0);
-    });
-
-    it("Can read device page options", () => {
+    it("Can read device page options", (done) => {
         const devicePageOptionsResponse: ISelectableOption[] = [
             { value: "0", label: "label0 "}
         ];
 
-        let capabilities = service.getCapabilities(PageFields.PageSize);
+        service.getCapabilities(PageFields.PageSize).subscribe((capabilities) => {
+            expect(capabilities).toEqual(devicePageOptionsResponse);
+            done();
+        });
         request = httpMock.expectOne(`${deviceOptionsUrl}${PageFields.PageSize}`);
         request.flush(devicePageOptionsResponse);
-        capabilities = service.getCapabilities(PageFields.PageSize);
-
-        expect(capabilities).toEqual(devicePageOptionsResponse);
     });
+
+    it("Can cache device page options", (done) => {
+        const devicePageOptionsResponse: ISelectableOption[] = [
+            { value: "0", label: "label0 "}
+        ];
+
+        service.getCapabilities(PageFields.PageSize).subscribe();
+        request = httpMock.expectOne(`${deviceOptionsUrl}${PageFields.PageSize}`);
+        request.flush(devicePageOptionsResponse);
+
+        service.getCapabilities(PageFields.PageSize).subscribe((capabilities) => {
+            expect(capabilities).toEqual(devicePageOptionsResponse);
+            done();
+        });
+    });
+
 });

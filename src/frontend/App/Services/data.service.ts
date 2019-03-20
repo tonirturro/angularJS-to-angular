@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable, of, Subject } from "rxjs";
 import {
     IDeleteDeviceResponse,
     IDeletePageResponse,
@@ -43,8 +44,6 @@ export class DataService implements IDataService {
     private defaultCachedDevices: IDevice[] = [];
     private isGettingDevices = false;
     private cachedCapabilities: ICapabilitiesDictionary = {};
-    private isGettingCapabilities: IGettingCapabilitiesDictionary = {};
-    private defaultCachedCapabilities: ISelectableOption[] = [];
 
     /**
      * Initializes a new instance from the Data class.
@@ -90,17 +89,12 @@ export class DataService implements IDataService {
      * Get the options available for a particular device capability
      * @param capability the capability to be queried
      */
-    public getCapabilities(capability: string): ISelectableOption[] {
+    public getCapabilities(capability: string): Observable<ISelectableOption[]> {
         if (this.cachedCapabilities[capability]) {
-            return this.cachedCapabilities[capability];
+            return of(this.cachedCapabilities[capability]);
         }
 
-        if (!this.isGettingCapabilities[capability]) {
-            this.isGettingCapabilities[capability] = true;
-            this.getCapabilitiesFromModel(capability);
-        }
-
-        return this.defaultCachedCapabilities;
+        return this.getCapabilitiesFromModel(capability);
     }
 
     /**
@@ -231,15 +225,21 @@ export class DataService implements IDataService {
      * Query the options available for a particular device capability
      * @param capability the capability to be queried
      */
-    private getCapabilitiesFromModel(capability: string) {
+    private getCapabilitiesFromModel(capability: string): Observable<ISelectableOption[]> {
+        const capabilitiesResult = new Subject<ISelectableOption[]>();
+
         this.http.get<ISelectableOption[]>(`${this.getUrl("deviceOptions")}${capability}`)
             .subscribe((options) => {
                 this.cachedCapabilities[capability] = options;
+                capabilitiesResult.next(options);
+                capabilitiesResult.complete();
             },
-                () => {
-                    this.isGettingCapabilities[capability] = false;
+                (error) => {
                     this.log.error(`Failure to get ${capability} device capability`);
+                    capabilitiesResult.error(error);
                 });
+
+        return capabilitiesResult;
     }
 
     /**

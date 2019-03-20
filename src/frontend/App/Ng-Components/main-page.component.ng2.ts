@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { StateService } from "@uirouter/angular";
+import { take } from "rxjs/operators";
 import { EModals } from ".";
 import { IDevice } from "../../../common/rest";
 import { ModalManagerService } from "../Ng-Ui-Lib";
@@ -36,8 +37,13 @@ export class MainPageComponent implements OnInit {
      */
     public ngOnInit() {
         this.currentLanguage = ELanguages.English;
+        this.localizationService.language$
+            .pipe(take(1))
+            .subscribe(() => {
+                this.$log.info("Set initial language");
+                this.changeView();
+            });
         this.localizationService.setLanguage(this.currentLanguage);
-        this.changeView();
      }
 
     /**

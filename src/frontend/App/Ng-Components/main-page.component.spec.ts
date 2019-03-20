@@ -21,6 +21,7 @@ describe("Given a main page component", () => {
         id: 1,
         name: "Device 2"
     }];
+    const languageObservable: Subject<any> = new Subject<any>();
 
     let fixture: ComponentFixture<MainPageComponent>;
     let element: Element;
@@ -83,12 +84,14 @@ describe("Given a main page component", () => {
         deviceNameSpy = spyOnProperty(localizationService, "deviceName", "get");
         deleteDeviceMessageSpy = spyOnProperty(localizationService, "deleteDeviceMessage", "get");
         closeMessageSpy = spyOnProperty(localizationService, "closeMessage", "get");
+        spyOnProperty(localizationService, "language$", "get").and.returnValue(languageObservable);
         const modalManagerService: ModalManagerService = TestBed.get(ModalManagerService);
         modalPushSpy = spyOn(modalManagerService, "push");
         const applicationService: ApplicationService = TestBed.get(ApplicationService);
         closeSpy = spyOn(applicationService, "close");
 
         fixture.detectChanges();
+        languageObservable.next();
     });
 
     it("When it is initialized Then the html is defined", () => {
