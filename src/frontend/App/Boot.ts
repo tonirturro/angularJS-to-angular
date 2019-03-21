@@ -2,7 +2,7 @@ import "./polyfills";
 
 import "./angular-modules";
 
-import "./Ng-Ui-Lib/styles/bootstrap.scss";
+import "./UiLib/styles/bootstrap.scss";
 
 import "./app.styles.css";
 

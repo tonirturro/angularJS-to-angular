@@ -3,10 +3,10 @@ import { StateService } from "@uirouter/angular";
 import { take } from "rxjs/operators";
 import { EModals } from ".";
 import { IDevice } from "../../../common/rest";
-import { ModalManagerService } from "../Ng-Ui-Lib";
 import { ApplicationService } from "../Services/application.service";
 import { DataService } from "../Services/data.service";
 import { LogService } from "../Services/log.service";
+import { ModalManagerService } from "../UiLib";
 import { ELanguages, IDeviceSelection, ILanguageParam, IMessageParam } from "./definitions";
 import { LocalizationService } from "./localization.service";
 

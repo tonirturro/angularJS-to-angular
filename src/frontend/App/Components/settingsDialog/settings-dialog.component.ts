@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ISelectableOption } from "../../../../common/rest";
-import { NgbActiveModal } from "../../Ng-Ui-Lib";
+import { NgbActiveModal } from "../../UiLib";
 import { ELanguages, ILanguageParam } from "../definitions";
 
 @Component({

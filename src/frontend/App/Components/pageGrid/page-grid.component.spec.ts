@@ -4,11 +4,11 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { Observable, of, Subject } from "rxjs";
 import { PageFields } from "../../../../common/model";
 import { ISelectableOption } from "../../../../common/rest";
-import { NgbTooltipDirective } from "../../Ng-Ui-Lib";
 import { AppServicesModule } from "../../Services";
 import { DataService } from "../../Services/data.service";
+import { NgbTooltipDirective } from "../../UiLib";
 import { LocalizationService } from "../localization.service";
-import { PageGridComponent } from "./page-grid.component.ng2";
+import { PageGridComponent } from "./page-grid.component";
 
 describe("Given a page grid controller", () => {
     const fakeMouseEvent: any = {

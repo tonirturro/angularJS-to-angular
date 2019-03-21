@@ -3,15 +3,15 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { UIRouterModule } from "@uirouter/angular";
-import { ModalManagerService, UserInterfaceLibModule } from "../Ng-Ui-Lib";
-import { IModalDescription } from "../Ng-Ui-Lib/modal/modal-manager.service";
 import { AppServicesModule } from "../Services";
+import { UserInterfaceLibModule } from "../UiLib";
+import { IModalDescription, ModalManagerService } from "../UiLib/modal/modal-manager.service";
 import { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-dialog.component";
 import { DeviceEditComponent } from "./deviceEdit/device-edit.component";
 import { DevicePanelComponent } from "./devicePanel/device-panel.component";
 import { LocalizationService } from "./localization.service";
 import { MainPageComponent } from "./main-page.component";
-import { PageGridComponent } from "./pageGrid/page-grid.component.ng2";
+import { PageGridComponent } from "./pageGrid/page-grid.component";
 import { SettingsDialogComponent } from "./settingsDialog/settings-dialog.component";
 import { ToolBarComponent } from "./toolBar/toolbar.component";
 
@@ -20,7 +20,7 @@ export { SettingsDialogComponent } from "./settingsDialog/settings-dialog.compon
 export { DevicePanelComponent } from "./devicePanel/device-panel.component";
 export { DeviceEditComponent } from "./deviceEdit/device-edit.component";
 export { ToolBarComponent } from "./toolBar/toolbar.component";
-export { PageGridComponent } from "./pageGrid/page-grid.component.ng2";
+export { PageGridComponent } from "./pageGrid/page-grid.component";
 export { LocalizationService } from "./localization.service";
 
 export enum EModals {

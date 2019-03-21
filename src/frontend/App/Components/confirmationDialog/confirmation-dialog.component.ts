@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { NgbActiveModal } from "../../Ng-Ui-Lib";
+import { NgbActiveModal } from "../../UiLib";
 import { IMessageParam } from "../definitions";
 
 @Component({

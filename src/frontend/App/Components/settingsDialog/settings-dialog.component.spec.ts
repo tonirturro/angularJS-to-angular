@@ -2,7 +2,7 @@ import { TestBed } from "@angular/core/testing";
 import { FormsModule } from "@angular/forms";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { Observable, of } from "rxjs";
-import { NgbActiveModal } from "../../Ng-Ui-Lib";
+import { NgbActiveModal } from "../../UiLib/modal/modal-active";
 import { ELanguages, ILanguageParam } from "../definitions";
 import { SettingsDialogComponent } from "./settings-dialog.component";
 
