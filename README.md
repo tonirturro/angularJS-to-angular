@@ -23,6 +23,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step11 : Use Ng-uUi-Lib from main conponent and remove UiLib.
 * step12 : Manage routes from Angular version of ui-router.
 * step13 : Migrate main component.
+* step14 : Remove AngularJS references.
 
 To go to a particular step:
 
