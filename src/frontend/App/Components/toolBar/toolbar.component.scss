@@ -2,6 +2,9 @@
     display: flex;
     &__left {
         flex: 1;
+        .btn-group {
+            margin-right: 5px;
+        }
     }
     &__right {
         flex: 1;

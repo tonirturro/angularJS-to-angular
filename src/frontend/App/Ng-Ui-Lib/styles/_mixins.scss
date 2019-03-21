@@ -1,8 +1,14 @@
 // Utilities
 @import "mixins/breakpoints";
+@import "mixins/hover";
 @import "mixins/reset-text";
+
+// Components
+@import "mixins/buttons";
+@import "mixins/table-row";
 
 // Skins
 @import "mixins/border-radius";
 @import "mixins/box-shadow";
+@import "mixins/gradients";
 @import "mixins/transition";

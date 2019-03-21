@@ -1,6 +1,18 @@
+// Core variables and mixins
 @import "functions";
 @import "variables";
 @import "mixins";
+@import "utilities";
+
+// Reset and dependencies
+@import "normalize";
+@import "glyphicons";
+
+// Core CSS
+@import "tables";
+@import "buttons";
+@import "button-group";
+
+// Components
 @import "modal";
 @import "tooltip";
-@import "utilities";
