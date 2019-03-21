@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { Observable, of } from "rxjs";
-import { ToolBarComponent } from "..";
 import { NgbTooltipDirective } from "../../UiLib";
+import { ToolBarComponent } from "./toolbar.component";
 
 enum ButtonPosition {
     AddDevice, EditDevice, EditPages, Settings, Close

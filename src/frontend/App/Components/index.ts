@@ -7,6 +7,7 @@ import { AppServicesModule } from "../Services";
 import { UserInterfaceLibModule } from "../UiLib";
 import { IModalDescription, ModalManagerService } from "../UiLib/modal/modal-manager.service";
 import { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-dialog.component";
+import { EModals } from "./definitions";
 import { DeviceEditComponent } from "./deviceEdit/device-edit.component";
 import { DevicePanelComponent } from "./devicePanel/device-panel.component";
 import { LocalizationService } from "./localization.service";
@@ -15,18 +16,7 @@ import { PageGridComponent } from "./pageGrid/page-grid.component";
 import { SettingsDialogComponent } from "./settingsDialog/settings-dialog.component";
 import { ToolBarComponent } from "./toolBar/toolbar.component";
 
-export { ConfirmationDialogComponent } from "./confirmationDialog/confirmation-dialog.component";
-export { SettingsDialogComponent } from "./settingsDialog/settings-dialog.component";
-export { DevicePanelComponent } from "./devicePanel/device-panel.component";
-export { DeviceEditComponent } from "./deviceEdit/device-edit.component";
-export { ToolBarComponent } from "./toolBar/toolbar.component";
-export { PageGridComponent } from "./pageGrid/page-grid.component";
-export { LocalizationService } from "./localization.service";
-
-export enum EModals {
-    Confimation = "confirmation",
-    Settings = "settings"
-}
+export { MainPageComponent } from "./main-page.component";
 
 interface IModalDefinition {
     name: EModals;
@@ -49,13 +39,9 @@ const modals: IModalDefinition[] = [
         MainPageComponent
     ],
     entryComponents: [
+        MainPageComponent,
         ConfirmationDialogComponent,
-        SettingsDialogComponent,
-        DevicePanelComponent,
-        DeviceEditComponent,
-        ToolBarComponent,
-        PageGridComponent,
-        MainPageComponent
+        SettingsDialogComponent
     ],
     imports: [
         CommonModule,

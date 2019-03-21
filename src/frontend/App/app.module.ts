@@ -3,9 +3,8 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 
-import { ComponentsModule } from "./Components";
+import { ComponentsModule, MainPageComponent } from "./Components";
 
-import { MainPageComponent } from "./Components/main-page.component";
 import { RoutesModule } from "./Routes/routes.module";
 import { GettextTranslationsLoader } from "./Services/gettext-translations.loader";
 

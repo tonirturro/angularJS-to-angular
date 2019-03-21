@@ -1,3 +1,8 @@
+export enum EModals {
+    Confimation = "confirmation",
+    Settings = "settings"
+}
+
 export enum ELanguages {
     English,
     Klingon
