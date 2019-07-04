@@ -1,11 +1,26 @@
-const merge = require('webpack-merge');
-const webpackBaseConfig = require('./webpack.config.base');
 
-module.exports = merge(webpackBaseConfig, {
+module.exports =  {
     output: {
-        filename: 'main.js' 
+        filename: 'backend.js' 
     },
     target: 'electron-main',
     mode: 'development',
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: [{
+                    loader: 'ts-loader',
+                    options: {
+                        transpileOnly: true,
+                        experimentalWatchApi: true
+                    }
+                }]
+            }
+        ]
+    },
+    resolve: {
+        extensions: ['.js', '.ts']
+    },
     devtool: 'inline-source-map'
-});
+}

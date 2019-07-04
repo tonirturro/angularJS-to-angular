@@ -1,42 +1,31 @@
-// Karma configuration
-// Generated on Tue Mar 21 2017 21:29:48 GMT+0100 (Romance Standard Time)
-const webpackConfig = require('../webpack/webpack.config.test');
+// Karma configuration file, see link for more information
+// https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function (config) {
     config.set({
-
-        // frameworks to use
-        // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
-
-        files: [
-            "unitFrontend.js"
-        ],
-
-        preprocessors: {
-            "unitFrontend.js": ["webpack", "sourcemap"]
-        },
-
-        webpackMiddleware: {
-            stats: 'errors-only'
-        },
-        webpackServer: {
-            noInfo: true
-        },
-        webpack: webpackConfig,
-
-        // test results reporter to use
-        // possible values: 'dots', 'progress'
-        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress'],
-
-        // web server port
-        port: 9876,
-
-        // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
-
-        concurrency: Infinity
+      basePath: '',
+      frameworks: ['jasmine', '@angular-devkit/build-angular'],
+      plugins: [
+        require('karma-jasmine'),
+        require('karma-chrome-launcher'),
+        require('karma-jasmine-html-reporter'),
+        require('karma-coverage-istanbul-reporter'),
+        require('@angular-devkit/build-angular/plugins/karma')
+      ],
+      client: {
+        clearContext: false // leave Jasmine Spec Runner output visible in browser
+      },
+      coverageIstanbulReporter: {
+        dir: require('path').join(__dirname, '../coverage'),
+        reports: ['html', 'lcovonly', 'text-summary'],
+        fixWebpackSourcePaths: true
+      },
+      reporters: ['progress', 'kjhtml'],
+      port: 9876,
+      colors: true,
+      logLevel: config.LOG_INFO,
+      autoWatch: true,
+      browsers: ['Chrome'],
+      singleRun: false
     });
-};
+  };

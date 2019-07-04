@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-
-declare var TEST: boolean;
+import { environment } from "../../environments/environment";
 
 /**
  * As silly as use the console to simulate a log service
@@ -8,13 +7,13 @@ declare var TEST: boolean;
 @Injectable()
 export class LogService {
     public error(msg: string) {
-        if (!TEST) {
+        if (!environment.test) {
             // tslint:disable-next-line:no-console
             console.error(msg);
         }
     }
     public info(msg: string): any {
-        if (!TEST) {
+        if (!environment.test) {
             // tslint:disable-next-line: no-console
             console.info(msg);
         }

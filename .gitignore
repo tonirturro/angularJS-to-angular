@@ -16,3 +16,6 @@ backend-build/
 #do not lock versions
 package-lock.json
 
+#coverage
+coverage/
+

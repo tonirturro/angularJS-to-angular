@@ -1,6 +1,8 @@
-import { expect } from "chai";
+
 import { PageFields } from "../../common/model";
 import { Capabilities } from "./Capabilities";
+
+import { expect } from "chai";
 
 describe("Given a capabilities service", () => {
     let capabilities: Capabilities;

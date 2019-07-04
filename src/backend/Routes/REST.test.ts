@@ -1,7 +1,9 @@
-import * as chai from "chai";
-import { expect } from "chai";
-import chaiHttp = require("chai-http");
-import * as sinon from "sinon";
+// tslint:disable-next-line: no-var-requires
+const chaiHttp = require("chai-http");
+// tslint:disable-next-line: no-var-requires
+const sinon = require("sinon");
+
+import { expect, request, use } from "chai";
 
 import { PageFields } from "../../common/model";
 import { INewDeviceParams, IUpdateDeviceParams, IUpdateParams } from "../../common/rest";
@@ -14,7 +16,7 @@ describe("REST Route", () => {
     const ExpectedDeviceId = 2;
 
     const checkRESTResponse = (field: string, done: () => void) => {
-        chai.request(main.application)
+        request(main.application)
             .put(`/REST/pages/${field}`)
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -44,7 +46,7 @@ describe("REST Route", () => {
             pages: [pageId],
         };
 
-        chai.request(main.application)
+        request(main.application)
             .put(`/REST/pages/${field}`)
             .set("content-type", "application/json")
             .send(JSON.stringify(data))
@@ -58,7 +60,7 @@ describe("REST Route", () => {
     /**
      * Initialize test environment
      */
-    chai.use(chaiHttp);
+    use(chaiHttp);
     const getCapabilitiesSpy = sinon.spy(main.dependencies.capabilitiesLayer, "getCapabilities");
 
     /**
@@ -71,7 +73,7 @@ describe("REST Route", () => {
      * Pages
      ************************************************************/
     it("Get pages responds ok", (done) => {
-        chai.request(main.application)
+        request(main.application)
             .get("/REST/pages")
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -81,7 +83,7 @@ describe("REST Route", () => {
 
     it("Get pages respond calls data", (done) => {
         const spy = sinon.spy(main.dependencies.dataLayer, "getPages");
-        chai.request(main.application)
+        request(main.application)
             .get("/REST/pages")
             .then(() => {
                 expect(spy.calledOnce).to.equal(true);
@@ -90,7 +92,7 @@ describe("REST Route", () => {
     });
 
     it("Post pages responds ok", (done) => {
-        chai.request(main.application)
+        request(main.application)
             .post(`/REST/pages/${ExpectedDeviceId}`)
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -100,7 +102,7 @@ describe("REST Route", () => {
 
     it("Post pages calls new page", (done) => {
         const spy = sinon.spy(main.dependencies.dataLayer, "newPage");
-        chai.request(main.application)
+        request(main.application)
             .post(`/REST/pages/${ExpectedDeviceId}`)
             .then(() => {
                 expect(spy.calledOnce).to.equal(true);
@@ -110,7 +112,7 @@ describe("REST Route", () => {
     });
 
     it("Delete page responds ok", (done) => {
-        chai.request(main.application)
+        request(main.application)
             .del(`/REST/pages/${ExpectedPageId}`)
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -120,7 +122,7 @@ describe("REST Route", () => {
 
     it("Delete page calls delete page with the right page number", (done) => {
         const spy = sinon.spy(main.dependencies.dataLayer, "deletePage");
-        chai.request(main.application)
+        request(main.application)
             .del(`/REST/pages/${ExpectedPageId}`)
             .then(() => {
                 expect(spy.calledOnce).to.equal(true);
@@ -165,7 +167,7 @@ describe("REST Route", () => {
      * Devices
      **************************************************************************************/
     it("Get devices responds ok", (done) => {
-        chai.request(main.application)
+        request(main.application)
             .get("/REST/devices")
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -175,7 +177,7 @@ describe("REST Route", () => {
 
     it("Get devices respond calls data", (done) => {
         const spy = sinon.spy(main.dependencies.dataLayer, "getDevices");
-        chai.request(main.application)
+        request(main.application)
             .get("/REST/devices")
             .then(() => {
                 expect(spy.calledOnce).to.equal(true);
@@ -184,7 +186,7 @@ describe("REST Route", () => {
     });
 
     it("Put devices responds ok", (done) => {
-        chai.request(main.application)
+        request(main.application)
             .put("/REST/devices")
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -197,7 +199,7 @@ describe("REST Route", () => {
         const data: INewDeviceParams = {
             name: "any"
         };
-        chai.request(main.application)
+        request(main.application)
             .put("/REST/devices")
             .set("content-type", "application/json")
             .send(JSON.stringify(data))
@@ -209,7 +211,7 @@ describe("REST Route", () => {
     });
 
     it("Delete device responds ok", (done) => {
-        chai.request(main.application)
+        request(main.application)
             .del(`/REST/devices/${ExpectedDeviceId}`)
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -219,7 +221,7 @@ describe("REST Route", () => {
 
     it("Delete device calls delete device with the right device number", (done) => {
         const spy = sinon.spy(main.dependencies.dataLayer, "deleteDevice");
-        chai.request(main.application)
+        request(main.application)
             .del(`/REST/devices/${ExpectedDeviceId}`)
             .then(() => {
                 let r = expect(spy.calledOnce).to.be.true;
@@ -235,7 +237,7 @@ describe("REST Route", () => {
             newValue: "any"
         };
 
-        chai.request(main.application)
+        request(main.application)
             .put(`/REST/devices/name`)
             .set("content-type", "application/json")
             .send(JSON.stringify(data))
@@ -247,7 +249,7 @@ describe("REST Route", () => {
     });
 
     it("Getting device options responds ok", (done) => {
-        chai.request(main.application)
+        request(main.application)
             .get("/REST/deviceOptions/any")
             .then((res) => {
                 expect(res.status).to.equal(200);
@@ -257,7 +259,7 @@ describe("REST Route", () => {
 
     it("Getting the page options calls the appropiated capabilities", (done) => {
         getCapabilitiesSpy.reset();
-        chai.request(main.application)
+        request(main.application)
             .get(`/REST/deviceOptions/${PageFields.PageSize}`)
             .then(() => {
                 expect(getCapabilitiesSpy.calledOnce).to.equal(true);
@@ -268,7 +270,7 @@ describe("REST Route", () => {
 
     it("Getting the qualities options calls the appropiated capabilities", (done) => {
         getCapabilitiesSpy.reset();
-        chai.request(main.application)
+        request(main.application)
             .get(`/REST/deviceOptions/${PageFields.PrintQuality}`)
             .then(() => {
                 expect(getCapabilitiesSpy.calledOnce).to.equal(true);
@@ -279,7 +281,7 @@ describe("REST Route", () => {
 
     it("Getting the media options calls the appropiated capabilities", (done) => {
         getCapabilitiesSpy.reset();
-        chai.request(main.application)
+        request(main.application)
             .get(`/REST/deviceOptions/${PageFields.MediaType}`)
             .then(() => {
                 expect(getCapabilitiesSpy.calledOnce).to.equal(true);
@@ -290,7 +292,7 @@ describe("REST Route", () => {
 
     it("Getting the destination options calls the appropiated capabilities", (done) => {
         getCapabilitiesSpy.reset();
-        chai.request(main.application)
+        request(main.application)
             .get(`/REST/deviceOptions/${PageFields.Destination}`)
             .then(() => {
                 expect(getCapabilitiesSpy.calledOnce).to.equal(true);
