@@ -1,6 +1,9 @@
-import * as angular from "angular";
+import { Observable, of } from "rxjs";
 import { IDevice, IPage, ISelectableOption } from "../../../common/rest";
 import { IDataService } from "./definitions";
+
+// tslint:disable-next-line: no-empty
+const NOOP = () => {};
 
 export class DataServiceMock implements IDataService {
     public get pages(): IPage[] {
@@ -9,25 +12,25 @@ export class DataServiceMock implements IDataService {
     public get devices(): IDevice[] {
         return [];
     }
-    public getCapabilities(capability: string): ISelectableOption[] {
-        return [];
+    public getCapabilities(capability: string): Observable<ISelectableOption[]> {
+        return of([]);
     }
     public addNewPage(deviceId: number) {
-        angular.noop();
+        NOOP();
     }
     public addNewDevice(name: string) {
-        angular.noop();
+        NOOP();
     }
     public deletePage(idToDelete: number) {
-        angular.noop();
+        NOOP();
     }
     public deleteDevice(idToDelete: number) {
-        angular.noop();
+        NOOP();
     }
     public updateDeviceName(id: number, newValue: string) {
-        angular.noop();
+        NOOP();
     }
     public updatePageField(field: string, pages: number[], newValue: string) {
-        angular.noop();
+        NOOP();
     }
 }

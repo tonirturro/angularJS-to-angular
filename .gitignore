@@ -10,8 +10,8 @@ npm-debug.log
 #app dist stuff
 dist/
 
-#server dist stuff
-server/**/*.*
+#backend temp
+backend-build/
 
 #do not lock versions
 package-lock.json

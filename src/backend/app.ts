@@ -1,6 +1,6 @@
 ﻿import * as bodyParser from "body-parser";
 import * as express from "express";
-import path = require("path");
+import * as path from "path";
 
 import { Capabilities } from "./Repository/Capabilities";
 import { Data } from "./Repository/Data";

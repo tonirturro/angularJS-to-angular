@@ -1,22 +1,22 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "module": "commonjs",
+    "baseUrl": "./",
+    "outDir": "./build/out-tsc",
     "sourceMap": true,
-    "target": "es2015",
+    "declaration": false,
+    "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": false,
     "importHelpers": true,
-    "lib": ["es2018", "dom"],
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
     ]
-  },
-  "include": [
-    "src", "test/matcher-types.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-   ]
+  }
 }

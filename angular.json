@@ -1,0 +1,64 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "angularjs-to-angular": {
+            "root": "",
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                  "styleext": "scss"
+                }
+            },
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist",
+                        "index": "src/frontend/index.htm",
+                        "main": "src/frontend/App/Boot.ts",
+                        "polyfills": "src/frontend/App/polyfills.ts",
+                        "tsConfig": "src/frontend/tsconfig.app.json",
+                        "assets": [
+                            { "glob": "backend.js", "input": "backend-build", "output": "/"},
+                            { "glob": "package.json", "input": "src/electron-launch", "output": "/"},
+                            "src/favicon.ico"
+                        ],
+                        "styles": [
+                            "src/frontend/App/UiLib/styles/bootstrap.scss",
+                            "src/frontend/App/app.styles.css"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                  "replace": "src/frontend/environments/environment.ts",
+                                  "with": "src/frontend/environments/environment.prod.ts"
+                                }
+                              ],
+                              "optimization": true,
+                              "outputHashing": "all",
+                              "sourceMap": false,
+                              "extractCss": true,
+                              "namedChunks": false,
+                              "aot": true,
+                              "extractLicenses": true,
+                              "vendorChunk": false,
+                              "buildOptimizer": true,
+                              "budgets": [
+                                {
+                                  "type": "initial",
+                                  "maximumWarning": "2mb",
+                                  "maximumError": "5mb"
+                                }
+                              ]
+                        }
+                    }
+                }      
+            }
+        }
+    },
+    "defaultProject": "angularjs-to-angular"
+}
