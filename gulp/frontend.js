@@ -1,12 +1,13 @@
 const path = require('path');
 const gulp = require('gulp');
 const gettext = require('gulp-angular-gettext');
-const exec = require('child_process').exec;
+const { exec} = require('child_process');
 const tslint = require('gulp-tslint');
 const runSequence = require('run-sequence');
 const electron = require('electron-connect').server.create({
   path: 'dist'
 });
+const { BuildLauncher } = require('./buildLauncher');
 
 const localizationSrcFolder = path.resolve(__dirname, '../localization/*.po')
 const frontendFolder =  path.resolve(__dirname, '../src/frontend');
@@ -24,19 +25,15 @@ gulp.task('translations', () => {
 });
 
 gulp.task('angular-app-prod', (cb) => {
-  exec('ng build --prod="true"', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+  const build = new BuildLauncher(false, true);
+
+  build.run(cb);
 });
 
 gulp.task('angular-app-dev', (cb) => {
-  exec('ng build', (err, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    cb(err);
-  });
+  const build = new BuildLauncher();
+
+  build.run(cb);
 });
 
 gulp.task('angular-app-dev-watch', (done) => {
