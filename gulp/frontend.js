@@ -1,27 +1,39 @@
-const path = require('path');
 const gulp = require('gulp');
 const gettext = require('gulp-angular-gettext');
-const { exec} = require('child_process');
 const tslint = require('gulp-tslint');
-const runSequence = require('run-sequence');
 const electron = require('electron-connect').server.create({
   path: 'dist'
 });
 const { BuildLauncher } = require('./buildLauncher');
 
-const localizationSrcFolder = path.resolve(__dirname, '../localization/*.po')
-const frontendFolder =  path.resolve(__dirname, '../src/frontend');
-const frontEndSources = path.resolve(frontendFolder, 'App');
-const frontEndTSFiles = path.resolve(frontEndSources, '**/*.ts');
-const frontEndAllFiles = path.resolve(frontEndSources, '**/*.*');
-const appOutput = path.resolve(__dirname, '../dist');
+const localizationSrcFolder = 'localization/*.po';
+const frontendFolder =  'src/frontend';
+const frontEndSources = frontendFolder + '/App';
+const frontEndTSFiles = frontEndSources + '/**/*.ts';
+const frontEndAllFiles = frontEndSources + '/**/*.*';
+const appOutput = 'dist';
+
+function launchElectron(cb) {
+  electron.start('--remote-debugging-port=9222');
+  cb();
+}
+
+function stopElectron(cb) {
+  electron.stop();
+  cb();
+}
+
+function restartElectron(cb) {
+  electron.restart();
+  cb();
+}
 
 gulp.task('translations', () => {
   return gulp.src(localizationSrcFolder)
   .pipe(gettext.compile({
       format: 'json'
   }))
-  .pipe(gulp.dest(path.resolve(appOutput, 'translations')));
+  .pipe(gulp.dest(appOutput + '/translations'));
 });
 
 gulp.task('angular-app-prod', (cb) => {
@@ -36,42 +48,27 @@ gulp.task('angular-app-dev', (cb) => {
   build.run(cb);
 });
 
-gulp.task('angular-app-dev-watch', (done) => {
-    gulp.watch(frontEndAllFiles, () => {
-      console.log('Rebuild...');
-    });
-});
-
 gulp.task('tslint',  () => {
-  gulp.src(frontEndTSFiles)
+  return gulp.src(frontEndTSFiles)
     .pipe(tslint({
       formatter: 'stylish'
     }))
     .pipe(tslint.report({
       emitError: true
-    }))
+    }));
 });
 
-gulp.task('frontend', (done) => {
-  runSequence('tslint', 'angular-app-prod', 'translations', done);
-});
+function watchCode() {
+  gulp.watch(frontEndAllFiles, gulp.series(stopElectron, 'angular-app-dev', 'translations', launchElectron));
+}
 
-gulp.task('frontend-debug', (done) => {
-  runSequence('angular-app-dev', 'translations', done);
-});
+function watchTranslations() {
+  gulp.watch(localizationSrcFolder, gulp.series('translations', restartElectron));
+}
 
-gulp.task('watch-frontend', (done) => {
-    runSequence( 'backend', 'angular-app-dev','translations', 'electron-watch', done);
-});
+gulp.task('frontend', gulp.series('tslint', 'angular-app-prod', 'translations'));
 
-gulp.task('electron-watch', () => {
-  electron.start('--remote-debugging-port=9222');
-  gulp.watch(frontEndAllFiles, () => {
-    electron.stop();
-    console.log('Rebuild...');
-    runSequence('angular-app-dev', 'translations', () => {
-      electron.start('--remote-debugging-port=9222');
-    });
-  });
-});
+gulp.task('frontend-debug', gulp.series('angular-app-dev', 'translations'));
+
+gulp.task('watch-frontend', gulp.series('backend', 'angular-app-dev', 'translations', gulp.parallel(launchElectron, watchCode, watchTranslations)));
 
