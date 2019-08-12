@@ -23,6 +23,14 @@ class BuildLauncher {
             cb(code);
         });
     }
+
+    watch(cb) {
+        this.params.push('--watch=true');
+        this.params.push('--deleteOutputPath=false')
+
+        this.run(cb);
+    }
+
 }
 
 exports.BuildLauncher = BuildLauncher;
