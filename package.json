@@ -8,7 +8,7 @@
     "build": "gulp build",
     "build:dev": "gulp build-debug",
     "test": "ng test --watch=false --codeCoverage=true && gulp test-backend",
-    "npm start": "ng test --watch=false",
+    "test:frontend": "ng test --watch=false",
     "test:frontend:watch": "ng test",
     "test:backend": "gulp test-backend",
     "lint": "gulp tslint"
