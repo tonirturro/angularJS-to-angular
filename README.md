@@ -26,6 +26,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step14 : Remove AngularJS references.
 * step15 : Use the Angular CLI tool.
 * appendixA : Create distributable bundle.
+* appendixB : Use the right build for distributable bundle.
 
 To go to a particular step:
 

@@ -32,7 +32,7 @@ gulp.task('translations', () => {
 });
 
 gulp.task('angular-app-prod', (cb) => {
-  const build = new BuildLauncher(false, true);
+  const build = new BuildLauncher(true);
 
   build.run(cb);
 });

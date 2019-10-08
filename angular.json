@@ -76,23 +76,6 @@
                     }                
                 }
             }
-        },
-        "backend": {
-          "root": "",
-          "projectType": "library",
-          "architect": {
-            "build": {
-              "builder": "@angular-builders/custom-webpack:server",
-              "options": {
-                "customWebpackConfig": {
-                  "path": "webpack/webpack.config.backend.js"
-                },
-                "outputPath": "backend-build",
-                "main": "src/backend/main.ts",
-                "tsConfig": "src/backend/tsconfig.srv.json"
-              }
-            }
-          }
         }
     },
     "defaultProject": "frontend"
