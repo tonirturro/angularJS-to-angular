@@ -25,7 +25,7 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step13 : Migrate main component.
 * step14 : Remove AngularJS references.
 * step15 : Use the Angular CLI tool.
-* apendixA : Create distributable bundle.
+* appendixA : Create distributable bundle.
 
 To go to a particular step:
 
