@@ -24,7 +24,8 @@ We will follow the steps documented at https://angular.io/guide/upgrade
 * step12 : Manage routes from Angular version of ui-router.
 * step13 : Migrate main component.
 * step14 : Remove AngularJS references.
-* step15 : Use the Angular CLI tool
+* step15 : Use the Angular CLI tool.
+* apendixA : Create distributable bundle.
 
 To go to a particular step:
 

@@ -9,6 +9,7 @@ npm-debug.log
 
 #app dist stuff
 dist/
+bundle/
 
 #backend temp
 backend-build/
